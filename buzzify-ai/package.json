@@ -1,0 +1,32 @@
+{
+  "name": "buzzify-ai",
+  "version": "1.0.0",
+  "description": "An AI-powered, trend-based content website that updates automatically using Google Trends data.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "nextjs",
+    "tailwindcss",
+    "ai",
+    "content",
+    "trends"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "tailwindcss": "^2.2.19"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-next": "^12.0.7",
+    "typescript": "^4.4.4"
+  }
+}
