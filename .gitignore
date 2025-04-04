@@ -1,1 +1,12 @@
 buzzify-ai/node_modules
+buzzify-ai/dist
+buzzify-ai/.env
+buzzify-ai/.env.local
+buzzify-ai/.env.development.local
+buzzify-ai/.env.test.local
+buzzify-ai/.env.production.local
+buzzify-ai/.DS_Store
+buzzify-ai/.idea
+buzzify-ai/.vscode
+buzzify-ai/.history
+buzzify-ai/.next

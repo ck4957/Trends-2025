@@ -1,11 +1,17 @@
-import Layout from '../components/Layout';
-import '../styles/globals.css';
+import Head from 'next/head';
+import type { AppProps } from 'next/app';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
+    <>
+      <Head>
+        <link
+          href="https://cdn.jsdelivr.net/npm/tailwindcss@2/dist/tailwind.min.css"
+          rel="stylesheet"
+        />
+      </Head>
       <Component {...pageProps} />
-    </Layout>
+    </>
   );
 }
 
