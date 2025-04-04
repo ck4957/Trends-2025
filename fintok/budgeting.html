@@ -3,238 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Budgeting Templates for 2025 | FinanceHub</title>
+    <meta name="google-adsense-account" content="ca-pub-3911596373332918">
+    <title>Budgeting Templates for 2025 | FinTok</title>
     <meta name="description" content="Free budgeting templates and calculators designed for 2025's economic challenges. Set financial goals and track expenses effectively.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3911596373332918"
+     crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-    <style>
-        .template-preview {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 1rem;
-            margin-bottom: 2rem;
-            background-color: #f9f9f9;
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5CF6', // Purple
+                        secondary: '#6D28D9', // Darker purple
+                        accent: '#10B981', // Green
+                        light: '#F5F3FF', // Light purple
+                        dark: '#171717', // Near black
+                    }
+                },
+                fontFamily: {
+                    sans: ['Poppins', 'sans-serif'],
+                }
+            }
         }
-        
-        .calculator-container {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 2rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 3rem 0;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-        
-        #budget-results {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background-color: var(--light-color);
-            border-radius: 5px;
-            display: none;
-        }
-        
-        .warning {
-            color: #d32f2f;
-            font-weight: 600;
-        }
-        
-        .budget-categories {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-        
-        .budget-category {
-            background-color: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .budget-category h4 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-        
-        .recommended-percent {
-            font-weight: 600;
-            color: var(--secondary-color);
-            margin-bottom: 0.5rem;
-        }
-        
-        .download-btn {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-top: 1rem;
-            font-weight: 600;
-        }
-        
-        .download-btn:hover {
-            background-color: var(--secondary-color);
-        }
-    </style>
+    </script>
 </head>
-<body>
-    <header>
-        <div class="container header-container">
-            <div class="logo">
-                <a href="index.html">FinanceHub</a>
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+    <header class="sticky top-0 z-50 bg-gradient-to-r from-primary to-secondary text-white shadow-md">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold flex items-center">
+                <i class="fas fa-chart-line mr-2"></i>
+                <a href="index.html">FinTok</a>
             </div>
             <nav>
-                <div class="mobile-menu">
+                <div class="md:hidden text-2xl cursor-pointer">
                     <i class="fas fa-bars"></i>
                 </div>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="budgeting.html">Budgeting</a></li>
-                    <li><a href="side-hustles.html">Side Hustles</a></li>
-                    <li><a href="index-investing.html">Index Investing</a></li>
-                    <li><a href="passive-income.html">Passive Income</a></li>
+                <ul class="hidden md:flex space-x-6">
+                    <li><a href="index.html" class="font-semibold hover:text-light transition">Home</a></li>
+                    <li><a href="budgeting.html" class="font-semibold hover:text-light transition">Budgeting</a></li>
+                    <li><a href="side-hustles.html" class="font-semibold hover:text-light transition">Side Hustles</a></li>
+                    <li><a href="index-investing.html" class="font-semibold hover:text-light transition">Index Investing</a></li>
+                    <li><a href="passive-income.html" class="font-semibold hover:text-light transition">Passive Income</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main>
-        <div class="container">
-            <h1 class="section-title">Budgeting Templates for 2025</h1>
+    <main class="py-12">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold text-primary mb-8 text-center">Budgeting Templates for 2025</h1>
             
-            <div class="topic-content">
-                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Budgeting Templates" class="topic-image">
+            <div class="max-w-4xl mx-auto">
+                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Budgeting Templates" class="w-full h-80 object-cover rounded-lg mb-8">
                 
-                <h2>Why Budgeting Matters in 2025</h2>
-                <p>With inflation, changing work environments, and economic uncertainties, having a solid budgeting strategy is more important than ever. Our templates are designed to help you navigate these challenges and take control of your finances.</p>
+                <h2 class="text-2xl font-bold text-secondary mb-4">Why Budgeting Matters in 2025</h2>
+                <p class="mb-4">With inflation, changing work environments, and economic uncertainties, having a solid budgeting strategy is more important than ever. Our templates are designed to help you navigate these challenges and take control of your finances.</p>
                 
-                <p>A good budget isn't just about restricting your spending—it's about making intentional choices with your money that align with your values and goals. Whether you're saving for a home, planning for retirement, or just trying to reduce financial stress, these templates will help you get started.</p>
+                <p class="mb-8">A good budget isn't just about restricting your spending—it's about making intentional choices with your money that align with your values and goals. Whether you're saving for a home, planning for retirement, or just trying to reduce financial stress, these templates will help you get started.</p>
                 
-                <h2>Recommended Budget Categories</h2>
-                <p>Financial experts typically recommend allocating your income across these major categories:</p>
+                <h2 class="text-2xl font-bold text-secondary mb-4">Recommended Budget Categories</h2>
+                <p class="mb-4">Financial experts typically recommend allocating your income across these major categories:</p>
                 
-                <div class="budget-categories">
-                    <div class="budget-category">
-                        <h4>Housing</h4>
-                        <p class="recommended-percent">25-35% of income</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="text-xl font-semibold text-primary mb-2">Housing</h4>
+                        <p class="font-medium text-accent mb-2">25-35% of income</p>
                         <p>Includes rent/mortgage, utilities, repairs, and home insurance</p>
                     </div>
                     
-                    <div class="budget-category">
-                        <h4>Transportation</h4>
-                        <p class="recommended-percent">10-15% of income</p>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="text-xl font-semibold text-primary mb-2">Transportation</h4>
+                        <p class="font-medium text-accent mb-2">10-15% of income</p>
                         <p>Includes car payments, gas, maintenance, public transportation</p>
                     </div>
                     
-                    <div class="budget-category">
-                        <h4>Food</h4>
-                        <p class="recommended-percent">10-15% of income</p>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="text-xl font-semibold text-primary mb-2">Food</h4>
+                        <p class="font-medium text-accent mb-2">10-15% of income</p>
                         <p>Includes groceries and dining out</p>
                     </div>
                     
-                    <div class="budget-category">
-                        <h4>Savings/Debt Repayment</h4>
-                        <p class="recommended-percent">15-20% of income</p>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="text-xl font-semibold text-primary mb-2">Savings/Debt Repayment</h4>
+                        <p class="font-medium text-accent mb-2">15-20% of income</p>
                         <p>Includes emergency fund, retirement, and debt payments</p>
                     </div>
                     
-                    <div class="budget-category">
-                        <h4>Healthcare</h4>
-                        <p class="recommended-percent">5-10% of income</p>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="text-xl font-semibold text-primary mb-2">Healthcare</h4>
+                        <p class="font-medium text-accent mb-2">5-10% of income</p>
                         <p>Includes insurance, medications, and medical bills</p>
                     </div>
                     
-                    <div class="budget-category">
-                        <h4>Personal Spending</h4>
-                        <p class="recommended-percent">5-10% of income</p>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="text-xl font-semibold text-primary mb-2">Personal Spending</h4>
+                        <p class="font-medium text-accent mb-2">5-10% of income</p>
                         <p>Includes entertainment, clothing, and hobbies</p>
                     </div>
                 </div>
                 
-                <h2>2025 Budget Templates</h2>
-                <p>Choose the template that works best for your financial situation:</p>
+                <h2 class="text-2xl font-bold text-secondary mb-4">2025 Budget Templates</h2>
+                <p class="mb-4">Choose the template that works best for your financial situation:</p>
                 
-                <div class="template-preview">
-                    <h3>50/30/20 Budget Template</h3>
-                    <p>A simplified approach that allocates 50% of your income to needs, 30% to wants, and 20% to savings and debt repayment.</p>
-                    <p><strong>Perfect for:</strong> Beginners who want a simple framework to follow</p>
-                    <a href="#" class="download-btn"><i class="fas fa-download"></i> Download Excel Template</a>
-                    <a href="#" class="download-btn"><i class="fas fa-download"></i> Download Google Sheets Template</a>
+                <div class="bg-gray-100 border border-gray-200 rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-bold mb-2">50/30/20 Budget Template</h3>
+                    <p class="mb-2">A simplified approach that allocates 50% of your income to needs, 30% to wants, and 20% to savings and debt repayment.</p>
+                    <p class="font-bold mb-4">Perfect for: Beginners who want a simple framework to follow</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-md font-medium inline-flex items-center transition"><i class="fas fa-download mr-2"></i> Download Excel Template</a>
+                        <a href="#" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-md font-medium inline-flex items-center transition"><i class="fas fa-download mr-2"></i> Download Google Sheets Template</a>
+                    </div>
                 </div>
                 
-                <div class="template-preview">
-                    <h3>Zero-Based Budget Template</h3>
-                    <p>A detailed budgeting method where every dollar of income is assigned a specific purpose, bringing your balance to zero at the end of each month.</p>
-                    <p><strong>Perfect for:</strong> Detail-oriented individuals who want complete control over their spending</p>
-                    <a href="#" class="download-btn"><i class="fas fa-download"></i> Download Excel Template</a>
-                    <a href="#" class="download-btn"><i class="fas fa-download"></i> Download Google Sheets Template</a>
+                <div class="bg-gray-100 border border-gray-200 rounded-lg p-6 mb-6"></div>
+                    <h3 class="text-xl font-bold mb-2">Zero-Based Budget Template</h3>
+                    <p class="mb-2">A detailed budgeting method where every dollar of income is assigned a specific purpose, bringing your balance to zero at the end of each month.</p>
+                    <p class="font-bold mb-4">Perfect for: Detail-oriented individuals who want complete control over their spending</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-md font-medium inline-flex items-center transition"><i class="fas fa-download mr-2"></i> Download Excel Template</a>
+                        <a href="#" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-md font-medium inline-flex items-center transition"><i class="fas fa-download mr-2"></i> Download Google Sheets Template</a>
+                    </div>
                 </div>
                 
-                <div class="template-preview">
-                    <h3>Variable Income Budget Template</h3>
-                    <p>Designed for freelancers, gig workers, and those with irregular income. Helps prioritize expenses and plan for lean months.</p>
-                    <p><strong>Perfect for:</strong> Freelancers, contractors, and those with commission-based incomes</p>
-                    <a href="#" class="download-btn"><i class="fas fa-download"></i> Download Excel Template</a>
-                    <a href="#" class="download-btn"><i class="fas fa-download"></i> Download Google Sheets Template</a>
+                <div class="bg-gray-100 border border-gray-200 rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-bold mb-2">Variable Income Budget Template</h3>
+                    <p class="mb-2">Designed for freelancers, gig workers, and those with irregular income. Helps prioritize expenses and plan for lean months.</p>
+                    <p class="font-bold mb-4">Perfect for: Freelancers, contractors, and those with commission-based incomes</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-md font-medium inline-flex items-center transition"><i class="fas fa-download mr-2"></i> Download Excel Template</a>
+                        <a href="#" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-md font-medium inline-flex items-center transition"><i class="fas fa-download mr-2"></i> Download Google Sheets Template</a>
+                    </div>
                 </div>
                 
-                <div class="template-preview">
-                    <h3>Debt Payoff Budget Template</h3>
-                    <p>Specifically designed to help you aggressively pay down debt while maintaining essential expenses.</p>
-                    <p><strong>Perfect for:</strong> Those focused on eliminating credit card debt, student loans, or other high-interest debt</p>
-                    <a href="#" class="download-btn"><i class="fas fa-download"></i> Download Excel Template</a>
-                    <a href="#" class="download-btn"><i class="fas fa-download"></i> Download Google Sheets Template</a>
+                <div class="bg-gray-100 border border-gray-200 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-2">Debt Payoff Budget Template</h3>
+                    <p class="mb-2">Specifically designed to help you aggressively pay down debt while maintaining essential expenses.</p>
+                    <p class="font-bold mb-4">Perfect for: Those focused on eliminating credit card debt, student loans, or other high-interest debt</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-md font-medium inline-flex items-center transition"><i class="fas fa-download mr-2"></i> Download Excel Template</a>
+                        <a href="#" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-md font-medium inline-flex items-center transition"><i class="fas fa-download mr-2"></i> Download Google Sheets Template</a>
+                    </div>
                 </div>
                 
-                <h2 id="calculator">Budget Calculator</h2>
-                <p>Use this calculator to get a quick overview of your budget situation and receive personalized recommendations.</p>
+                <h2 id="calculator" class="text-2xl font-bold text-secondary mb-4">Budget Calculator</h2>
+                <p class="mb-4">Use this calculator to get a quick overview of your budget situation and receive personalized recommendations.</p>
                 
-                <div class="calculator-container">
+                <div class="bg-white rounded-lg shadow-md p-8 mb-8">
                     <form id="budget-calculator">
-                        <div class="form-group">
-                            <label for="income">Monthly Income After Taxes ($):</label>
-                            <input type="number" id="income" name="income" placeholder="e.g., 4000" required>
+                        <div class="mb-6">
+                            <label for="income" class="block mb-2 font-semibold">Monthly Income After Taxes ($):</label>
+                            <input type="number" id="income" name="income" placeholder="e.g., 4000" required
+                                class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary">
                         </div>
                         
-                        <div class="form-group">
-                            <label for="expenses">Monthly Expenses ($):</label>
-                            <input type="number" id="expenses" name="expenses" placeholder="e.g., 3000" required>
+                        <div class="mb-6">
+                            <label for="expenses" class="block mb-2 font-semibold">Monthly Expenses ($):</label>
+                            <input type="number" id="expenses" name="expenses" placeholder="e.g., 3000" required
+                                class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary">
                         </div>
                         
-                        <div class="form-group">
-                            <label for="savings">Monthly Savings ($):</label>
-                            <input type="number" id="savings" name="savings" placeholder="e.g., 500" required>
+                        <div class="mb-6">
+                            <label for="savings" class="block mb-2 font-semibold">Monthly Savings ($):</label>
+                            <input type="number" id="savings" name="savings" placeholder="e.g., 500" required
+                                class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary">
                         </div>
                         
-                        <button type="submit" class="btn">Calculate Budget</button>
+                        <button type="submit" class="bg-accent hover:bg-secondary text-white py-3 px-6 rounded-md font-semibold transition">Calculate Budget</button>
                     </form>
                     
-                    <div id="budget-results"></div>
+                    <div id="budget-results" class="mt-8 p-6 bg-light rounded-md hidden"></div>
                 </div>
                 
-                <h2>Budgeting Tips for 2025</h2>
-                <ul class="resource-list">
+                <h2 class="text-2xl font-bold text-secondary mb-4">Budgeting Tips for 2025</h2>
+                <ul class="list-disc pl-6 space-y-2 mb-8">
                     <li>Use AI-powered tools to track spending patterns and identify areas for improvement</li>
                     <li>Prepare for continued inflation by building a larger emergency fund (aim for 6-9 months of expenses)</li>
                     <li>Consider digital banking solutions that offer automated savings and spending insights</li>
@@ -247,38 +191,40 @@
         </div>
     </main>
 
-    <footer>
-        <div class="container footer-container">
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="budgeting.html">Budgeting</a></li>
-                    <li><a href="side-hustles.html">Side Hustles</a></li>
-                    <li><a href="index-investing.html">Index Investing</a></li>
-                    <li><a href="passive-income.html">Passive Income</a></li>
-                </ul>
+    <footer class="bg-dark text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="hover:text-light transition">Home</a></li>
+                        <li><a href="budgeting.html" class="hover:text-light transition">Budgeting</a></li>
+                        <li><a href="side-hustles.html" class="hover:text-light transition">Side Hustles</a></li>
+                        <li><a href="index-investing.html" class="hover:text-light transition">Index Investing</a></li>
+                        <li><a href="passive-income.html" class="hover:text-light transition">Passive Income</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="budgeting.html#calculator" class="hover:text-light transition">Budget Calculator</a></li>
+                        <li><a href="index-investing.html#calculator" class="hover:text-light transition">Investment Calculator</a></li>
+                        <li><a href="side-hustles.html#comparison" class="hover:text-light transition">Side Hustle Comparison</a></li>
+                        <li><a href="passive-income.html#tools" class="hover:text-light transition">AI Tool Directory</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">About FinTok</h3>
+                    <p class="mb-2">FinTok provides up-to-date resources to help you make smart financial decisions in 2025 and beyond.</p>
+                    <p>This content is for informational purposes only and should not be considered financial advice.</p>
+                </div>
             </div>
             
-            <div class="footer-section">
-                <h3>Resources</h3>
-                <ul>
-                    <li><a href="budgeting.html#calculator">Budget Calculator</a></li>
-                    <li><a href="index-investing.html#calculator">Investment Calculator</a></li>
-                    <li><a href="side-hustles.html#comparison">Side Hustle Comparison</a></li>
-                    <li><a href="passive-income.html#tools">AI Tool Directory</a></li>
-                </ul>
+            <div class="border-t border-gray-700 mt-8 pt-4">
+                <p>&copy; 2025 FinTok. All rights reserved.</p>
             </div>
-            
-            <div class="footer-section">
-                <h3>About FinanceHub</h3>
-                <p>FinanceHub provides up-to-date resources to help you make smart financial decisions in 2025 and beyond.</p>
-                <p>This content is for informational purposes only and should not be considered financial advice.</p>
-            </div>
-        </div>
-        
-        <div class="copyright container">
-            <p>&copy; 2025 FinanceHub. All rights reserved.</p>
         </div>
     </footer>
 
