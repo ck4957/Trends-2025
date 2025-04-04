@@ -3,319 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Side Hustles That Work in 2025 | FinanceHub</title>
+    <title>Side Hustles That Work in 2025 | FinTok</title>
     <meta name="description" content="Discover profitable side gigs and hustles for 2025. Find flexible options to boost your income in today's gig economy.">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-    <style>
-        .hustle-card {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5CF6', // Purple
+                        secondary: '#6D28D9', // Darker purple
+                        accent: '#10B981', // Green
+                        light: '#F5F3FF', // Light purple
+                        dark: '#171717', // Near black
+                    }
+                },
+                fontFamily: {
+                    sans: ['Poppins', 'sans-serif'],
+                }
+            }
         }
-        
-        .hustle-header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1.5rem;
-        }
-        
-        .hustle-header h3 {
-            margin-bottom: 0.5rem;
-        }
-        
-        .hustle-body {
-            padding: 1.5rem;
-        }
-        
-        .hustle-stats {
-            display: flex;
-            margin: 1.5rem 0;
-            flex-wrap: wrap;
-        }
-        
-        .stat {
-            flex: 1;
-            min-width: 150px;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-        
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-        
-        .comparison-table {
-            overflow-x: auto;
-        }
-        
-        .tag {
-            display: inline-block;
-            background-color: var(--light-color);
-            color: var(--primary-color);
-            padding: 0.3rem 0.6rem;
-            border-radius: 3px;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-    </style>
+    </script>
 </head>
-<body>
-    <header>
-        <div class="container header-container">
-            <div class="logo">
-                <a href="index.html">FinanceHub</a>
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+    <header class="sticky top-0 z-50 bg-gradient-to-r from-primary to-secondary text-white shadow-md">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold flex items-center">
+                <i class="fas fa-chart-line mr-2"></i>
+                <a href="index.html">FinTok</a>
             </div>
             <nav>
-                <div class="mobile-menu">
+                <div class="md:hidden text-2xl cursor-pointer">
                     <i class="fas fa-bars"></i>
                 </div>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="budgeting.html">Budgeting</a></li>
-                    <li><a href="side-hustles.html">Side Hustles</a></li>
-                    <li><a href="index-investing.html">Index Investing</a></li>
-                    <li><a href="passive-income.html">Passive Income</a></li>
+                <ul class="hidden md:flex space-x-6">
+                    <li><a href="index.html" class="font-semibold hover:text-light transition">Home</a></li>
+                    <li><a href="budgeting.html" class="font-semibold hover:text-light transition">Budgeting</a></li>
+                    <li><a href="side-hustles.html" class="font-semibold hover:text-light transition">Side Hustles</a></li>
+                    <li><a href="index-investing.html" class="font-semibold hover:text-light transition">Index Investing</a></li>
+                    <li><a href="passive-income.html" class="font-semibold hover:text-light transition">Passive Income</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main>
-        <div class="container">
-            <h1 class="section-title">Side Hustles That Work in 2025</h1>
+    <main class="py-8">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl text-center font-bold text-primary mb-8">Side Hustles That Work in 2025</h1>
             
-            <div class="topic-content">
-                <img src="https://images.unsplash.com/photo-1556742031-c6961e8560b0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Side Hustles" class="topic-image">
+            <div class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <img src="https://images.unsplash.com/photo-1556742031-c6961e8560b0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Side Hustles" class="w-full h-80 object-cover rounded-lg mb-8">
                 
-                <h2>The Gig Economy in 2025</h2>
-                <p>The gig economy continues to evolve rapidly, offering more opportunities than ever to earn supplemental income. According to recent data, over 45% of Americans have some form of side hustle, with the average side hustler earning an additional $1,200 per month.</p>
+                <h2 class="text-2xl font-bold mb-4 text-primary">The Gig Economy in 2025</h2>
+                <p class="mb-4">The gig economy continues to evolve rapidly, offering more opportunities than ever to earn supplemental income. According to recent data, over 45% of Americans have some form of side hustle, with the average side hustler earning an additional $1,200 per month.</p>
                 
-                <p>In 2025, the most successful side hustles leverage technology, specialized skills, and flexible work arrangements. The key is finding opportunities that match your skills, schedule, and income goals.</p>
+                <p class="mb-8">In 2025, the most successful side hustles leverage technology, specialized skills, and flexible work arrangements. The key is finding opportunities that match your skills, schedule, and income goals.</p>
                 
-                <h2 id="comparison">Top Side Hustles Comparison</h2>
-                <p>We've analyzed the most profitable and accessible side hustles for 2025. Here's how they compare:</p>
+                <h2 id="comparison" class="text-2xl font-bold mb-4 text-primary">Top Side Hustles Comparison</h2>
+                <p class="mb-6">We've analyzed the most profitable and accessible side hustles for 2025. Here's how they compare:</p>
                 
-                <div class="comparison-table">
-                    <table>
-                        <thead>
+                <div class="overflow-x-auto mb-12 bg-white border border-gray-200 rounded-lg shadow-sm">
+                    <table class="w-full text-left">
+                        <thead class="bg-light text-primary">
                             <tr>
-                                <th>Side Hustle</th>
-                                <th>Potential Monthly Income</th>
-                                <th>Time Investment</th>
-                                <th>Startup Cost</th>
-                                <th>Skills Required</th>
+                                <th class="py-3 px-4 font-semibold">Side Hustle</th>
+                                <th class="py-3 px-4 font-semibold">Potential Monthly Income</th>
+                                <th class="py-3 px-4 font-semibold">Time Investment</th>
+                                <th class="py-3 px-4 font-semibold">Startup Cost</th>
+                                <th class="py-3 px-4 font-semibold">Skills Required</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>AI Content Creation</td>
-                                <td>$1,500-$5,000</td>
-                                <td>10-20 hrs/week</td>
-                                <td>$100-$300</td>
-                                <td>Writing, Prompt Engineering</td>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-3 px-4 font-medium">AI Content Creation</td>
+                                <td class="py-3 px-4">$1,500-$5,000</td>
+                                <td class="py-3 px-4">10-20 hrs/week</td>
+                                <td class="py-3 px-4">$100-$300</td>
+                                <td class="py-3 px-4">Writing, Prompt Engineering</td>
                             </tr>
-                            <tr>
-                                <td>Virtual Assistance</td>
-                                <td>$1,000-$3,000</td>
-                                <td>15-25 hrs/week</td>
-                                <td>$0-$100</td>
-                                <td>Organization, Communication</td>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-3 px-4 font-medium">Virtual Assistance</td>
+                                <td class="py-3 px-4">$1,000-$3,000</td>
+                                <td class="py-3 px-4">15-25 hrs/week</td>
+                                <td class="py-3 px-4">$0-$100</td>
+                                <td class="py-3 px-4">Organization, Communication</td>
                             </tr>
-                            <tr>
-                                <td>Online Course Creation</td>
-                                <td>$500-$10,000</td>
-                                <td>40+ hrs setup, 5 hrs/week maintenance</td>
-                                <td>$200-$500</td>
-                                <td>Subject Expertise, Basic Video Production</td>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-3 px-4 font-medium">Online Course Creation</td>
+                                <td class="py-3 px-4">$500-$10,000</td>
+                                <td class="py-3 px-4">40+ hrs setup, 5 hrs/week maintenance</td>
+                                <td class="py-3 px-4">$200-$500</td>
+                                <td class="py-3 px-4">Subject Expertise, Basic Video Production</td>
                             </tr>
-                            <tr>
-                                <td>EV Charging Host</td>
-                                <td>$300-$1,200</td>
-                                <td>1-2 hrs/week</td>
-                                <td>$500-$2,000</td>
-                                <td>Available Space, Basic Property Management</td>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-3 px-4 font-medium">EV Charging Host</td>
+                                <td class="py-3 px-4">$300-$1,200</td>
+                                <td class="py-3 px-4">1-2 hrs/week</td>
+                                <td class="py-3 px-4">$500-$2,000</td>
+                                <td class="py-3 px-4">Available Space, Basic Property Management</td>
                             </tr>
-                            <tr>
-                                <td>Freelance Web Development</td>
-                                <td>$2,000-$10,000</td>
-                                <td>20-30 hrs/week</td>
-                                <td>$0-$500</td>
-                                <td>Coding, Design, Project Management</td>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-3 px-4 font-medium">Freelance Web Development</td>
+                                <td class="py-3 px-4">$2,000-$10,000</td>
+                                <td class="py-3 px-4">20-30 hrs/week</td>
+                                <td class="py-3 px-4">$0-$500</td>
+                                <td class="py-3 px-4">Coding, Design, Project Management</td>
                             </tr>
-                            <tr>
-                                <td>Print-on-Demand Store</td>
-                                <td>$500-$3,000</td>
-                                <td>10-15 hrs/week</td>
-                                <td>$100-$300</td>
-                                <td>Design, Marketing</td>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-3 px-4 font-medium">Print-on-Demand Store</td>
+                                <td class="py-3 px-4">$500-$3,000</td>
+                                <td class="py-3 px-4">10-15 hrs/week</td>
+                                <td class="py-3 px-4">$100-$300</td>
+                                <td class="py-3 px-4">Design, Marketing</td>
                             </tr>
-                            <tr>
-                                <td>Rideshare/Delivery</td>
-                                <td>$1,000-$2,500</td>
-                                <td>15-25 hrs/week</td>
-                                <td>Vehicle Expenses</td>
-                                <td>Driving, Time Management</td>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-3 px-4 font-medium">Rideshare/Delivery</td>
+                                <td class="py-3 px-4">$1,000-$2,500</td>
+                                <td class="py-3 px-4">15-25 hrs/week</td>
+                                <td class="py-3 px-4">Vehicle Expenses</td>
+                                <td class="py-3 px-4">Driving, Time Management</td>
                             </tr>
-                            <tr>
-                                <td>Virtual Experience Host</td>
-                                <td>$800-$3,000</td>
-                                <td>10-15 hrs/week</td>
-                                <td>$100-$500</td>
-                                <td>Presentation, Subject Expertise</td>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-3 px-4 font-medium">Virtual Experience Host</td>
+                                <td class="py-3 px-4">$800-$3,000</td>
+                                <td class="py-3 px-4">10-15 hrs/week</td>
+                                <td class="py-3 px-4">$100-$500</td>
+                                <td class="py-3 px-4">Presentation, Subject Expertise</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 
-                <h2>Featured Side Hustles for 2025</h2>
-                <p>Here are detailed breakdowns of some of the most promising side hustles this year:</p>
+                <h2 class="text-2xl font-bold mb-4 text-primary">Featured Side Hustles for 2025</h2>
+                <p class="mb-6">Here are detailed breakdowns of some of the most promising side hustles this year:</p>
                 
-                <div class="hustle-card">
-                    <div class="hustle-header">
-                        <h3>AI Content Creation</h3>
+                <div class="mb-8 bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+                    <div class="bg-gradient-to-r from-primary to-secondary text-white p-6">
+                        <h3 class="text-xl font-bold mb-1">AI Content Creation</h3>
                         <p>Using AI tools to create marketable content</p>
                     </div>
-                    <div class="hustle-body">
-                        <p>With the continued advancement of AI tools, creating valuable content has become more accessible than ever. By leveraging AI for initial drafts while adding your expertise and personal touch, you can create high-quality articles, social media posts, product descriptions, and more.</p>
+                    <div class="p-6">
+                        <p class="mb-6">With the continued advancement of AI tools, creating valuable content has become more accessible than ever. By leveraging AI for initial drafts while adding your expertise and personal touch, you can create high-quality articles, social media posts, product descriptions, and more.</p>
                         
-                        <div class="hustle-stats">
-                            <div class="stat">
-                                <div class="stat-value">$1,500-$5,000</div>
-                                <p>Monthly Income</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-primary mb-1">$1,500-$5,000</div>
+                                <p class="text-gray-600">Monthly Income</p>
                             </div>
-                            <div class="stat">
-                                <div class="stat-value">10-20</div>
-                                <p>Hours/Week</p>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-primary mb-1">10-20</div>
+                                <p class="text-gray-600">Hours/Week</p>
                             </div>
-                            <div class="stat">
-                                <div class="stat-value">$100-$300</div>
-                                <p>Startup Cost</p>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-primary mb-1">$100-$300</div>
+                                <p class="text-gray-600">Startup Cost</p>
                             </div>
                         </div>
                         
-                        <h4>Getting Started:</h4>
-                        <ul>
+                        <h4 class="font-bold text-lg mb-2">Getting Started:</h4>
+                        <ul class="list-disc pl-6 mb-6 space-y-1">
                             <li>Subscribe to quality AI tools like ChatGPT Plus, Claude, or specialized writing tools</li>
                             <li>Develop prompt engineering skills to get better results</li>
                             <li>Find a niche where you have expertise to add value beyond AI</li>
                             <li>Create profiles on Upwork, Fiverr, and content marketplaces</li>
                         </ul>
                         
-                        <h4>Success Factors:</h4>
-                        <div>
-                            <span class="tag">Low Barrier to Entry</span>
-                            <span class="tag">High Demand</span>
-                            <span class="tag">Scalable</span>
-                            <span class="tag">Remote Work</span>
+                        <h4 class="font-bold text-lg mb-2">Success Factors:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="inline-block bg-light text-primary px-3 py-1 rounded-md text-sm">Low Barrier to Entry</span>
+                            <span class="inline-block bg-light text-primary px-3 py-1 rounded-md text-sm">High Demand</span>
+                            <span class="inline-block bg-light text-primary px-3 py-1 rounded-md text-sm">Scalable</span>
+                            <span class="inline-block bg-light text-primary px-3 py-1 rounded-md text-sm">Remote Work</span>
                         </div>
                     </div>
                 </div>
                 
-                <div class="hustle-card">
-                    <div class="hustle-header">
-                        <h3>Virtual Experience Host</h3>
+                <div class="mb-8 bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+                    <div class="bg-gradient-to-r from-primary to-secondary text-white p-6">
+                        <h3 class="text-xl font-bold mb-1">Virtual Experience Host</h3>
                         <p>Leading online tours, classes, or experiences</p>
                     </div>
-                    <div class="hustle-body">
-                        <p>As remote work and digital experiences continue to grow, there's increasing demand for virtual experiences. Whether you're teaching a cooking class, leading a virtual tour of your city, or hosting a wine tasting, you can monetize your knowledge and passion.</p>
+                    <div class="p-6">
+                        <p class="mb-6">As remote work and digital experiences continue to grow, there's increasing demand for virtual experiences. Whether you're teaching a cooking class, leading a virtual tour of your city, or hosting a wine tasting, you can monetize your knowledge and passion.</p>
                         
-                        <div class="hustle-stats">
-                            <div class="stat">
-                                <div class="stat-value">$800-$3,000</div>
-                                <p>Monthly Income</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-primary mb-1">$800-$3,000</div>
+                                <p class="text-gray-600">Monthly Income</p>
                             </div>
-                            <div class="stat">
-                                <div class="stat-value">10-15</div>
-                                <p>Hours/Week</p>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-primary mb-1">10-15</div>
+                                <p class="text-gray-600">Hours/Week</p>
                             </div>
-                            <div class="stat">
-                                <div class="stat-value">$100-$500</div>
-                                <p>Startup Cost</p>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-primary mb-1">$100-$500</div>
+                                <p class="text-gray-600">Startup Cost</p>
                             </div>
                         </div>
                         
-                        <h4>Getting Started:</h4>
-                        <ul>
+                        <h4 class="font-bold text-lg mb-2">Getting Started:</h4>
+                        <ul class="list-disc pl-6 mb-6 space-y-1">
                             <li>Identify a unique experience you can offer (local tours, cooking classes, craft workshops)</li>
                             <li>Invest in quality video/audio equipment for professional streaming</li>
                             <li>Create listings on platforms like Airbnb Experiences, ClassBento, or Eatwith</li>
                             <li>Build a social media presence to attract direct bookings</li>
                         </ul>
                         
-                        <h4>Success Factors:</h4>
-                        <div>
-                            <span class="tag">Unique Skill Required</span>
-                            <span class="tag">Growing Market</span>
-                            <span class="tag">Flexible Schedule</span>
-                            <span class="tag">Remote Work</span>
+                        <h4 class="font-bold text-lg mb-2">Success Factors:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="inline-block bg-light text-primary px-3 py-1 rounded-md text-sm">Unique Skill Required</span>
+                            <span class="inline-block bg-light text-primary px-3 py-1 rounded-md text-sm">Growing Market</span>
+                            <span class="inline-block bg-light text-primary px-3 py-1 rounded-md text-sm">Flexible Schedule</span>
+                            <span class="inline-block bg-light text-primary px-3 py-1 rounded-md text-sm">Remote Work</span>
                         </div>
                     </div>
                 </div>
                 
-                <div class="hustle-card">
-                    <div class="hustle-header">
-                        <h3>EV Charging Host</h3>
+                <div class="mb-12 bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+                    <div class="bg-gradient-to-r from-primary to-secondary text-white p-6">
+                        <h3 class="text-xl font-bold mb-1">EV Charging Host</h3>
                         <p>Renting out electric vehicle charging space</p>
                     </div>
-                    <div class="hustle-body">
-                        <p>With the rapid adoption of electric vehicles, charging infrastructure hasn't kept pace. If you have a driveway or parking space where you can install an EV charger, you can earn passive income by renting it out through apps that connect EV owners with private chargers.</p>
+                    <div class="p-6">
+                        <p class="mb-6">With the rapid adoption of electric vehicles, charging infrastructure hasn't kept pace. If you have a driveway or parking space where you can install an EV charger, you can earn passive income by renting it out through apps that connect EV owners with private chargers.</p>
                         
-                        <div class="hustle-stats">
-                            <div class="stat">
-                                <div class="stat-value">$300-$1,200</div>
-                                <p>Monthly Income</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-primary mb-1">$300-$1,200</div>
+                                <p class="text-gray-600">Monthly Income</p>
                             </div>
-                            <div class="stat">
-                                <div class="stat-value">1-2</div>
-                                <p>Hours/Week</p>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-primary mb-1">1-2</div>
+                                <p class="text-gray-600">Hours/Week</p>
                             </div>
-                            <div class="stat">
-                                <div class="stat-value">$500-$2,000</div>
-                                <p>Startup Cost</p>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-primary mb-1">$500-$2,000</div>
+                                <p class="text-gray-600">Startup Cost</p>
                             </div>
                         </div>
                         
-                        <h4>Getting Started:</h4>
-                        <ul>
+                        <h4 class="font-bold text-lg mb-2">Getting Started:</h4>
+                        <ul class="list-disc pl-6 mb-6 space-y-1">
                             <li>Check local regulations regarding private EV charging stations</li>
                             <li>Install a compatible EV charger (many utility companies offer rebates)</li>
                             <li>List your charger on platforms like EVmatch, Plugshare, or ChargePoint</li>
                             <li>Consider pricing strategies based on location and charging speed</li>
                         </ul>
                         
-                        <h4>Success Factors:</h4>
-                        <div>
-                            <span class="tag">Mostly Passive</span>
-                            <span class="tag">Growing Market</span>
-                            <span class="tag">Urban Areas Best</span>
-                            <span class="tag">Eco-Friendly</span>
+                        <h4 class="font-bold text-lg mb-2">Success Factors:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="inline-block bg-light text-primary px-3 py-1 rounded-md text-sm">Mostly Passive</span>
+                            <span class="inline-block bg-light text-primary px-3 py-1 rounded-md text-sm">Growing Market</span>
+                            <span class="inline-block bg-light text-primary px-3 py-1 rounded-md text-sm">Urban Areas Best</span>
+                            <span class="inline-block bg-light text-primary px-3 py-1 rounded-md text-sm">Eco-Friendly</span>
                         </div>
                     </div>
                 </div>
                 
-                <h2>Choosing the Right Side Hustle</h2>
-                <p>When selecting a side hustle, consider these key factors:</p>
+                <h2 class="text-2xl font-bold mb-4 text-primary">Choosing the Right Side Hustle</h2>
+                <p class="mb-2">When selecting a side hustle, consider these key factors:</p>
                 
-                <ul class="resource-list">
-                    <li><strong>Skill Alignment:</strong> Choose options that leverage your existing skills or those you're eager to learn</li>
-                    <li><strong>Time Commitment:</strong> Be realistic about how much time you can consistently dedicate</li>
-                    <li><strong>Startup Costs:</strong> Consider what you can afford to invest initially</li>
-                    <li><strong>Income Potential:</strong> Balance immediate income with long-term growth opportunities</li>
-                    <li><strong>Scalability:</strong> Consider whether the hustle can grow over time or remains capped</li>
-                    <li><strong>Enjoyment Factor:</strong> Choose something you'll enjoy, as sustainability matters</li>
+                <ul class="list-disc pl-6 space-y-2 mb-8">
+                    <li><strong class="font-semibold">Skill Alignment:</strong> Choose options that leverage your existing skills or those you're eager to learn</li>
+                    <li><strong class="font-semibold">Time Commitment:</strong> Be realistic about how much time you can consistently dedicate</li>
+                    <li><strong class="font-semibold">Startup Costs:</strong> Consider what you can afford to invest initially</li>
+                    <li><strong class="font-semibold">Income Potential:</strong> Balance immediate income with long-term growth opportunities</li>
+                    <li><strong class="font-semibold">Scalability:</strong> Consider whether the hustle can grow over time or remains capped</li>
+                    <li><strong class="font-semibold">Enjoyment Factor:</strong> Choose something you'll enjoy, as sustainability matters</li>
                 </ul>
                 
-                <h2>Tax Considerations for Side Hustles</h2>
-                <p>Remember that income from side hustles is taxable. Keep these points in mind:</p>
+                <h2 class="text-2xl font-bold mb-4 text-primary">Tax Considerations for Side Hustles</h2>
+                <p class="mb-2">Remember that income from side hustles is taxable. Keep these points in mind:</p>
                 
-                <ul class="resource-list">
+                <ul class="list-disc pl-6 space-y-2 mb-6">
                     <li>Track all income and business-related expenses for tax deductions</li>
                     <li>Consider making quarterly estimated tax payments to avoid penalties</li>
                     <li>Depending on your structure, you may be eligible for self-employment tax deductions</li>
@@ -323,43 +285,43 @@
                     <li>If your side hustle generates significant income, consult with a tax professional</li>
                 </ul>
                 
-                <p><em>Disclaimer: This information is for educational purposes only and should not be considered tax or financial advice. Consult with qualified professionals for advice specific to your situation.</em></p>
+                <p class="italic text-gray-600">Disclaimer: This information is for educational purposes only and should not be considered tax or financial advice. Consult with qualified professionals for advice specific to your situation.</p>
             </div>
         </div>
     </main>
 
-    <footer>
-        <div class="container footer-container">
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="budgeting.html">Budgeting</a></li>
-                    <li><a href="side-hustles.html">Side Hustles</a></li>
-                    <li><a href="index-investing.html">Index Investing</a></li>
-                    <li><a href="passive-income.html">Passive Income</a></li>
+    <footer class="bg-dark text-white mt-12 py-8">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="index.html" class="text-light hover:text-accent transition">Home</a></li>
+                    <li><a href="budgeting.html" class="text-light hover:text-accent transition">Budgeting</a></li>
+                    <li><a href="side-hustles.html" class="text-light hover:text-accent transition">Side Hustles</a></li>
+                    <li><a href="index-investing.html" class="text-light hover:text-accent transition">Index Investing</a></li>
+                    <li><a href="passive-income.html" class="text-light hover:text-accent transition">Passive Income</a></li>
                 </ul>
             </div>
             
-            <div class="footer-section">
-                <h3>Resources</h3>
-                <ul>
-                    <li><a href="budgeting.html#calculator">Budget Calculator</a></li>
-                    <li><a href="index-investing.html#calculator">Investment Calculator</a></li>
-                    <li><a href="side-hustles.html#comparison">Side Hustle Comparison</a></li>
-                    <li><a href="passive-income.html#tools">AI Tool Directory</a></li>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Resources</h3>
+                <ul class="space-y-2">
+                    <li><a href="budgeting.html#calculator" class="text-light hover:text-accent transition">Budget Calculator</a></li>
+                    <li><a href="index-investing.html#calculator" class="text-light hover:text-accent transition">Investment Calculator</a></li>
+                    <li><a href="side-hustles.html#comparison" class="text-light hover:text-accent transition">Side Hustle Comparison</a></li>
+                    <li><a href="passive-income.html#tools" class="text-light hover:text-accent transition">AI Tool Directory</a></li>
                 </ul>
             </div>
             
-            <div class="footer-section">
-                <h3>About FinanceHub</h3>
-                <p>FinanceHub provides up-to-date resources to help you make smart financial decisions in 2025 and beyond.</p>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">About FinTok</h3>
+                <p class="mb-2">FinTok provides up-to-date resources to help you make smart financial decisions in 2025 and beyond.</p>
                 <p>This content is for informational purposes only and should not be considered financial advice.</p>
             </div>
         </div>
         
-        <div class="copyright container">
-            <p>&copy; 2025 FinanceHub. All rights reserved.</p>
+        <div class="container mx-auto px-4 text-center pt-6 mt-6 border-t border-gray-700">
+            <p>&copy; 2025 FinTok. All rights reserved.</p>
         </div>
     </footer>
 
