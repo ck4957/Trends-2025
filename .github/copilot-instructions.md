@@ -1,0 +1,1 @@
+Use only Tailwind CSS. Reference the style using CDN

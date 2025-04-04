@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beginner's Guide to Index Investing | FinanceHub</title>
+    <meta name="description" content="Learn how to build wealth through low-cost index funds. Simple strategies for long-term investing success for beginners in 2025.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .calculator-container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 3rem 0;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        #investment-results {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: var(--light-color);
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .investment-type {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .investment-type h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .pros, .cons {
+            background-color: #f9f9f9;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+        
+        .pros h4 {
+            color: var(--primary-color);
+        }
+        
+        .cons h4 {
+            color: #d32f2f;
+        }
+        
+        .info-box {
+            background-color: var(--light-color);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .steps-container {
+            counter-reset: step-counter;
+            margin: 2rem 0;
+        }
+        
+        .step {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .step:before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2rem;
+            height: 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .chart-container {
+            max-width: 100%;
+            margin: 2rem 0;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html">FinanceHub</a>
+            </div>
+            <nav>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="budgeting.html">Budgeting</a></li>
+                    <li><a href="side-hustles.html">Side Hustles</a></li>
+                    <li><a href="index-investing.html">Index Investing</a></li>
+                    <li><a href="passive-income.html">Passive Income</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1 class="section-title">Beginner's Guide to Index Investing</h1>
+            
+            <div class="topic-content">
+                <img src="https://images.unsplash.com/photo-1612010167108-3e6b327405f0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Index Investing" class="topic-image">
+                
+                <h2>What Is Index Investing?</h2>
+                <p>Index investing is a passive investment strategy that seeks to replicate the performance of a specific market index, such as the S&P 500 or the Total Stock Market Index. Rather than trying to beat the market by picking individual stocks, index investors aim to match the market's performance over time.</p>
+                
+                <p>This strategy has gained enormous popularity due to its simplicity, low costs, and strong historical performance compared to actively managed funds. In fact, over 15-year periods, approximately 90% of actively managed funds fail to outperform their benchmark indices.</p>
+                
+                <div class="info-box">
+                    <h3>Index Investing at a Glance</h3>
+                    <p><strong>Risk Level:</strong> Moderate (depends on index selected)</p>
+                    <p><strong>Minimum Investment:</strong> As low as $1 with fractional shares</p>
+                    <p><strong>Time Commitment:</strong> Minimal - "set it and forget it"</p>
+                    <p><strong>Expected Returns:</strong> Historical average of 7-10% annually for broad market indices (before inflation)</p>
+                </div>
+                
+                <h2>Why Choose Index Investing?</h2>
+                <ul class="resource-list">
+                    <li><strong>Low Fees:</strong> Index funds typically charge much lower expense ratios than actively managed funds</li>
+                    <li><strong>Diversification:</strong> Built-in diversification across hundreds or thousands of companies</li>
+                    <li><strong>Tax Efficiency:</strong> Lower turnover means fewer taxable events</li>
+                    <li><strong>Simplicity:</strong> Easy to understand and implement</li>
+                    <li><strong>Evidence-Based:</strong> Decades of research support the effectiveness of this approach</li>
+                    <li><strong>Time-Efficient:</strong> Requires minimal ongoing research or management</li>
+                </ul>
+                
+                <h2>Types of Index Funds</h2>
+                
+                <div class="investment-type">
+                    <h3>Total Market Index Funds</h3>
+                    <p>These funds aim to track the performance of the entire stock market, including companies of all sizes.</p>
+                    <p><strong>Examples:</strong> Vanguard Total Stock Market ETF (VTI), Fidelity ZERO Total Market Index Fund (FZROX)</p>
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4>Pros</h4>
+                            <ul>
+                                <li>Maximum diversification</li>
+                                <li>Exposure to small and mid-sized companies with growth potential</li>
+                                <li>Very low expense ratios</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4>Cons</h4>
+                            <ul>
+                                <li>May be more volatile than large-cap only funds</li>
+                                <li>Dominated by large companies due to market-cap weighting</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="investment-type">
+                    <h3>S&P 500 Index Funds</h3>
+                    <p>These funds track the performance of the 500 largest U.S. companies, which make up about 80% of the total U.S. market value.</p>
+                    <p><strong>Examples:</strong> Vanguard S&P 500 ETF (VOO), Fidelity 500 Index Fund (FXAIX), SPDR S&P 500 ETF (SPY)</p>
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4>Pros</h4>
+                            <ul>
+                                <li>Focused on established, stable companies</li>
+                                <li>Strong long-term performance history</li>
+                                <li>Extremely low expense ratios</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4>Cons</h4>
+                            <ul>
+                                <li>No exposure to small or mid-sized companies</li>
+                                <li>Limited international diversification</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="investment-type">
+                    <h3>International Index Funds</h3>
+                    <p>These funds track markets outside the United States, providing global diversification.</p>
+                    <p><strong>Examples:</strong> Vanguard Total International Stock ETF (VXUS), Fidelity International Index Fund (FSPSX)</p>
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4>Pros</h4>
+                            <ul>
+                                <li>Geographic diversification</li>
+                                <li>Exposure to emerging markets with growth potential</li>
+                                <li>Hedge against U.S. market downturns</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4>Cons</h4>
+                            <ul>
+                                <li>Higher expense ratios than U.S. funds</li>
+                                <li>Potential currency risk</li>
+                                <li>May underperform U.S. markets for extended periods</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="investment-type">
+                    <h3>Bond Index Funds</h3>
+                    <p>These funds track various bond indices, providing income and stability to a portfolio.</p>
+                    <p><strong>Examples:</strong> Vanguard Total Bond Market ETF (BND), iShares Core U.S. Aggregate Bond ETF (AGG)</p>
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4>Pros</h4>
+                            <ul>
+                                <li>Lower volatility than stock funds</li>
+                                <li>Regular income payments</li>
+                                <li>Portfolio stabilization during stock market downturns</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4>Cons</h4>
+                            <ul>
+                                <li>Lower long-term returns than stocks</li>
+                                <li>Sensitive to interest rate changes</li>
+                                <li>May not keep pace with inflation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2>Getting Started with Index Investing</h2>
+                <p>Follow these steps to begin your index investing journey:</p>
+                
+                <div class="steps-container">
+                    <div class="step">
+                        <h3>Open an Investment Account</h3>
+                        <p>Choose a brokerage firm that offers low-cost index funds with no commissions.</p>
+                        <p><strong>Popular Options:</strong> Vanguard, Fidelity, Charles Schwab, M1 Finance, Robinhood</p>
+                        <p><strong>Account Types:</strong> Consider tax-advantaged accounts like IRAs or 401(k)s before taxable accounts</p>
+                    </div>
+                    
+                    <div class="step">
+                        <h3>Determine Your Asset Allocation</h3>
+                        <p>Decide how to divide your investments between stocks and bonds based on your risk tolerance and time horizon.</p>
+                        <p>A common rule of thumb: <strong>110 minus your age = percentage to allocate to stocks</strong></p>
+                        <p>Example: A 30-year-old might consider an 80% stock, 20% bond portfolio (110 - 30 = 80)</p>
+                    </div>
+                    
+                    <div class="step">
+                        <h3>Select Your Index Funds</h3>
+                        <p>Choose index funds that match your desired asset allocation.</p>
+                        <p><strong>Simple 3-Fund Portfolio:</strong></p>
+                        <ul>
+                            <li>U.S. Total Market Index Fund</li>
+                            <li>International Stock Index Fund</li>
+                            <li>Total Bond Market Index Fund</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step">
+                        <h3>Make Regular Contributions</h3>
+                        <p>Set up automatic investments on a regular schedule (monthly, bi-weekly) to take advantage of dollar-cost averaging.</p>
+                        <p>This helps reduce the impact of market volatility and builds the habit of consistent investing.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <h3>Rebalance Periodically</h3>
+                        <p>Review your portfolio 1-2 times per year to ensure your asset allocation remains on target.</p>
+                        <p>If one asset class has grown significantly more than others, consider rebalancing to maintain your desired allocation.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <h3>Stay the Course</h3>
+                        <p>The key to successful index investing is consistency and patience. Avoid reacting to market news or trying to time the market.</p>
+                        <p>Your investment strategy should be based on your long-term goals, not short-term market movements.</p>
+                    </div>
+                </div>
+                
+                <h2 id="calculator">Investment Calculator</h2>
+                <p>Use this calculator to project the growth of your investments over time with regular contributions.</p>
+                
+                <div class="calculator-container">
+                    <form id="investment-calculator">
+                        <div class="form-group">
+                            <label for="principal">Initial Investment ($):</label>
+                            <input type="number" id="principal" name="principal" placeholder="e.g., 10000" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="annual-contribution">Annual Contribution ($):</label>
+                            <input type="number" id="annual-contribution" name="annual-contribution" placeholder="e.g., 6000" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="years">Investment Period (years):</label>
+                            <input type="number" id="years" name="years" placeholder="e.g., 30" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="rate">Expected Annual Return (%):</label>
+                            <input type="number" id="rate" name="rate" step="0.1" placeholder="e.g., 7" required>
+                        </div>
+                        
+                        <button type="submit" class="btn">Calculate Investment</button>
+                    </form>
+                    
+                    <div id="investment-results"></div>
+                </div>
+                
+                <h2>Common Index Investing Mistakes to Avoid</h2>
+                <ul class="resource-list">
+                    <li><strong>Trying to time the market:</strong> Consistently predicting market movements is nearly impossible</li>
+                    <li><strong>Chasing performance:</strong> Last year's best-performing index may not repeat its success</li>
+                    <li><strong>Ignoring expense ratios:</strong> Even small differences in fees can significantly impact long-term returns</li>
+                    <li><strong>Lack of diversification:</strong> Investing in only one market segment increases risk</li>
+                    <li><strong>Frequent trading:</strong> Excessive trading increases costs and can trigger taxable events</li>
+                    <li><strong>Emotional decisions:</strong> Reacting to market volatility often leads to buying high and selling low</li>
+                </ul>
+                
+                <div class="info-box">
+                    <h3>The Power of Compound Growth</h3>
+                    <p>Investing $500 monthly with an average 7% annual return:</p>
+                    <ul>
+                        <li>After 10 years: $83,000</li>
+                        <li>After 20 years: $246,000</li>
+                        <li>After 30 years: $566,000</li>
+                        <li>After 40 years: $1,200,000</li>
+                    </ul>
+                    <p>Time in the market is more important than timing the market!</p>
+                </div>
+                
+                <h2>Resources for Index Investors</h2>
+                <ul class="resource-list">
+                    <li><strong>Books:</strong> "The Simple Path to Wealth" by JL Collins, "The Bogleheads' Guide to Investing"</li>
+                    <li><strong>Communities:</strong> r/Bogleheads, Bogleheads.org forums</li>
+                    <li><strong>Tools:</strong> Portfolio Visualizer, Personal Capital, Morningstar</li>
+                    <li><strong>Blogs:</strong> JL Collins' Stock Series, The White Coat Investor, Mr. Money Mustache</li>
+                </ul>
+                
+                <p><em>Disclaimer: This information is for educational purposes only and should not be considered investment advice. Past performance does not guarantee future results. Consider consulting with a financial professional before making investment decisions.</em></p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="budgeting.html">Budgeting</a></li>
+                    <li><a href="side-hustles.html">Side Hustles</a></li>
+                    <li><a href="index-investing.html">Index Investing</a></li>
+                    <li><a href="passive-income.html">Passive Income</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="budgeting.html#calculator">Budget Calculator</a></li>
+                    <li><a href="index-investing.html#calculator">Investment Calculator</a></li>
+                    <li><a href="side-hustles.html#comparison">Side Hustle Comparison</a></li>
+                    <li><a href="passive-income.html#tools">AI Tool Directory</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>About FinanceHub</h3>
+                <p>FinanceHub provides up-to-date resources to help you make smart financial decisions in 2025 and beyond.</p>
+                <p>This content is for informational purposes only and should not be considered financial advice.</p>
+            </div>
+        </div>
+        
+        <div class="copyright container">
+            <p>&copy; 2025 FinanceHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
