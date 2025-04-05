@@ -1,17 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 
-interface TrendItem {
+interface NewsItem {
   title: string;
+  url: string;
+  source: string;
+  picture: string;
 }
 
-interface TrendsData {
-  trends: TrendItem[];
-  timestamp: string;
+interface Trend {
+  title: string;
+  traffic: string;
+  news: NewsItem[];
 }
 
 export default function Home() {
-  const [trends, setTrends] = useState<TrendsData | null>(null);
+  const [trends, setTrends] = useState<Trend[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -19,14 +23,12 @@ export default function Home() {
     async function fetchTrends() {
       try {
         const response = await fetch('/api/trends');
-        if (!response.ok) {
-          throw new Error('Failed to fetch trends');
-        }
+        if (!response.ok) throw new Error('Failed to fetch trends');
         const data = await response.json();
-        setTrends(data);
+        setTrends(data.trends);
       } catch (err) {
-        setError('Could not load trends. Please try again later.');
         console.error(err);
+        setError('Failed to load trends. Please try again later.');
       } finally {
         setLoading(false);
       }
@@ -73,32 +75,49 @@ export default function Home() {
               <h2 className="text-2xl font-semibold mb-6 text-gray-800">Today's Trending Topics</h2>
               
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {trends?.trends.map((trend, index) => (
+                {trends.map((trend, index) => (
                   <div 
                     key={index} 
                     className="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-300"
                   >
                     <div className="px-4 py-5 sm:p-6">
                       <h3 className="text-lg font-medium text-gray-900">{trend.title}</h3>
-                      <div className="mt-4 flex items-center">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                          Trending
-                        </span>
-                      </div>
-                      <div className="mt-5">
-                        <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                          Generate Content
-                        </button>
-                      </div>
+                      <p className="text-sm text-gray-500 mb-4">Traffic: {trend.traffic}</p>
+
+                      {trend.news.length > 0 && (
+                        <div>
+                          <h3 className="text-lg font-medium text-gray-700 mb-2">Related News:</h3>
+                          <ul className="space-y-2">
+                            {trend.news.map((news, idx) => (
+                              <li key={idx} className="flex items-start space-x-4">
+                                <img
+                                  src={news.picture}
+                                  alt={news.title}
+                                  className="w-16 h-16 object-cover rounded"
+                                />
+                                <div>
+                                  <a
+                                    href={news.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 hover:underline"
+                                  >
+                                    {news.title}
+                                  </a>
+                                  <p className="text-sm text-gray-500">Source: {news.source}</p>
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}
               </div>
               
-              {trends && (
-                <div className="mt-6 text-center text-sm text-gray-500">
-                  Last updated: {new Date(trends.timestamp).toLocaleString()}
-                </div>
+              {trends.length === 0 && (
+                <p className="text-center text-gray-500">No trending topics found.</p>
               )}
             </div>
           )}
