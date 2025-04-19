@@ -4,6 +4,21 @@ import path from "path";
 import { parseStringPromise } from "xml2js";
 // Placeholder: Import your AI SDK (e.g., OpenAI)
 // import OpenAI from 'openai';
+import { createClient } from "@supabase/supabase-js";
+
+// Environment variables
+const PLATFORM = process.env.PLATFORM || "vercel"; // 'vercel' or 'supabase'
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY; // Server-side only, more privileged
+
+// Initialize Supabase client if needed
+const getSupabaseClient = () => {
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+    throw new Error("Supabase credentials not found in environment variables");
+  }
+  return createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+};
 
 // Placeholder: Initialize AI client (ensure API key is securely managed, e.g., via environment variables)
 // const openai = new OpenAI({
@@ -40,17 +55,63 @@ async function generateSummary(
   }
 }
 
+// Function to get XML data - works with both Vercel and Supabase
+async function getXmlData(): Promise<string> {
+  if (PLATFORM === "supabase") {
+    try {
+      const supabase = getSupabaseClient();
+      const { data, error } = await supabase.storage
+        .from("trends-files")
+        .download("1-trends.xml");
+
+      if (error) {
+        throw new Error(`Failed to download from Supabase: ${error.message}`);
+      }
+
+      return await data.text();
+    } catch (error) {
+      console.error("Error fetching XML from Supabase:", error);
+      throw error;
+    }
+  } else {
+    // Default Vercel approach - read from file system
+    const filePath = path.join(process.cwd(), "posts", "1-trends.xml");
+    if (!fs.existsSync(filePath)) {
+      throw new Error("Trends XML file not found.");
+    }
+    return fs.readFileSync(filePath, "utf-8");
+  }
+}
+
+// Function to store processed data in Supabase (if using Supabase)
+async function storeProcessedData(processedTrends: any[]): Promise<void> {
+  if (PLATFORM === "supabase") {
+    try {
+      const supabase = getSupabaseClient();
+      const { error } = await supabase.from("processed_trends").upsert({
+        id: "latest",
+        trends: processedTrends,
+        timestamp: new Date().toISOString(),
+      });
+
+      if (error) {
+        throw new Error(`Failed to store data in Supabase: ${error.message}`);
+      }
+    } catch (error) {
+      console.error("Error storing data in Supabase:", error);
+      // Continue without failing the request
+    }
+  }
+  // In Vercel mode, we don't need to store the data persistently
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   try {
-    // Path to the manually saved trends.xml file
-    const filePath = path.join(process.cwd(), "posts", "1-trends.xml"); // Assuming the file is named 1-trends.xml
-    if (!fs.existsSync(filePath)) {
-      return res.status(404).json({ error: "Trends XML file not found." });
-    }
-    const xmlData = fs.readFileSync(filePath, "utf-8");
+    // Get XML data from either file system or Supabase
+    const xmlData = await getXmlData();
 
     // Parse the XML data
     const parsedData = await parseStringPromise(xmlData);
@@ -93,6 +154,9 @@ export default async function handler(
         news: processedNews,
       });
     }
+
+    // Store processed data if using Supabase
+    await storeProcessedData(processedTrends);
 
     // Return the processed data
     res

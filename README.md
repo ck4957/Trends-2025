@@ -4,11 +4,12 @@ Welcome to the Trends 2025 project! This repository contains a collection of web
 
 ## Projects
 
-### Click-Spill (Buzzify AI)
+### Click-Spill
 
 A Next.js application that automatically generates content based on trending Google search topics, styled with Tailwind CSS via CDN.
 
 - **Key Features**:
+
   - Real-time trending topics from Google Trends API
   - AI-powered summaries for news articles
   - Responsive design with Tailwind CSS (via CDN)
@@ -16,6 +17,7 @@ A Next.js application that automatically generates content based on trending Goo
   - AdSense ready for monetization
 
 - **Tech Stack**:
+
   - Frontend: Next.js with TypeScript
   - Styling: Tailwind CSS (via CDN)
   - Data: Google Trends API
@@ -34,12 +36,14 @@ A Next.js application that automatically generates content based on trending Goo
 An interactive flashcard learning platform featuring AI-powered content for Biology, Physics, and History subjects.
 
 - **Key Features**:
+
   - Interactive Flashcards
   - Subject-specific Content
   - Responsive Design
   - Modern UI with Tailwind CSS (via CDN)
 
 - **Tech Stack**:
+
   - HTML5
   - JavaScript
   - Tailwind CSS (via CDN)
