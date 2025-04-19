@@ -1,0 +1,12 @@
+click-spill/.next
+click-spill/node_modules
+click-spill/dist
+click-spill/.env
+click-spill/.env.local
+click-spill/.env.development.local
+click-spill/.env.test.local
+click-spill/.env.production.local
+click-spill/.DS_Store
+click-spill/.idea
+click-spill/.vscode
+click-spill/.history
