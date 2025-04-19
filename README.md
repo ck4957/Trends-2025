@@ -6,6 +6,7 @@ Welcome to the Trends 2025 project! This repository contains a collection of ind
 
 The project is organized into the following folders, each representing a unique topic:
 
+- **fintok**: Resources and tools for personal finance, including budgeting, side hustles, index investing, and passive income.
 - **ai-for-beginners**: Resources and tools for learning AI and machine learning.
 - **personal-finance**: Guides and templates for personal finance and investing.
 - **health-wellness**: Information and tools for health, wellness, and biohacking.
@@ -19,11 +20,11 @@ The project is organized into the following folders, each representing a unique 
 
 Each individual site can be deployed on GitHub Pages. Follow these steps for deployment:
 
-1. Navigate to the specific topic folder (e.g., `ai-for-beginners`).
+1. Navigate to the specific topic folder (e.g., `fintok`).
 2. Open the `index.html` file to customize content as needed.
 3. Push the changes to your GitHub repository.
 4. Go to the repository settings on GitHub.
-5. Under the "Pages" section, select the branch and folder (usually `main` and `/` or `/ai-for-beginners`) to publish the site.
+5. Under the "Pages" section, select the branch and folder (usually `main` and `/` or `/fintok`) to publish the site.
 
 ## SEO Optimization
 
