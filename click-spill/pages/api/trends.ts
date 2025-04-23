@@ -2,15 +2,21 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import fs from "fs";
 import path from "path";
 import { parseStringPromise } from "xml2js";
-// Placeholder: Import your AI SDK (e.g., OpenAI)
-// import OpenAI from 'openai';
+import OpenAI from "openai";
 import { createClient } from "@supabase/supabase-js";
 
 // Environment variables
-const PLATFORM = process.env.PLATFORM || "vercel"; // 'vercel' or 'supabase'
+const PLATFORM = process.env.NEXT_PUBLIC_PLATFORM || "vercel"; // 'vercel' or 'supabase'
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY; // Server-side only, more privileged
+const SUPABASE_SERVICE_KEY = process.env.NEXT_PUBLIC_SUPABASE_SERVICE_KEY; // Server-side only, more privileged
+const SUPABASE_BUCKET = process.env.NEXT_PUBLIC_SUPABASE_BUCKET || "";
+const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY || "";
+const OPENAI_MODEL = process.env.NEXT_PUBLIC_OPENAI_MODEL || "";
+const OPENAI_MAX_TOKENS = parseInt(
+  process.env.NEXT_PUBLIC_OPENAI_MAX_TOKENS || "150",
+  10
+);
 
 // Initialize Supabase client if needed
 const getSupabaseClient = () => {
@@ -20,12 +26,6 @@ const getSupabaseClient = () => {
   return createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 };
 
-// Placeholder: Initialize AI client (ensure API key is securely managed, e.g., via environment variables)
-// const openai = new OpenAI({
-//   apiKey: process.env.OPENAI_API_KEY,
-// });
-
-// Placeholder: Function to generate summary using AI
 async function generateSummary(
   title: string,
   source: string,
@@ -36,16 +36,19 @@ async function generateSummary(
 
   try {
     // Replace with actual AI API call
-    // const response = await openai.chat.completions.create({
-    //   model: "gpt-3.5-turbo", // Or another suitable model
-    //   messages: [{ role: "user", content: prompt }],
-    //   max_tokens: 150, // Adjust as needed
-    // });
-    // const summary = response.choices[0]?.message?.content?.trim() || 'Summary could not be generated.';
+    const client = new OpenAI({
+      apiKey: OPENAI_API_KEY,
+    });
+    const response = await client.chat.completions.create({
+      model: OPENAI_MODEL, // Or another suitable model
+      messages: [{ role: "user", content: prompt }],
+      max_tokens: OPENAI_MAX_TOKENS, // Adjust as needed
+    });
+    const summary = response.choices[0]?.message?.content?.trim() || "";
 
     // --- Placeholder Response ---
-    console.log(`AI Prompt for "${title}": ${prompt}`); // Log the prompt for debugging
-    const summary = `This is a placeholder summary for the news item titled "${title}" from ${source}. An AI model would generate a concise, ~100-word summary here based on the provided information and potentially the content at the URL: ${url}.`;
+    // console.log(`AI Prompt for "${title}": ${prompt}`); // Log the prompt for debugging
+    // const summary = `This is a placeholder summary for the news item titled "${title}" from ${source}. An AI model would generate a concise, ~100-word summary here based on the provided information and potentially the content at the URL: ${url}.`;
     // --- End Placeholder ---
 
     return summary;
@@ -59,27 +62,41 @@ async function generateSummary(
 async function getXmlData(): Promise<string> {
   if (PLATFORM === "supabase") {
     try {
-      const supabase = getSupabaseClient();
-      const { data, error } = await supabase.storage
-        .from("trends-files")
-        .download("1-trends.xml");
+      // Check for filename in request params
+      let filename: string | null = null;
 
-      if (error) {
-        throw new Error(`Failed to download from Supabase: ${error.message}`);
+      // Get today's date in YYYY-MM-DD format
+      const today = new Date();
+      const todayStr = today.toISOString().split("T")[0];
+
+      filename = todayStr + ".xml";
+      console.log("Filename:", filename, "Bucket:", SUPABASE_BUCKET);
+      // Get XML file from storage
+      const supabase = getSupabaseClient();
+      const { data: fileData, error: fileError } = await supabase.storage
+        .from(SUPABASE_BUCKET)
+        .download(filename);
+
+      if (fileError) {
+        console.error("Error downloading file from Supabase:", fileError);
+        throw new Error(
+          `Failed to download from Supabase: ${fileError.message}`
+        );
       }
 
-      return await data.text();
+      // Convert file data to text
+      return await fileData.text();
     } catch (error) {
       console.error("Error fetching XML from Supabase:", error);
       throw error;
     }
   } else {
     // Default Vercel approach - read from file system
-    const filePath = path.join(process.cwd(), "posts", "1-trends.xml");
-    if (!fs.existsSync(filePath)) {
-      throw new Error("Trends XML file not found.");
-    }
-    return fs.readFileSync(filePath, "utf-8");
+    //const filePath = path.join(process.cwd(), "posts", "1-trends.xml");
+    //if (!fs.existsSync(filePath)) {
+    throw new Error("Trends XML file not found.");
+    //}
+    // return fs.readFileSync(filePath, "utf-8");
   }
 }
 
@@ -89,7 +106,6 @@ async function storeProcessedData(processedTrends: any[]): Promise<void> {
     try {
       const supabase = getSupabaseClient();
       const { error } = await supabase.from("processed_trends").upsert({
-        id: "latest",
         trends: processedTrends,
         timestamp: new Date().toISOString(),
       });
@@ -125,6 +141,7 @@ export default async function handler(
       const traffic = item["ht:approx_traffic"]
         ? item["ht:approx_traffic"][0]
         : "N/A";
+      const pubDate = item.pubDate ? item.pubDate[0] : null; // Extract publication date
       const newsItems = item["ht:news_item"] || [];
       const processedNews = [];
 
@@ -137,7 +154,7 @@ export default async function handler(
           : null; // Handle missing picture
 
         // Generate summary for each news item
-        const summary = await generateSummary(newsTitle, newsSource, newsUrl);
+        const summary = ""; //await generateSummary(newsTitle, newsSource, newsUrl);
 
         processedNews.push({
           title: newsTitle,
@@ -151,6 +168,7 @@ export default async function handler(
       processedTrends.push({
         title: title,
         traffic: traffic,
+        pubDate: pubDate, // Include the publication date
         news: processedNews,
       });
     }
