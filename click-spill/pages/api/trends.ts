@@ -9,12 +9,6 @@ const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const SUPABASE_SERVICE_KEY = process.env.NEXT_PUBLIC_SUPABASE_SERVICE_KEY; // Server-side only, more privileged
 const SUPABASE_BUCKET = process.env.NEXT_PUBLIC_SUPABASE_BUCKET || "";
-const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY || "";
-const OPENAI_MODEL = process.env.NEXT_PUBLIC_OPENAI_MODEL || "";
-const OPENAI_MAX_TOKENS = parseInt(
-  process.env.NEXT_PUBLIC_OPENAI_MAX_TOKENS || "150",
-  10
-);
 
 // Initialize Supabase client if needed
 const getSupabaseClient = () => {
@@ -23,38 +17,6 @@ const getSupabaseClient = () => {
   }
   return createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 };
-
-async function generateSummary(
-  title: string,
-  source: string,
-  url: string
-): Promise<string> {
-  // Construct a prompt for the AI
-  const prompt = `Summarize the news item titled "${title}" from ${source} (${url}) in approximately 100 words for a general audience. Focus on the key information and its significance.`;
-
-  try {
-    // Replace with actual AI API call
-    const client = new OpenAI({
-      apiKey: OPENAI_API_KEY,
-    });
-    const response = await client.chat.completions.create({
-      model: OPENAI_MODEL, // Or another suitable model
-      messages: [{ role: "user", content: prompt }],
-      max_tokens: OPENAI_MAX_TOKENS, // Adjust as needed
-    });
-    const summary = response.choices[0]?.message?.content?.trim() || "";
-
-    // --- Placeholder Response ---
-    // console.log(`AI Prompt for "${title}": ${prompt}`); // Log the prompt for debugging
-    // const summary = `This is a placeholder summary for the news item titled "${title}" from ${source}. An AI model would generate a concise, ~100-word summary here based on the provided information and potentially the content at the URL: ${url}.`;
-    // --- End Placeholder ---
-
-    return summary;
-  } catch (error) {
-    console.error(`Error generating summary for "${title}":`, error);
-    return "Summary generation failed.";
-  }
-}
 
 // Function to get XML data - works with both Vercel and Supabase
 async function getXmlData(): Promise<string> {
