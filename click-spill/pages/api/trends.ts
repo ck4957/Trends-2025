@@ -1,6 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import fs from "fs";
-import path from "path";
 import { parseStringPromise } from "xml2js";
 import OpenAI from "openai";
 import { createClient } from "@supabase/supabase-js";
