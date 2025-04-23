@@ -11,13 +11,21 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [timestamp, setTimestamp] = useState<string | null>(null);
-  
+
   // New states for pagination and view mode
   const [availableDates, setAvailableDates] = useState<DateOption[]>([]);
   const [currentDate, setCurrentDate] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<ViewMode>(
-    (typeof window !== 'undefined' && localStorage.getItem('viewMode') as ViewMode) || 'grid'
-  );
+  // Start with a default value that doesn't depend on localStorage
+  const [viewMode, setViewMode] = useState<ViewMode>("grid");
+
+  // Add a separate useEffect for localStorage
+  useEffect(() => {
+    // This will only run on the client
+    const savedViewMode = localStorage.getItem("viewMode") as ViewMode;
+    if (savedViewMode) {
+      setViewMode(savedViewMode);
+    }
+  }, []);
 
   // Fetch available dates when component mounts
   useEffect(() => {
@@ -27,18 +35,18 @@ export default function Home() {
         if (!response.ok) {
           throw new Error("Failed to fetch available dates");
         }
-        
+
         const data = await response.json();
-        
+
         if (data.dates && data.dates.length > 0) {
           // Convert raw dates to DateOption objects with formatted display date
           const dateOptions: DateOption[] = data.dates.map((date: string) => ({
             date,
-            displayDate: formatDateForDisplay(date)
+            displayDate: formatDateForDisplay(date),
           }));
-          
+
           setAvailableDates(dateOptions);
-          
+
           // Set the most recent date as current
           setCurrentDate(data.dates[0]);
         } else {
@@ -64,13 +72,13 @@ export default function Home() {
   const fetchTrendsForDate = async (date: string) => {
     setLoading(true);
     setError("");
-    
+
     try {
       const response = await fetch(`/api/trends-by-date?date=${date}`);
       if (!response.ok) {
         throw new Error("Failed to fetch trends for date");
       }
-      
+
       const data = await response.json();
       setTrends(data.trends);
       setTimestamp(new Date().toISOString());
@@ -84,12 +92,12 @@ export default function Home() {
 
   // Toggle between grid and list view
   const toggleViewMode = () => {
-    const newMode: ViewMode = viewMode === 'grid' ? 'list' : 'grid';
+    const newMode: ViewMode = viewMode === "grid" ? "list" : "grid";
     setViewMode(newMode);
-    
+
     // Save preference to localStorage
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('viewMode', newMode);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("viewMode", newMode);
     }
   };
 
@@ -99,7 +107,7 @@ export default function Home() {
     return date.toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
-      day: "numeric"
+      day: "numeric",
     });
   };
 
@@ -118,11 +126,11 @@ export default function Home() {
         {/* View Toggle and Date Selector */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
           {/* Toggle View Button */}
-          <button 
+          <button
             onClick={toggleViewMode}
             className="flex items-center mb-4 sm:mb-0 px-3 py-2 bg-white dark:bg-gray-800 rounded-md shadow text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
           >
-            {viewMode === 'grid' ? (
+            {viewMode === "grid" ? (
               <>
                 <i className="fas fa-list mr-2"></i>
                 <span>Switch to List View</span>
@@ -144,9 +152,10 @@ export default function Home() {
                   onClick={() => setCurrentDate(dateOption.date)}
                   className={`
                     px-3 py-1 rounded-md whitespace-nowrap text-sm
-                    ${currentDate === dateOption.date
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+                    ${
+                      currentDate === dateOption.date
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
                     }
                   `}
                 >

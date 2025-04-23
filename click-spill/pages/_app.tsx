@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>ClickSpill - Daily Trending Topics</title>
         <link rel="icon" href="/favicon.ico" />
         {/* Tailwind CSS via CDN */}
-        <link href="https://cdn.tailwindcss.com" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         {/* Add Font Awesome for icons */}
         <link
           rel="stylesheet"
