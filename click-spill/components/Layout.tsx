@@ -8,7 +8,9 @@ interface LayoutProps {
   description?: string;
 }
 
-const brandFont = "'Pacifico', cursive";
+const brandFont = "monospace";
+const brandName = "Click Spill";
+const brandTagline = "AI-powered trending topics";
 
 const Layout: React.FC<LayoutProps> = ({
   children,
@@ -69,12 +71,12 @@ const Layout: React.FC<LayoutProps> = ({
               <div className="flex flex-col">
                 <span
                   className="text-2xl tracking-tight text-gray-900 dark:text-white select-none"
-                  style={{ fontFamily: "monospace" }}
+                  style={{ fontFamily: brandFont }}
                 >
-                  Click Spill
+                  {brandName}
                 </span>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 italic">
-                  AI-powered trending topics
+                  {brandTagline}
                 </p>
               </div>
             </a>
@@ -128,7 +130,7 @@ const Layout: React.FC<LayoutProps> = ({
           </nav>
           <p className="text-center text-gray-300 dark:text-gray-600 text-xs sm:text-sm">
             &copy; {new Date().getFullYear()}{" "}
-            <span style={{ fontFamily: "monospace" }}>Click Spill</span>. All
+            <span style={{ fontFamily: brandFont }}>{brandName}</span>. All
             rights reserved.
           </p>
         </div>
