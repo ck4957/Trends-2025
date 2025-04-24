@@ -8,8 +8,7 @@ interface LayoutProps {
   description?: string;
 }
 
-const brandFont =
-  "Montserrat, Poppins, 'Segoe UI', 'Helvetica Neue', Arial, 'sans-serif'";
+const brandFont = "'Pacifico', cursive";
 
 const Layout: React.FC<LayoutProps> = ({
   children,
@@ -41,9 +40,8 @@ const Layout: React.FC<LayoutProps> = ({
           name="google-adsense-account"
           content="ca-pub-3911596373332918"
         ></meta>
-        {/* Google Fonts for unique brand style */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
           rel="stylesheet"
         />
       </Head>
@@ -70,12 +68,14 @@ const Layout: React.FC<LayoutProps> = ({
               />
               <div className="flex flex-col">
                 <span
-                  className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white select-none"
-                  style={{ fontFamily: brandFont, letterSpacing: "0.02em" }}
+                  className="text-2xl tracking-tight text-gray-900 dark:text-white select-none"
+                  style={{ fontFamily: "monospace" }}
                 >
-                  ClickSpill
+                  Click Spill
                 </span>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">AI-powered trending topics</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 italic">
+                  AI-powered trending topics
+                </p>
               </div>
             </a>
           </div>
@@ -128,7 +128,7 @@ const Layout: React.FC<LayoutProps> = ({
           </nav>
           <p className="text-center text-gray-300 dark:text-gray-600 text-xs sm:text-sm">
             &copy; {new Date().getFullYear()}{" "}
-            <span style={{ fontFamily: brandFont }}>ClickSpill</span>. All
+            <span style={{ fontFamily: "monospace" }}>Click Spill</span>. All
             rights reserved.
           </p>
         </div>
