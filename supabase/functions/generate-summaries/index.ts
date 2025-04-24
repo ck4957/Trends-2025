@@ -7,13 +7,13 @@ const openAIClient = new OpenAI({
   maxRetries: 3,
 });
 // Generate summary for an entire trend based on multiple news items
-async function generateSummary(trendTitle, newsItems) {
+async function generateSummary(trendTitle: string, newsItems: any[]) {
   const openaiKey = Deno.env.get("OPENAI_API_KEY");
   if (!openaiKey) {
     console.error("OpenAI API key not found in environment");
     return "Summary unavailable - API key not configured.";
   }
-  const model = "gpt-4.1-nano";
+  const model = "gpt-4o-mini";
   const maxTokens = Number(Deno.env.get("OPENAI_MAX_TOKENS")) || 150;
   // Format news items for the prompt
   const newsItemsText = newsItems
@@ -45,6 +45,77 @@ Provide a concise summary (2-3 sentences) explaining what this trend is about an
     return null;
   }
 }
+
+// Process a single trend to generate its summary
+async function processTrend(supabaseAdmin, trendId) {
+  // Use a join to fetch the trend with its news items in a single query
+  const { data, error } = await supabaseAdmin
+    .from("trends")
+    .select(
+      `
+      id, 
+      title,
+      news_items (
+        title,
+        url,
+        source
+      )
+    `
+    )
+    .eq("id", trendId)
+    .single();
+
+  if (error || !data) {
+    return {
+      success: false,
+      trend_id: trendId,
+      error: `Trend not found: ${error?.message}`,
+    };
+  }
+
+  // Extract the news items from the joined result
+  const trend = {
+    id: data.id,
+    title: data.title,
+  };
+  const newsItems = data.news_items || [];
+
+  // Check if we have any news items
+  if (newsItems.length === 0) {
+    return {
+      success: false,
+      trend_id: trendId,
+      error: "No news items found for this trend",
+    };
+  }
+
+  // Generate the summary
+  const summary = await generateSummary(trend.title, newsItems);
+
+  // Update the trend with the summary
+  const { error: updateError } = await supabaseAdmin
+    .from("trends")
+    .update({
+      ai_summary: summary,
+      summary_generated_at: new Date().toISOString(),
+    })
+    .eq("id", trendId);
+
+  if (updateError) {
+    return {
+      success: false,
+      trend_id: trendId,
+      error: `Failed to update trend: ${updateError.message}`,
+    };
+  }
+
+  return {
+    success: true,
+    trend_id: trendId,
+    summary: summary,
+  };
+}
+
 Deno.serve(async (req) => {
   try {
     const supabaseAdmin = createClient(
@@ -56,12 +127,14 @@ Deno.serve(async (req) => {
         },
       }
     );
+
     const payload = await req.json();
+
     // Validate payload
-    if (!payload || !payload.trend_id) {
+    if (!payload || (!payload.trend_id && !payload.trend_ids)) {
       return new Response(
         JSON.stringify({
-          error: "Invalid payload. Required: trend_id",
+          error: "Invalid payload. Required: trend_id or trend_ids array",
         }),
         {
           status: 400,
@@ -71,122 +144,59 @@ Deno.serve(async (req) => {
         }
       );
     }
-    const trendId = payload.trend_id;
-    // Use a join to fetch the trend with its news items in a single query
-    const { data, error } = await supabaseAdmin
-      .from("trends")
-      .select(
-        `
-    id, 
-    title,
-    news_items (
-      title,
-      url,
-      source
-    )
-  `
-      )
-      .eq("id", trendId)
-      .single();
-    if (error || !data) {
-      return new Response(
-        JSON.stringify({
-          error: `Trend not found: ${error?.message}`,
-        }),
-        {
-          status: 404,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    }
-    // Extract the news items from the joined result
-    const trend = {
-      id: data.id,
-      title: data.title,
-    };
-    const newsItems = data.news_items || [];
-    // Check if we have any news items
-    if (newsItems.length === 0) {
-      return new Response(
-        JSON.stringify({
-          error: "No news items found for this trend",
-        }),
-        {
-          status: 404,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    }
-    // // Fetch the trend
-    // const { data: trend, error: trendError } = await supabaseAdmin
-    //   .from("trends")
-    //   .select("id, title")
-    //   .eq("id", trendId)
-    //   .single();
-    // if (trendError || !trend) {
-    //   return new Response(
-    //     JSON.stringify({ error: `Trend not found: ${trendError?.message}` }),
-    //     { status: 404, headers: { "Content-Type": "application/json" } }
-    //   );
-    // }
-    // // Fetch associated news items
-    // const { data: newsItems, error: newsError } = await supabaseAdmin
-    //   .from("news_items")
-    //   .select("title, url, source")
-    //   .eq("trend_id", trendId);
-    // if (newsError) {
-    //   return new Response(
-    //     JSON.stringify({
-    //       error: `Failed to fetch news items: ${newsError.message}`,
-    //     }),
-    //     { status: 500, headers: { "Content-Type": "application/json" } }
-    //   );
-    // }
-    // if (!newsItems || newsItems.length === 0) {
-    //   return new Response(
-    //     JSON.stringify({ error: "No news items found for this trend" }),
-    //     { status: 404, headers: { "Content-Type": "application/json" } }
-    //   );
-    // }
-    // Generate the summary
-    const summary = await generateSummary(trend.title, newsItems);
-    // Update the trend with the summary
-    const { error: updateError } = await supabaseAdmin
-      .from("trends")
-      .update({
-        ai_summary: summary,
-        summary_generated_at: new Date().toISOString(),
-      })
-      .eq("id", trendId);
-    if (updateError) {
-      return new Response(
-        JSON.stringify({
-          error: `Failed to update trend: ${updateError.message}`,
-        }),
-        {
-          status: 500,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    }
-    return new Response(
-      JSON.stringify({
-        success: true,
-        trend_id: trendId,
-        summary: summary,
-      }),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+
+    // Handle both single trend_id and array of trend_ids
+    if (payload.trend_ids && Array.isArray(payload.trend_ids)) {
+      // Process multiple trends
+      const results = [];
+      for (const trendId of payload.trend_ids) {
+        const result = await processTrend(supabaseAdmin, trendId);
+        results.push(result);
       }
-    );
+
+      return new Response(
+        JSON.stringify({
+          success: true,
+          results: results,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    } else {
+      // Process single trend
+      const trendId = payload.trend_id;
+      const result = await processTrend(supabaseAdmin, trendId);
+
+      if (!result.success) {
+        return new Response(
+          JSON.stringify({
+            error: result.error,
+          }),
+          {
+            status: 404,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      }
+
+      return new Response(
+        JSON.stringify({
+          success: true,
+          trend_id: result.trend_id,
+          summary: result.summary,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error("Processing error:", errorMessage);
