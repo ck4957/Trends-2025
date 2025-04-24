@@ -8,10 +8,10 @@ const NewsItemDetail: React.FC<NewsItemProps> = ({
   picture,
   summary,
   publishedAt,
-  viewMode
+  viewMode,
 }) => {
   // Format published date if available
-  const formattedDate = publishedAt 
+  const formattedDate = publishedAt
     ? new Date(publishedAt).toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
@@ -19,24 +19,27 @@ const NewsItemDetail: React.FC<NewsItemProps> = ({
     : null;
 
   return (
-    <li className={`
+    <li
+      className={`
       border-t border-gray-200 dark:border-gray-700 pt-4 first:border-0 first:pt-0
-      ${viewMode === 'list' ? 'flex gap-4' : ''}
-    `}>
-      {picture && (
+      ${viewMode === "list" ? "flex gap-4" : ""}
+    `}
+    >
+      {/* {picture && (
         <img
           src={picture}
           alt={title}
           className={`
             rounded-lg object-cover 
-            ${viewMode === 'grid' 
-              ? 'w-full h-36 mb-3' 
-              : 'w-24 h-24 flex-shrink-0'
+            ${
+              viewMode === "grid"
+                ? "w-full h-36 mb-3"
+                : "w-24 h-24 flex-shrink-0"
             }
           `}
         />
-      )}
-      <div className={viewMode === 'list' ? 'flex-1' : ''}>
+      )} */}
+      <div className={viewMode === "list" ? "flex-1" : ""}>
         <a
           href={url}
           target="_blank"
@@ -45,7 +48,7 @@ const NewsItemDetail: React.FC<NewsItemProps> = ({
         >
           {title}
         </a>
-        
+
         <div className="mt-1 flex items-center text-sm text-gray-500 dark:text-gray-400">
           <span>{source}</span>
           {formattedDate && (
@@ -55,17 +58,7 @@ const NewsItemDetail: React.FC<NewsItemProps> = ({
             </>
           )}
         </div>
-        
-        {summary && (
-          <div className={`
-            text-sm text-gray-700 dark:text-gray-300
-            ${viewMode === 'grid' ? 'mt-2' : 'mt-1'}
-          `}>
-            <div className="text-xs text-gray-500 dark:text-gray-400 font-medium mb-1">AI Generated Summary:</div>
-            <p>{summary}</p>
-          </div>
-        )}
-        
+
         <a
           href={url}
           target="_blank"

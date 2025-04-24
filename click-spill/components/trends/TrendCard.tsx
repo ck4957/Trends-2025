@@ -5,6 +5,8 @@ import { TrendCardProps } from "./trends.model";
 const TrendCard: React.FC<TrendCardProps> = ({
   title,
   traffic,
+  picture,
+  source,
   publishedAt,
   summary,
   news,
@@ -36,10 +38,26 @@ const TrendCard: React.FC<TrendCardProps> = ({
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
           Traffic: {traffic}
         </p>
+        <span>{source}</span>
+
         {formattedDate && (
           <p className="text-xs text-gray-400 dark:text-gray-500 mb-4">
             Published: {formattedDate}
           </p>
+        )}
+        {picture && (
+          <img
+            src={picture}
+            alt={title}
+            className={`
+            rounded-lg object-cover 
+            ${
+              viewMode === "grid"
+                ? "w-full h-36 mb-3"
+                : "w-24 h-24 flex-shrink-0"
+            }
+          `}
+          />
         )}
 
         {/* AI Summary Section */}
