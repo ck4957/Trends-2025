@@ -59,7 +59,7 @@ const Layout: React.FC<LayoutProps> = ({
         crossOrigin="anonymous"
         strategy="afterInteractive"
       />
-      <header className="bg-gray-200 dark:bg-gray-900 shadow sticky top-0 z-30">
+      <header className="bg-gray-800 dark:bg-gray-900 shadow sticky top-0 z-30">
         <div className="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center">
             <a href="/" className="flex items-center">
@@ -100,35 +100,35 @@ const Layout: React.FC<LayoutProps> = ({
       <Script id="adsense-display">
         {`(adsbygoogle = window.adsbygoogle || []).push({});`}
       </Script>
-      <footer className="bg-gray-200 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 mt-auto">
+      <footer className="bg-gray-800 dark:bg-gray-900 border-t border-gray-700 dark:border-gray-800 mt-auto">
         <div className="max-w-7xl mx-auto py-6 px-4 overflow-hidden sm:px-6 lg:px-8 flex flex-col items-center">
           <nav className="flex flex-wrap justify-center gap-4 mb-2">
             <a
               href="/about"
-              className="text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition"
+              className="text-gray-400 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition"
             >
               About
             </a>
             <a
               href="/contact"
-              className="text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition"
+              className="text-gray-400 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition"
             >
               Contact
             </a>
             <a
               href="/terms"
-              className="text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition"
+              className="text-gray-400 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition"
             >
               Terms
             </a>
             <a
               href="/privacy"
-              className="text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition"
+              className="text-gray-400 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition"
             >
               Privacy
             </a>
           </nav>
-          <p className="text-center text-gray-300 dark:text-gray-600 text-xs sm:text-sm">
+          <p className="text-center text-gray-500 dark:text-gray-400 text-xs sm:text-sm">
             &copy; {new Date().getFullYear()}{" "}
             <span style={{ fontFamily: brandFont }}>{brandName}</span>. All
             rights reserved.

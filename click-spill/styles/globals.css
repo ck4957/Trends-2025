@@ -40,15 +40,6 @@ a {
   @apply mx-auto px-4;
 }
 
-/* Customize header and footer colors */
-header {
-  background-color: var(--bg-header) !important;
-}
-
-footer {
-  background-color: var(--bg-footer) !important;
-}
-
 /* Card styles with softer backgrounds */
 .card,
 .trend-card {
