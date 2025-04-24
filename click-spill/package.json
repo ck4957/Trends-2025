@@ -1,5 +1,5 @@
 {
-  "name": "click-spill",
+  "name": "buzzify-ai",
   "version": "1.0.0",
   "description": "An AI-powered, trend-based content website that updates automatically using Google Trends data.",
   "main": "index.js",
@@ -19,11 +19,9 @@
   "author": "Chirag Kular",
   "license": "MIT",
   "dependencies": {
-    "@supabase/supabase-js": "^2.49.4",
     "axios": "1.8.4",
     "cheerio": "1.0.0",
     "next": "latest",
-    "openai": "^4.95.1",
     "puppeteer": "24.6.0",
     "react": "latest",
     "react-dom": "latest",
@@ -31,7 +29,7 @@
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
-    "@types/node": "^22.14.0",
+    "@types/node": "22.14.0",
     "@types/react": "19.1.0",
     "@types/xml2js": "^0.4.14",
     "eslint": "^9.23.0",
