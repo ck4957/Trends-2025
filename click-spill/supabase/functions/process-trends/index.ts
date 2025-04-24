@@ -136,9 +136,6 @@ Deno.serve(async (req) => {
     // Process the XML trends data
     const trendItems = parsedData.rss.channel[0].item;
 
-    // Initialize an array to hold all news item IDs at the start of the function
-    let allNewsItemIds: string[] = [];
-
     // Process trends in parallel with Promise.all for better performance
     const trendPromises = trendItems.map(async (item: any, index: number) => {
       // Skip empty items
@@ -149,7 +146,8 @@ Deno.serve(async (req) => {
         ? item["ht:approx_traffic"][0]
         : "N/A";
       const pubDate = item.pubDate ? item.pubDate[0] : null;
-
+      const pictureUrl = item["ht:picture"][0];
+      const pictureSource = item["ht:picture_source"][0];
       // 2. Insert trend record
       const { data: trendRecord, error: trendError } = await supabaseAdmin
         .from("trends")
@@ -157,6 +155,9 @@ Deno.serve(async (req) => {
           trend_day_id: trendDayId,
           title: title,
           approx_traffic: traffic,
+          picture_url: pictureUrl,
+          source: pictureSource,
+          published_at: pubDate,
           rank: index + 1,
         })
         .select()
@@ -171,7 +172,6 @@ Deno.serve(async (req) => {
 
       const trendId = trendRecord.id;
       const newsItems = item["ht:news_item"] || [];
-      let newsItemIds: string[] = []; // Store the IDs to process later
 
       // Process news items for this trend
       const newsPromises = newsItems.map(async (newsItem: any) => {
@@ -210,87 +210,17 @@ Deno.serve(async (req) => {
           return null;
         }
 
-        // Add the news item ID to the batch list
-        newsItemIds.push(newsItemData.id);
         return newsItemData.id;
       });
 
       // Wait for all news items to be processed
       await Promise.all(newsPromises);
 
-      // Add this news item batch to the overall collection for later processing
-      if (newsItemIds.length > 0) {
-        allNewsItemIds = [...allNewsItemIds, ...newsItemIds];
-      }
       return title; // Return something to indicate success
     });
 
     // Wait for all trends to be processed
     await Promise.all(trendPromises);
-
-    // After processing all trends, create batches for summary generation
-    if (allNewsItemIds.length > 0) {
-      // Create batches of 20 items max
-      const batchSize = 20;
-      const batches = [];
-
-      for (let i = 0; i < allNewsItemIds.length; i += batchSize) {
-        const batchItems = allNewsItemIds.slice(i, i + batchSize);
-
-        // Create a batch record
-        const { data: batchData, error: batchError } = await supabaseAdmin
-          .from("summary_batches")
-          .insert({
-            trend_day_id: trendDayId,
-            source_filename: filename,
-            total_items: batchItems.length,
-            status: "pending",
-            created_at: new Date().toISOString(),
-          })
-          .select()
-          .single();
-
-        if (batchError) {
-          console.error(`Error creating summary batch: ${batchError.message}`);
-        } else {
-          batches.push({ batch_id: batchData.id, item_ids: batchItems });
-
-          // Call the summary generation function for the first batch only
-          // The rest will be processed by a scheduled job or manually
-          if (batches.length === 1) {
-            try {
-              // Invoke the summary generation edge function
-              const response = await fetch(
-                `${Deno.env.get(
-                  "SUPABASE_URL"
-                )}/functions/v1/generate-summaries`,
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${Deno.env.get(
-                      "SUPABASE_SERVICE_ROLE_KEY"
-                    )}`,
-                  },
-                  body: JSON.stringify({
-                    batch_id: batchData.id,
-                    item_ids: batchItems,
-                  }),
-                }
-              );
-
-              console.log(
-                `Triggered summary generation for first batch of ${batchItems.length} items`
-              );
-            } catch (error) {
-              console.error("Failed to trigger summary generation:", error);
-            }
-          }
-        }
-      }
-
-      console.log(`Created ${batches.length} summary generation batches`);
-    }
 
     console.log(`Successfully processed file ${filename}`);
 

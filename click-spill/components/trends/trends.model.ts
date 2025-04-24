@@ -13,6 +13,7 @@ export interface Trend {
   title: string;
   traffic: string;
   pubDate?: string | null;
+  ai_summary: string | null;
   news: NewsItem[];
 }
 

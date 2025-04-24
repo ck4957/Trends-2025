@@ -6,6 +6,7 @@ const TrendCard: React.FC<TrendCardProps> = ({
   title,
   traffic,
   pubDate,
+  ai_summary,
   news,
   viewMode,
 }) => {
@@ -41,6 +42,15 @@ const TrendCard: React.FC<TrendCardProps> = ({
           </p>
         )}
 
+        {/* AI Summary Section */}
+        {ai_summary && (
+          <div className="p-4 bg-gray-50 dark:bg-gray-700/50 border-b border-gray-100 dark:border-gray-700">
+            <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+              AI Summary
+            </h3>
+            <p className="text-gray-700 dark:text-gray-300">{ai_summary}</p>
+          </div>
+        )}
         {news && news.length > 0 && (
           <div>
             <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">

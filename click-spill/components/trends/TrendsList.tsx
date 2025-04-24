@@ -33,6 +33,7 @@ const TrendsList: React.FC<TrendsListProps> = ({ trends, viewMode }) => {
             title={trend.title}
             traffic={trend.traffic}
             pubDate={trend.pubDate}
+            ai_summary={trend.ai_summary}
             news={trend.news}
             viewMode={viewMode}
           />
