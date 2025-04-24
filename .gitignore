@@ -19,10 +19,10 @@ node_modules
 .vercel
 
 # Supabase
-**/supabase/.branches
-**/supabase/.temp
-**/supabase/.env
-**/supabase/config.toml
+supabase/.branches
+supabase/.temp
+supabase/.env
+supabase/config.toml
 
 # excempt the apps/www .env
 !apps/www/.env
