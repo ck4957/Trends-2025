@@ -145,6 +145,10 @@ Deno.serve(async (req) => {
       const traffic = item["ht:approx_traffic"]
         ? item["ht:approx_traffic"][0]
         : "N/A";
+
+      // Parse the numeric part for ranking (remove "+" and convert to integer)
+      const numericTraffic =
+        traffic !== "N/A" ? parseInt(traffic.replace(/\+/g, "")) : 0;
       const pubDate = item.pubDate ? item.pubDate[0] : null;
       const pictureUrl = item["ht:picture"][0];
       const pictureSource = item["ht:picture_source"][0];
@@ -154,11 +158,11 @@ Deno.serve(async (req) => {
         .upsert({
           trend_day_id: trendDayId,
           title: title,
-          approx_traffic: traffic,
+          approx_traffic: traffic, // Keep original string format for display
           picture_url: pictureUrl,
           source: pictureSource,
           published_at: pubDate,
-          rank: index + 1,
+          rank: numericTraffic, // Store numeric value for sorting
         })
         .select()
         .single();
@@ -216,6 +220,41 @@ Deno.serve(async (req) => {
       // Wait for all news items to be processed
       await Promise.all(newsPromises);
 
+      // Now that all news items are inserted, generate a summary for this trend
+
+      // Only attempt to generate a summary if there are news items
+      if (newsItems.length > 0) {
+        // Call the trend summary function
+        // Fire and forget approach - don't await the response
+        fetch(
+          `${Deno.env.get("SUPABASE_URL")}/functions/v1/generate-summaries`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${Deno.env.get(
+                "SUPABASE_SERVICE_ROLE_KEY"
+              )}`,
+            },
+            body: JSON.stringify({
+              trend_id: trendId,
+            }),
+          }
+        ).catch((error) => {
+          // Optional: log errors but don't block
+          console.error(
+            `Error calling summary generation for "${title}":`,
+            error
+          );
+        });
+
+        console.log(`Requested summary generation for trend "${title}"`);
+      } else {
+        console.log(
+          `Skipping summary generation for trend "${title}" (no news items)`
+        );
+      }
+
       return title; // Return something to indicate success
     });
 
@@ -243,34 +282,3 @@ Deno.serve(async (req) => {
     });
   }
 });
-
-/* To invoke locally:
-
-  1. Run `supabase start` (see: https://supabase.com/docs/reference/cli/supabase-start)
-  2. Make an HTTP request with a storage payload:
-
-  curl -i --location --request POST 'http://127.0.0.1:54321/functions/v1/process-trends' \
-    --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0' \
-    --header 'Content-Type: application/json' \
-    --data '{
-      "type": "INSERT",
-      "table": "objects",
-      "schema": "storage",
-      "record": {
-        "id": "some-uuid",
-        "bucket_id": "trends-files",
-        "name": "2025-04-23.xml",
-        "owner": "",
-        "created_at": "2025-04-23T00:00:00Z",
-        "updated_at": "2025-04-23T00:00:00Z",
-        "last_accessed_at": "2025-04-23T00:00:00Z",
-        "metadata": {},
-        "buckets": {
-          "id": "trends-files",
-          "name": "trends-files"
-        }
-      },
-      "old_record": null
-    }'
-
-*/

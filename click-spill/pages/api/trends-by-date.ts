@@ -47,6 +47,10 @@ export default async function handler(
         id, 
         title,
         approx_traffic,
+        ai_summary,
+        picture_url,
+        source,
+        published_at,
         rank,
         news_items (
           id, 
@@ -69,6 +73,10 @@ export default async function handler(
       id: trend.id,
       title: trend.title,
       traffic: trend.approx_traffic,
+      picture: trend.picture_url,
+      source: trend.source,
+      publishedAt: trend.published_at,
+      summary: trend.ai_summary,
       news: trend.news_items.map((news) => ({
         id: news.id,
         title: news.title,

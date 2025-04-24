@@ -12,8 +12,10 @@ export interface Trend {
   id?: string;
   title: string;
   traffic: string;
-  pubDate?: string | null;
-  ai_summary: string | null;
+  picture: string | null;
+  source: string;
+  publishedAt?: string;
+  summary: string | null;
   news: NewsItem[];
 }
 

@@ -111,9 +111,6 @@ export default function Home() {
     });
   };
 
-  // Format timestamp for display
-  const formattedTime = timestamp ? new Date(timestamp).toLocaleString() : "";
-
   const renderContent = () => {
     if (loading) return <Loading />;
     if (error) return <ErrorComponent message={error} />;
@@ -171,12 +168,6 @@ export default function Home() {
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
             Trends for {formatDateForDisplay(currentDate)}
           </h1>
-        )}
-
-        {timestamp && (
-          <p className="text-xs text-gray-400 dark:text-gray-500">
-            Last updated: {formattedTime}
-          </p>
         )}
       </div>
 

@@ -5,14 +5,14 @@ import { TrendCardProps } from "./trends.model";
 const TrendCard: React.FC<TrendCardProps> = ({
   title,
   traffic,
-  pubDate,
-  ai_summary,
+  publishedAt,
+  summary,
   news,
   viewMode,
 }) => {
   // Format the pubDate to a more readable format if it exists
-  const formattedDate = pubDate
-    ? new Date(pubDate).toLocaleDateString("en-US", {
+  const formattedDate = publishedAt
+    ? new Date(publishedAt).toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric",
@@ -43,12 +43,12 @@ const TrendCard: React.FC<TrendCardProps> = ({
         )}
 
         {/* AI Summary Section */}
-        {ai_summary && (
+        {summary && (
           <div className="p-4 bg-gray-50 dark:bg-gray-700/50 border-b border-gray-100 dark:border-gray-700">
             <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
               AI Summary
             </h3>
-            <p className="text-gray-700 dark:text-gray-300">{ai_summary}</p>
+            <p className="text-gray-700 dark:text-gray-300">{summary}</p>
           </div>
         )}
         {news && news.length > 0 && (
