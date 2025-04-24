@@ -1,0 +1,5 @@
+
+ALTER TABLE trends 
+ADD COLUMN picture_url TEXT,
+ADD COLUMN source TEXT,
+ADD COLUMN published_at TIMESTAMPTZ

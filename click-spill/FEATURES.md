@@ -1,3 +1,22 @@
+# 24th April
+
+Edge Function:fetch Google Trends RSS feed
+
+- Add a cron job to run the Edge Function every 24 hours.
+
+Process-Trends: (May be ?)
+
+- Before processing new trends file from Supabase Storage, check if the file already exists in the database. If it does, let's delete the file from the trends table and then process the new file. (Deleting from the trends will run the cascade delete on the other tables)
+
+UI
+Nice to have:
+
+- Need improve UI overall.
+
+---
+
+# 22nd April
+
 I want to show atleast 7 days of trending news.
 I will manually upload the rss xml file to the supabase storage.
 Once processed, the data will be stored in the supabase database probably including the file name.

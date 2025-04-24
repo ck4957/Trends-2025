@@ -4,6 +4,8 @@ import Loading from "../components/layout/Loading";
 import ErrorComponent from "../components/layout/Error";
 import TrendsList from "../components/trends/TrendsList";
 import { Trend, ViewMode, DateOption } from "../components/trends/trends.model";
+import { relative } from "path";
+import { getTrendDateString } from "@/utils/dateUtils";
 
 export default function Home() {
   // State management
@@ -43,6 +45,7 @@ export default function Home() {
           const dateOptions: DateOption[] = data.dates.map((date: string) => ({
             date,
             displayDate: formatDateForDisplay(date),
+            relativeDate: getTrendDateString(date),
           }));
 
           setAvailableDates(dateOptions);
@@ -111,9 +114,6 @@ export default function Home() {
     });
   };
 
-  // Format timestamp for display
-  const formattedTime = timestamp ? new Date(timestamp).toLocaleString() : "";
-
   const renderContent = () => {
     if (loading) return <Loading />;
     if (error) return <ErrorComponent message={error} />;
@@ -158,8 +158,9 @@ export default function Home() {
                         : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
                     }
                   `}
+                  title={dateOption.displayDate}
                 >
-                  {dateOption.displayDate}
+                  {dateOption.relativeDate || dateOption.displayDate}{" "}
                 </button>
               ))}
             </div>
@@ -171,12 +172,6 @@ export default function Home() {
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
             Trends for {formatDateForDisplay(currentDate)}
           </h1>
-        )}
-
-        {timestamp && (
-          <p className="text-xs text-gray-400 dark:text-gray-500">
-            Last updated: {formattedTime}
-          </p>
         )}
       </div>
 
