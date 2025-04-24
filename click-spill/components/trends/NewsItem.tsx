@@ -20,7 +20,8 @@ const NewsItemDetail: React.FC<NewsItemProps> = ({
       className={`
       border-t border-gray-200 dark:border-gray-700 pt-4 first:border-0 first:pt-0
       ${viewMode === "list" ? "flex gap-4" : ""}
-      hover:bg-gray-50 dark:hover:bg-gray-800/70 p-2 -m-2 rounded-md transition-colors duration-200
+      hover:bg-gray-100 dark:hover:bg-gray-800/70 p-2 -m-2 rounded-md transition-colors duration-200
+      bg-gray-50/50 dark:bg-gray-800/50
     `}
     >
       <div className={viewMode === "list" ? "flex-1" : ""}>

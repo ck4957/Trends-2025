@@ -19,9 +19,10 @@ const TrendCard: React.FC<TrendCardProps> = ({
   return (
     <div
       className={`
-      bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg 
-      hover:shadow-lg transition-shadow duration-300 border border-gray-100 dark:border-gray-700
+      bg-gray-50 dark:bg-gray-800 overflow-hidden shadow rounded-lg 
+      hover:shadow-lg transition-shadow duration-300 border border-gray-200 dark:border-gray-700
       ${viewMode === "list" ? "w-full" : ""}
+      trend-card
     `}
     >
       <div className="px-4 py-5 sm:p-6">
@@ -68,7 +69,7 @@ const TrendCard: React.FC<TrendCardProps> = ({
 
         {/* AI Summary Section */}
         {summary && (
-          <div className="p-4 my-3 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-md border-l-4 border-blue-500 dark:border-blue-400">
+          <div className="p-4 my-3 bg-gradient-to-r from-blue-50/80 to-indigo-50/80 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-md border-l-4 border-blue-500 dark:border-blue-400">
             <h3 className="text-sm font-semibold text-blue-700 dark:text-blue-300 uppercase tracking-wider mb-2">
               AI Summary
             </h3>

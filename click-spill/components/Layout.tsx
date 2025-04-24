@@ -34,7 +34,7 @@ const Layout: React.FC<LayoutProps> = ({
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
@@ -59,7 +59,7 @@ const Layout: React.FC<LayoutProps> = ({
         crossOrigin="anonymous"
         strategy="afterInteractive"
       />
-      <header className="bg-white dark:bg-gray-900 shadow sticky top-0 z-30">
+      <header className="bg-gray-200 dark:bg-gray-900 shadow sticky top-0 z-30">
         <div className="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center">
             <a href="/" className="flex items-center">
@@ -100,7 +100,7 @@ const Layout: React.FC<LayoutProps> = ({
       <Script id="adsense-display">
         {`(adsbygoogle = window.adsbygoogle || []).push({});`}
       </Script>
-      <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 mt-auto">
+      <footer className="bg-gray-200 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 mt-auto">
         <div className="max-w-7xl mx-auto py-6 px-4 overflow-hidden sm:px-6 lg:px-8 flex flex-col items-center">
           <nav className="flex flex-wrap justify-center gap-4 mb-2">
             <a

@@ -3,18 +3,60 @@
 @tailwind utilities;
 
 /* Custom global styles can be added below */
-body {
-    @apply bg-gray-100 text-gray-900;
+:root {
+  --bg-main: #f5f5f5;
+  --bg-header: #eaeaea;
+  --bg-footer: #eaeaea;
+  --text-main: #333333;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    @apply font-bold;
+.dark {
+  --bg-main: #1a1a1a;
+  --bg-header: #111111;
+  --bg-footer: #111111;
+  --text-main: #e0e0e0;
+}
+
+body {
+  @apply bg-gray-100 text-gray-900;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-bold;
 }
 
 a {
-    @apply text-blue-600 hover:text-blue-800;
+  @apply text-blue-600 hover:text-blue-800;
 }
 
 .container {
-    @apply mx-auto px-4;
+  @apply mx-auto px-4;
+}
+
+/* Customize header and footer colors */
+header {
+  background-color: var(--bg-header) !important;
+}
+
+footer {
+  background-color: var(--bg-footer) !important;
+}
+
+/* Card styles with softer backgrounds */
+.card,
+.trend-card {
+  @apply bg-gray-50 dark:bg-gray-800;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Visual separator for content sections */
+.content-section {
+  @apply border-b border-gray-200 dark:border-gray-700 pb-4 mb-4;
 }
