@@ -61,23 +61,23 @@ const Layout: React.FC<LayoutProps> = ({
       />
       <header className="bg-white dark:bg-gray-900 shadow sticky top-0 z-30">
         <div className="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
-          <div className="flex sm:flex-row items-center justify-between">
-            <a href="/" className="flex items-center mb-3 sm:mb-0">
+          <div className="flex justify-center">
+            <a href="/" className="flex items-center">
               <img
                 src="/logo.png"
                 alt="ClickSpill Logo"
-                className="h-8 w-8 rounded-md object-contain bg-black p-1 shadow-md mr-2"
+                className="h-10 w-10 rounded-md object-contain bg-black p-1 shadow-md mr-3"
               />
-              <span
-                className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white select-none"
-                style={{ fontFamily: brandFont, letterSpacing: "0.02em" }}
-              >
-                ClickSpill
-              </span>
+              <div className="flex flex-col">
+                <span
+                  className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white select-none"
+                  style={{ fontFamily: brandFont, letterSpacing: "0.02em" }}
+                >
+                  ClickSpill
+                </span>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">AI-powered trending topics</p>
+              </div>
             </a>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              AI powered insights on daily trending topics
-            </p>
           </div>
         </div>
       </header>
