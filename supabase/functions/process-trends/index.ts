@@ -11,6 +11,13 @@ import { createClient } from "supabase";
 import { parseStringPromise } from "xml2js";
 
 const TrendsFilesBucket = "trends-files";
+// Delay between summary generation requests (in milliseconds)
+const SUMMARY_REQUEST_DELAY_MS = 300;
+// Maximum concurrent summary requests (0 = unlimited)
+const MAX_CONCURRENT_SUMMARY_REQUESTS = 9;
+
+// Track the number of currently executing summary requests
+let activeSummaryRequests = 0;
 
 // Storage bucket event payload interface
 interface StoragePayload {
@@ -37,6 +44,49 @@ interface StoragePayload {
 function extractDateFromFilename(filename: string): string {
   const match = filename.match(/^(\d{4}-\d{2}-\d{2})/);
   return match ? match[1] : new Date().toISOString().split("T")[0];
+}
+
+// Helper function to delay summary generation with controlled concurrency
+async function requestSummaryWithDelay(
+  trendId: string,
+  title: string
+): Promise<void> {
+  // Wait if we've reached max concurrent requests
+  while (
+    MAX_CONCURRENT_SUMMARY_REQUESTS > 0 &&
+    activeSummaryRequests >= MAX_CONCURRENT_SUMMARY_REQUESTS
+  ) {
+    await new Promise((resolve) => setTimeout(resolve, 100)); // Check every 100ms
+  }
+
+  // Increment active request counter
+  activeSummaryRequests++;
+
+  try {
+    // Add delay between requests
+    await new Promise((resolve) =>
+      setTimeout(resolve, SUMMARY_REQUEST_DELAY_MS)
+    );
+
+    // Make the request to generate summary
+    fetch(`${Deno.env.get("SUPABASE_URL")}/functions/v1/generate-summaries`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")}`,
+      },
+      body: JSON.stringify({
+        trend_id: trendId,
+      }),
+    }).catch((error) => {
+      console.error(`Error calling summary generation for "${title}":`, error);
+    });
+
+    console.log(`Requested summary generation for trend "${title}"`);
+  } finally {
+    // Decrement counter when done (regardless of success/failure)
+    activeSummaryRequests--;
+  }
 }
 
 Deno.serve(async (req) => {
@@ -152,29 +202,57 @@ Deno.serve(async (req) => {
       const pubDate = item.pubDate ? item.pubDate[0] : null;
       const pictureUrl = item["ht:picture"][0];
       const pictureSource = item["ht:picture_source"][0];
-      // 2. Insert trend record
-      const { data: trendRecord, error: trendError } = await supabaseAdmin
-        .from("trends")
-        .upsert({
-          trend_day_id: trendDayId,
-          title: title,
-          approx_traffic: traffic, // Keep original string format for display
-          picture_url: pictureUrl,
-          source: pictureSource,
-          published_at: pubDate,
-          rank: numericTraffic, // Store numeric value for sorting
-        })
-        .select()
-        .single();
 
-      if (trendError) {
+      // Check if trend already exists for this day and title
+      const { data: existingTrend, error: checkError } = await supabaseAdmin
+        .from("trends")
+        .select("id")
+        .eq("trend_day_id", trendDayId)
+        .eq("title", title)
+        .maybeSingle();
+
+      if (checkError) {
         console.error(
-          `Error creating trend record for "${title}": ${trendError.message}`
+          `Error checking for existing trend "${title}": ${checkError.message}`
         );
         return null;
       }
 
-      const trendId = trendRecord.id;
+      // If trend already exists, use its ID instead of creating a new record
+      let trendId: string;
+
+      if (existingTrend) {
+        console.log(
+          `Trend "${title}" already exists for this date, skipping insertion`
+        );
+        trendId = existingTrend.id;
+      } else {
+        // 2. Insert trend record only if it doesn't already exist
+        const { data: trendRecord, error: trendError } = await supabaseAdmin
+          .from("trends")
+          .upsert({
+            trend_day_id: trendDayId,
+            title: title,
+            approx_traffic: traffic, // Keep original string format for display
+            picture_url: pictureUrl,
+            source: pictureSource,
+            published_at: pubDate,
+            rank: numericTraffic, // Store numeric value for sorting
+          })
+          .select()
+          .single();
+
+        if (trendError) {
+          console.error(
+            `Error creating trend record for "${title}": ${trendError.message}`
+          );
+          return null;
+        }
+
+        trendId = trendRecord.id;
+        console.log(`Created new trend record for "${title}"`);
+      }
+
       const newsItems = item["ht:news_item"] || [];
 
       // Process news items for this trend
@@ -224,31 +302,8 @@ Deno.serve(async (req) => {
 
       // Only attempt to generate a summary if there are news items
       if (newsItems.length > 0) {
-        // Call the trend summary function
-        // Fire and forget approach - don't await the response
-        fetch(
-          `${Deno.env.get("SUPABASE_URL")}/functions/v1/generate-summaries`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${Deno.env.get(
-                "SUPABASE_SERVICE_ROLE_KEY"
-              )}`,
-            },
-            body: JSON.stringify({
-              trend_id: trendId,
-            }),
-          }
-        ).catch((error) => {
-          // Optional: log errors but don't block
-          console.error(
-            `Error calling summary generation for "${title}":`,
-            error
-          );
-        });
-
-        console.log(`Requested summary generation for trend "${title}"`);
+        // Call the trend summary function using our delayed request helper
+        requestSummaryWithDelay(trendId, title);
       } else {
         console.log(
           `Skipping summary generation for trend "${title}" (no news items)`
