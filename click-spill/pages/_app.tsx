@@ -21,8 +21,58 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>ClickSpill - Daily Trending Topics</title>
+        <title>ClickSpill - Daily Trending Topics | Latest Trending News</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          name="description"
+          content="ClickSpill provides daily trending topics, news updates, and viral content in one place. Stay updated with the latest trends and breaking news."
+        />
+        <meta
+          name="keywords"
+          content="trending topics, viral news, daily trends, breaking news, popular content, current events"
+        />
+        <meta name="robots" content="index, follow" />
+        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="language" content="English" />
+        <meta name="revisit-after" content="1 days" />
+        <meta name="author" content="ClickSpill" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://clickspill.com/" />
+        <meta
+          property="og:title"
+          content="ClickSpill - Daily Trending Topics"
+        />
+        <meta
+          property="og:description"
+          content="Your source for daily trending topics and viral content. Stay updated with the latest trends and breaking news."
+        />
+        <meta
+          property="og:image"
+          content="https://clickspill.com/og-image.jpg"
+        />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://clickspill.com/" />
+        <meta
+          property="twitter:title"
+          content="ClickSpill - Daily Trending Topics"
+        />
+        <meta
+          property="twitter:description"
+          content="Your source for daily trending topics and viral content. Stay updated with the latest trends and breaking news."
+        />
+        <meta
+          property="twitter:image"
+          content="https://clickspill.com/twitter-image.jpg"
+        />
+
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://clickspill.com" />
         <link rel="icon" href="/cs.ico" />
+
         {/* Tailwind CSS via CDN */}
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         {/* Add Font Awesome for icons */}
@@ -48,6 +98,27 @@ function MyApp({ Component, pageProps }: AppProps) {
               }
             }
           `,
+          }}
+        />
+
+        {/* JSON-LD structured data for better SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: `
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "ClickSpill",
+              "url": "https://clickspill.com",
+              "description": "Daily trending topics and viral content",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://clickspill.com/search?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+              }
+            }
+            `,
           }}
         />
       </Head>

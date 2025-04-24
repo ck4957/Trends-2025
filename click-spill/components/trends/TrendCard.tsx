@@ -1,6 +1,7 @@
 import React from "react";
 import NewsItemDetail from "./NewsItem";
 import { TrendCardProps } from "./trends.model";
+import { getRelativeTimeString } from "@/utils/dateUtils";
 
 const TrendCard: React.FC<TrendCardProps> = ({
   title,
@@ -12,16 +13,8 @@ const TrendCard: React.FC<TrendCardProps> = ({
   news,
   viewMode,
 }) => {
-  // Format the pubDate to a more readable format if it exists
-  const formattedDate = publishedAt
-    ? new Date(publishedAt).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-    : null;
+  // Use relative time formatting
+  const relativeTime = publishedAt ? getRelativeTimeString(publishedAt) : null;
 
   return (
     <div
@@ -35,16 +28,24 @@ const TrendCard: React.FC<TrendCardProps> = ({
         <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
           {title}
         </h3>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
-          Traffic: {traffic}
-        </p>
-        <span>{source}</span>
-
-        {formattedDate && (
-          <p className="text-xs text-gray-400 dark:text-gray-500 mb-4">
-            Published: {formattedDate}
-          </p>
-        )}
+        <div className="flex flex-wrap gap-x-2 items-center text-sm mt-1.5 mb-3">
+          {traffic && (
+            <span className="px-2 py-0.5 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded-full">
+              ~{traffic} searches
+            </span>
+          )}
+          {source && (
+            <span className="text-gray-500 dark:text-gray-400">{source}</span>
+          )}
+          {relativeTime && (
+            <span
+              className="text-gray-400 dark:text-gray-500"
+              title={publishedAt ? new Date(publishedAt).toLocaleString() : ""}
+            >
+              {relativeTime}
+            </span>
+          )}
+        </div>
         {picture && (
           <img
             src={picture}
@@ -54,9 +55,12 @@ const TrendCard: React.FC<TrendCardProps> = ({
             ${
               viewMode === "grid"
                 ? "w-full h-36 mb-3"
-                : "w-24 h-24 flex-shrink-0"
+                : "w-24 h-24 float-right ml-4 mb-2"
             }
           `}
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = "none";
+            }}
           />
         )}
 

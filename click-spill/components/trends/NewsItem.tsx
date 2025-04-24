@@ -1,5 +1,6 @@
 import React from "react";
 import { NewsItemProps } from "./trends.model";
+import { getRelativeTimeString } from "@/utils/dateUtils";
 
 const NewsItemDetail: React.FC<NewsItemProps> = ({
   title,
@@ -11,12 +12,8 @@ const NewsItemDetail: React.FC<NewsItemProps> = ({
   viewMode,
 }) => {
   // Format published date if available
-  const formattedDate = publishedAt
-    ? new Date(publishedAt).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      })
-    : null;
+  // Get relative time
+  const relativeTime = publishedAt ? getRelativeTimeString(publishedAt) : null;
 
   return (
     <li
@@ -25,20 +22,6 @@ const NewsItemDetail: React.FC<NewsItemProps> = ({
       ${viewMode === "list" ? "flex gap-4" : ""}
     `}
     >
-      {/* {picture && (
-        <img
-          src={picture}
-          alt={title}
-          className={`
-            rounded-lg object-cover 
-            ${
-              viewMode === "grid"
-                ? "w-full h-36 mb-3"
-                : "w-24 h-24 flex-shrink-0"
-            }
-          `}
-        />
-      )} */}
       <div className={viewMode === "list" ? "flex-1" : ""}>
         <a
           href={url}
@@ -51,10 +34,16 @@ const NewsItemDetail: React.FC<NewsItemProps> = ({
 
         <div className="mt-1 flex items-center text-sm text-gray-500 dark:text-gray-400">
           <span>{source}</span>
-          {formattedDate && (
+          {relativeTime && (
             <>
               <span className="mx-1">•</span>
-              <span>{formattedDate}</span>
+              <span
+                title={
+                  publishedAt ? new Date(publishedAt).toLocaleString() : ""
+                }
+              >
+                {relativeTime}
+              </span>
             </>
           )}
         </div>

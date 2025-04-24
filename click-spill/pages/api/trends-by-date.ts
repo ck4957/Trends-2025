@@ -64,7 +64,7 @@ export default async function handler(
       `
       )
       .eq("trend_day_id", dayData.id)
-      .order("rank", { ascending: true });
+      .order("rank", { ascending: false });
 
     if (trendsError) throw trendsError;
 

@@ -4,6 +4,8 @@ import Loading from "../components/layout/Loading";
 import ErrorComponent from "../components/layout/Error";
 import TrendsList from "../components/trends/TrendsList";
 import { Trend, ViewMode, DateOption } from "../components/trends/trends.model";
+import { relative } from "path";
+import { getTrendDateString } from "@/utils/dateUtils";
 
 export default function Home() {
   // State management
@@ -43,6 +45,7 @@ export default function Home() {
           const dateOptions: DateOption[] = data.dates.map((date: string) => ({
             date,
             displayDate: formatDateForDisplay(date),
+            relativeDate: getTrendDateString(date),
           }));
 
           setAvailableDates(dateOptions);
@@ -155,8 +158,9 @@ export default function Home() {
                         : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
                     }
                   `}
+                  title={dateOption.displayDate}
                 >
-                  {dateOption.displayDate}
+                  {dateOption.relativeDate || dateOption.displayDate}{" "}
                 </button>
               ))}
             </div>

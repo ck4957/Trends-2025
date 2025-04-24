@@ -35,6 +35,7 @@ export interface NewsItemProps extends NewsItem {
 export interface DateOption {
   date: string; // YYYY-MM-DD format
   displayDate: string; // Formatted for display
+  relativeDate: string; // Relative time string
 }
 
 export type ViewMode = "grid" | "list";
