@@ -5,16 +5,20 @@ import { TrendsListProps } from "./trends.model";
 const TrendsList: React.FC<TrendsListProps> = ({ trends, viewMode }) => {
   if (trends.length === 0) {
     return (
-      <p className="text-center text-gray-500 dark:text-gray-400">
-        No trending topics found.
-      </p>
+      <div className="text-center p-8 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
+        <p className="text-gray-600 dark:text-gray-300 font-medium">
+          No trending topics found.
+        </p>
+      </div>
     );
   }
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-100">
-        Trending Topics
+      <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700 pb-2">
+        <span className="inline-block border-b-3 border-blue-500 dark:border-blue-400 pb-2 -mb-[9px]">
+          Trending Topics
+        </span>
       </h2>
 
       <div
