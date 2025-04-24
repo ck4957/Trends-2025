@@ -69,6 +69,16 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="https://clickspill.com/twitter-image.jpg"
         />
 
+        {/* Mobile optimization */}
+        <meta name="theme-color" content="#2563eb" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="format-detection" content="telephone=no" />
+
+        {/* Resource hints for faster loading */}
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+
         {/* Canonical URL */}
         <link rel="canonical" href="https://clickspill.com" />
         <link rel="icon" href="/cs.ico" />
@@ -110,13 +120,8 @@ function MyApp({ Component, pageProps }: AppProps) {
               "@context": "https://schema.org",
               "@type": "WebSite",
               "name": "ClickSpill",
-              "url": "https://clickspill.com",
-              "description": "Daily trending topics and viral content",
-              "potentialAction": {
-                "@type": "SearchAction",
-                "target": "https://clickspill.com/search?q={search_term_string}",
-                "query-input": "required name=search_term_string"
-              }
+              "url": "https://clickspill.vercel.app",
+              "description": "Daily trending topics and AI insights content"
             }
             `,
           }}
