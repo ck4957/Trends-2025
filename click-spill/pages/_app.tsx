@@ -120,7 +120,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               "@context": "https://schema.org",
               "@type": "WebSite",
               "name": "ClickSpill",
-              "url": "https://clickspill.vercel.app",
+              "url": "https://clickspill.com",
               "description": "Daily trending topics and AI insights content"
             }
             `,
