@@ -8,6 +8,10 @@ interface LayoutProps {
   description?: string;
 }
 
+const brandFont = "monospace";
+const brandName = "Click Spill";
+const brandTagline = "AI-powered trending topics";
+
 const Layout: React.FC<LayoutProps> = ({
   children,
   title = "Click Spill - Daily Trending Topics",
@@ -30,7 +34,7 @@ const Layout: React.FC<LayoutProps> = ({
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
@@ -38,6 +42,10 @@ const Layout: React.FC<LayoutProps> = ({
           name="google-adsense-account"
           content="ca-pub-3911596373332918"
         ></meta>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       {/* Google AdSense Script */}
       <Script
@@ -51,26 +59,27 @@ const Layout: React.FC<LayoutProps> = ({
         crossOrigin="anonymous"
         strategy="afterInteractive"
       />
-      <header className="bg-white dark:bg-gray-800 shadow">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                ClickSpill
-              </h1>
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                AI-powered trending topics & insights
-              </p>
-            </div>
-
-            {/* Theme Toggle Button */}
-            {/* <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-              aria-label="Toggle dark mode"
-            >
-              <i className={`fas ${isDarkMode ? "fa-sun" : "fa-moon"}`}></i>
-            </button> */}
+      <header className="bg-gray-200 dark:bg-gray-900 shadow sticky top-0 z-30">
+        <div className="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center">
+            <a href="/" className="flex items-center">
+              <img
+                src="/logo.png"
+                alt="ClickSpill Logo"
+                className="h-10 w-10 rounded-md object-contain bg-black p-1 shadow-md mr-3"
+              />
+              <div className="flex flex-col">
+                <span
+                  className="text-2xl tracking-tight text-gray-900 dark:text-white select-none"
+                  style={{ fontFamily: brandFont }}
+                >
+                  {brandName}
+                </span>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 italic">
+                  {brandTagline}
+                </p>
+              </div>
+            </a>
           </div>
         </div>
       </header>
@@ -91,10 +100,38 @@ const Layout: React.FC<LayoutProps> = ({
       <Script id="adsense-display">
         {`(adsbygoogle = window.adsbygoogle || []).push({});`}
       </Script>
-      <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-auto">
-        <div className="max-w-7xl mx-auto py-6 px-4 overflow-hidden sm:px-6 lg:px-8">
-          <p className="text-center text-gray-400 dark:text-gray-500 text-sm">
-            &copy; {new Date().getFullYear()} Click Spill. All rights reserved.
+      <footer className="bg-gray-200 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 mt-auto">
+        <div className="max-w-7xl mx-auto py-6 px-4 overflow-hidden sm:px-6 lg:px-8 flex flex-col items-center">
+          <nav className="flex flex-wrap justify-center gap-4 mb-2">
+            <a
+              href="/about"
+              className="text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition"
+            >
+              About
+            </a>
+            <a
+              href="/contact"
+              className="text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition"
+            >
+              Contact
+            </a>
+            <a
+              href="/terms"
+              className="text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition"
+            >
+              Terms
+            </a>
+            <a
+              href="/privacy"
+              className="text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition"
+            >
+              Privacy
+            </a>
+          </nav>
+          <p className="text-center text-gray-300 dark:text-gray-600 text-xs sm:text-sm">
+            &copy; {new Date().getFullYear()}{" "}
+            <span style={{ fontFamily: brandFont }}>{brandName}</span>. All
+            rights reserved.
           </p>
         </div>
       </footer>

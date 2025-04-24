@@ -29,6 +29,32 @@ export default function Home() {
     }
   }, []);
 
+  // Unique Page Visit Logging
+  useEffect(() => {
+    // Only run on client
+    if (typeof window === "undefined") return;
+    const PAGE_KEY = `visited_${window.location.pathname}`;
+    let visitId = localStorage.getItem("visit_id");
+    if (!visitId) {
+      visitId = crypto.randomUUID();
+      localStorage.setItem("visit_id", visitId);
+    }
+    // Only log once per page per visitor
+    if (!localStorage.getItem(PAGE_KEY)) {
+      fetch("/api/visit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          visit_id: visitId,
+          page: window.location.pathname,
+          user_agent: navigator.userAgent,
+          // IP will be filled by API if needed
+        }),
+      });
+      localStorage.setItem(PAGE_KEY, "1");
+    }
+  }, []);
+
   // Fetch available dates when component mounts
   useEffect(() => {
     async function fetchAvailableDates() {
