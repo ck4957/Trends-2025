@@ -19,10 +19,12 @@ export default async function handler(
 ) {
   try {
     const supabase = getSupabaseClient();
+    const { date } = req.query; // Get date from query param
 
-    // Get categories with trend counts
+    // Get categories with trend counts (filtered by date if provided)
     const { data: categoriesData, error: categoriesError } = await supabase.rpc(
-      "get_categories_with_counts"
+      "get_categories_with_counts",
+      date ? { date_param: date } : { date_param: null }
     );
 
     // If the RPC function doesn't exist yet, fall back to a raw query
@@ -44,10 +46,25 @@ export default async function handler(
       // For each category, we need to count the trends
       const categoriesWithCounts = await Promise.all(
         data.map(async (category) => {
-          const { count, error: countError } = await supabase
+          let query = supabase
             .from("trends")
             .select("*", { count: "exact", head: true })
             .eq("category_id", category.id);
+
+          // Apply date filter if provided
+          if (date) {
+            const { data: dayData } = await supabase
+              .from("trend_days")
+              .select("id")
+              .eq("date", date)
+              .single();
+
+            if (dayData) {
+              query = query.eq("trend_day_id", dayData.id);
+            }
+          }
+
+          const { count, error: countError } = await query;
 
           return {
             ...category,

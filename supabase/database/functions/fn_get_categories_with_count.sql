@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION get_categories_with_counts()
+CREATE OR REPLACE FUNCTION get_categories_with_counts(date_param TEXT DEFAULT NULL)
 RETURNS TABLE (
   id UUID,
   name TEXT,
@@ -18,6 +18,10 @@ BEGIN
     categories c
   LEFT JOIN 
     trends t ON c.id = t.category_id
+  LEFT JOIN
+    trend_days td ON t.trend_day_id = td.id
+  WHERE
+    (date_param IS NULL OR td.date = date_param::DATE) -- Cast text to DATE
   GROUP BY 
     c.id, c.name, c.slug, c.description
   ORDER BY 

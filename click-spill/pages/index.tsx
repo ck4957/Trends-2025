@@ -75,43 +75,50 @@ export default function Home() {
     fetchAvailableDates();
   }, []);
 
-  // Fetch categories when component mounts
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const response = await fetch("/api/categories");
-        if (!response.ok) {
-          throw new Error("Failed to fetch categories");
-        }
+  // Fetch categories for a specific date
+  async function fetchCategories(date: string | null = null) {
+    try {
+      // Include date in the query if it's available
+      const endpoint = date
+        ? `/api/categories?date=${date}`
+        : "/api/categories";
 
-        const data = await response.json();
-
-        // Add "All categories" as the first option
-        const allCategoriesOption = {
-          id: "all",
-          name: "All categories",
-          slug: "all",
-          count: data.categories.reduce(
-            (sum: number, cat: Category) => sum + cat.count,
-            0
-          ),
-        };
-
-        setCategories([allCategoriesOption, ...data.categories]);
-      } catch (err) {
-        console.error("Error fetching categories:", err);
+      console.log("Fetching categories from:", endpoint);
+      const response = await fetch(endpoint);
+      if (!response.ok) {
+        throw new Error("Failed to fetch categories");
       }
-    }
 
-    fetchCategories();
-  }, []);
+      const data = await response.json();
+
+      // Add "All categories" as the first option
+      const allCategoriesOption = {
+        id: "all",
+        name: "All categories",
+        slug: "all",
+        count: data.categories.reduce(
+          (sum: number, cat: Category) => sum + cat.count,
+          0
+        ),
+      };
+
+      setCategories([allCategoriesOption, ...data.categories]);
+    } catch (err) {
+      console.error("Error fetching categories:", err);
+    }
+  }
 
   // Fetch trends for the current date whenever it changes
   useEffect(() => {
     if (currentDate) {
+      // We have a date, fetch trends and categories for that specific date
       fetchTrendsForDate(currentDate);
+      fetchCategories(currentDate);
+    } else if (categories.length === 0) {
+      // No date yet but we need categories, fetch without date filter
+      fetchCategories(null);
     }
-  }, [currentDate]);
+  }, [currentDate, categories.length]);
 
   // Fetch trends for a specific date
   const fetchTrendsForDate = async (date: string) => {
@@ -135,6 +142,20 @@ export default function Home() {
       setLoading(false);
     }
   };
+
+  // Add this useEffect to filter trends when activeCategory changes
+  useEffect(() => {
+    if (!trends.length) return;
+
+    if (activeCategory === "all") {
+      setFilteredTrends(trends);
+    } else {
+      const filtered = trends.filter(
+        (trend) => trend.category?.slug === activeCategory
+      );
+      setFilteredTrends(filtered);
+    }
+  }, [activeCategory, trends]);
 
   // Toggle between grid and list view
   const toggleViewMode = () => {
