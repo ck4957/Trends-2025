@@ -3,15 +3,15 @@ import { createClient } from "@supabase/supabase-js";
 
 const SITE_URL = "https://clickspill.com";
 
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+const SUPABASE_SERVICE_KEY = process.env.NEXT_PUBLIC_SUPABASE_SERVICE_KEY || "";
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   // Initialize Supabase
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || "",
-    process.env.SUPABASE_SERVICE_KEY || "" // Use service key for better access
-  );
+  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 
   try {
     // Get available dates (last 30 days)
