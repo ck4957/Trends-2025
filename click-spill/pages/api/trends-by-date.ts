@@ -52,6 +52,7 @@ export default async function handler(
         source,
         published_at,
         rank,
+        category_id,
         news_items (
           id, 
           title, 
@@ -78,6 +79,7 @@ export default async function handler(
       source: trend.source,
       publishedAt: trend.published_at,
       summary: trend.ai_summary,
+      categoryId: trend.category_id,
       news: trend.news_items.map((news) => ({
         id: news.id,
         title: news.title,
