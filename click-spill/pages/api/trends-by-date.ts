@@ -87,8 +87,11 @@ export default async function handler(
       categoryId: trend.category_id,
       category: trend.categories
         ? {
+            // @ts-ignore - Supabase typing issue with nested selects
             id: trend.categories.id,
+            // @ts-ignore - Supabase typing issue with nested selects
             name: trend.categories.name,
+            // @ts-ignore - Supabase typing issue with nested selects
             slug: trend.categories.slug,
           }
         : null,
