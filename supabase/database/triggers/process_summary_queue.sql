@@ -41,14 +41,12 @@ BEGIN
     SELECT 1 FROM summary_queue WHERE status = 'processing' LIMIT 1
   ) THEN
     -- Call your edge function to process the queue
-    SELECT id INTO response_id FROM net.http_post(
+    response_id := net.http_post(
       supabase_url || '/functions/v1/process-summary-queue',
-      '{}',
-      'application/json',
-      ARRAY[
-        net.http_header('Authorization', 'Bearer ' || api_key),
-        net.http_header('Content-Type', 'application/json')
-      ]
+      headers:=jsonb_build_object(
+            'Content-type', 'application/json',
+            'Authorization', 'Bearer ' || api_key
+          ),
     );
     
     -- Log the request (optional)
@@ -91,3 +89,7 @@ SELECT cron.schedule(
   SELECT trigger_process_summary_queue();
   $$
 );
+
+
+-- Manually trigger the function to process the queue
+-- SELECT trigger_process_summary_queue();
