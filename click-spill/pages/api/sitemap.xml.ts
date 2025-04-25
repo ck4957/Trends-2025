@@ -35,7 +35,7 @@ export default async function handler(
       <url>
         <loc>${SITE_URL}/</loc>
         <lastmod>${new Date().toISOString()}</lastmod>
-        <changefreq>daily</changefreq>
+        <changefreq>hourly</changefreq>
         <priority>1.0</priority>
       </url>
     `;
@@ -47,7 +47,7 @@ export default async function handler(
           <url>
             <loc>${SITE_URL}/date/${date}</loc>
             <lastmod>${date}T00:00:00Z</lastmod>
-            <changefreq>daily</changefreq>
+            <changefreq>hourly</changefreq>
             <priority>0.9</priority>
           </url>
         `;
@@ -61,7 +61,7 @@ export default async function handler(
           <url>
             <loc>${SITE_URL}/category/${slug}</loc>
             <lastmod>${new Date().toISOString()}</lastmod>
-            <changefreq>weekly</changefreq>
+            <changefreq>monthly</changefreq>
             <priority>0.8</priority>
           </url>
         `;
@@ -70,6 +70,7 @@ export default async function handler(
 
     // Add individual trend pages
     // Only get the last 500 trends to keep sitemap size reasonable
+    /*
     const { data: trends } = await supabase
       .from("trends")
       .select("id, title, published_at")
@@ -89,7 +90,7 @@ export default async function handler(
           </url>
         `;
       });
-    }
+    } */
 
     // Close sitemap
     xml += "</urlset>";
