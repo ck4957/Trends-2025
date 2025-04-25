@@ -6,48 +6,90 @@ const openAIClient = new OpenAI({
   timeout: 3000,
   maxRetries: 3,
 });
-// Generate summary for an entire trend based on multiple news items
-async function generateSummary(trendTitle: string, newsItems: any[]) {
+// Modify the function signature to accept categories and categoryMap
+async function generateSummaryAndCategory(
+  trendTitle: string,
+  newsItems: any[],
+  categories: string[],
+  categoryMap: Record<string, string>
+) {
   const openaiKey = Deno.env.get("OPENAI_API_KEY");
   if (!openaiKey) {
     console.error("OpenAI API key not found in environment");
-    return "Summary unavailable - API key not configured.";
+    return {
+      summary: "Summary unavailable - API key not configured.",
+      category: "Other",
+      category_id: categoryMap ? categoryMap["Other"] : null,
+    };
   }
+
   const model = "gpt-4o-mini";
-  const maxTokens = Number(Deno.env.get("OPENAI_MAX_TOKENS")) || 150;
+  const maxTokens = Number(Deno.env.get("OPENAI_MAX_TOKENS")) || 200;
+
   // Format news items for the prompt
   const newsItemsText = newsItems
     .map((item) => `- "${item.title}" from ${item.source}`)
     .join("\n");
-  // Construct a prompt for the AI
-  const prompt = `Summarize the trending topic "${trendTitle}" based on these news headlines:
+
+  // Combined prompt requesting both summary and category
+  const prompt = `Analyze the trending topic "${trendTitle}" based on these news headlines:
 ${newsItemsText}
 
-Provide a concise summary (2-3 sentences) explaining what this trend is about and why it's currently trending.`;
+1. CATEGORY: Classify this trend into exactly ONE of the following categories: ${categories.join(
+    ", "
+  )}
+
+2. SUMMARY: Write a concise summary (2-3 sentences) explaining what this trend is about and why it's trending.
+
+Format your response exactly like this:
+CATEGORY: [single category name]
+SUMMARY: [your 2-3 sentence summary]`;
+
   try {
     const response = await openAIClient.chat.completions.create({
       model: model,
-      messages: [
-        {
-          role: "user",
-          content: prompt,
-        },
-      ],
+      messages: [{ role: "user", content: prompt }],
       max_tokens: maxTokens,
       temperature: 0.5,
     });
-    return response.choices[0]?.message?.content?.trim() || null;
+
+    const content = response.choices[0]?.message?.content?.trim() || "";
+
+    // Parse the response to extract category and summary
+    const categoryMatch = content.match(/CATEGORY:\s*([^\n]+)/i);
+    const summaryMatch = content.match(/SUMMARY:\s*(.+)$/is);
+
+    const categoryName = categoryMatch ? categoryMatch[1].trim() : "Other";
+    const summary = summaryMatch ? summaryMatch[1].trim() : content;
+
+    // Get the category ID from our map
+    const category_id = categoryMap[categoryName] || categoryMap["Other"];
+
+    return {
+      summary,
+      category: categoryName,
+      category_id,
+    };
   } catch (error) {
     console.error(
       `Error generating summary for trend "${trendTitle}":`,
       error.message || error
     );
-    return null;
+    return {
+      summary: null,
+      category: "Other",
+      category_id: categoryMap ? categoryMap["Other"] : null,
+    };
   }
 }
 
-// Process a single trend to generate its summary
-async function processTrend(supabaseAdmin, trendId) {
+// Update processTrend to accept the categories data
+async function processTrend(
+  supabaseAdmin,
+  trendId,
+  categories: string[],
+  categoryMap: Record<string, string>
+) {
   // Use a join to fetch the trend with its news items in a single query
   const { data, error } = await supabaseAdmin
     .from("trends")
@@ -89,14 +131,21 @@ async function processTrend(supabaseAdmin, trendId) {
     };
   }
 
-  // Generate the summary
-  const summary = await generateSummary(trend.title, newsItems);
+  // Generate the summary and category together
+  const { summary, category, category_id } = await generateSummaryAndCategory(
+    trend.title,
+    newsItems,
+    categories,
+    categoryMap
+  );
 
-  // Update the trend with the summary
+  // Update the trend with the summary and category
   const { error: updateError } = await supabaseAdmin
     .from("trends")
     .update({
       ai_summary: summary,
+      category: category,
+      category_id: category_id,
       summary_generated_at: new Date().toISOString(),
     })
     .eq("id", trendId);
@@ -113,9 +162,11 @@ async function processTrend(supabaseAdmin, trendId) {
     success: true,
     trend_id: trendId,
     summary: summary,
+    category: category,
   };
 }
 
+// In the main Deno.serve function, fetch categories once and reuse
 Deno.serve(async (req) => {
   try {
     const supabaseAdmin = createClient(
@@ -126,6 +177,32 @@ Deno.serve(async (req) => {
           persistSession: false,
         },
       }
+    );
+
+    // Fetch categories once at the beginning
+    const { data: categoriesData, error: categoriesError } = await supabaseAdmin
+      .from("categories")
+      .select("id, name")
+      .order("name");
+
+    if (categoriesError) {
+      return new Response(
+        JSON.stringify({
+          error: `Failed to fetch categories: ${categoriesError.message}`,
+        }),
+        {
+          status: 500,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
+
+    // Prepare categories data once
+    const categories = categoriesData.map((c) => c.name);
+    const categoryMap = Object.fromEntries(
+      categoriesData.map((c) => [c.name, c.id])
     );
 
     const payload = await req.json();
@@ -150,7 +227,13 @@ Deno.serve(async (req) => {
       // Process multiple trends
       const results = [];
       for (const trendId of payload.trend_ids) {
-        const result = await processTrend(supabaseAdmin, trendId);
+        // Pass categories and categoryMap to processTrend
+        const result = await processTrend(
+          supabaseAdmin,
+          trendId,
+          categories,
+          categoryMap
+        );
         results.push(result);
       }
 
@@ -168,7 +251,13 @@ Deno.serve(async (req) => {
     } else {
       // Process single trend
       const trendId = payload.trend_id;
-      const result = await processTrend(supabaseAdmin, trendId);
+      // Pass categories and categoryMap to processTrend
+      const result = await processTrend(
+        supabaseAdmin,
+        trendId,
+        categories,
+        categoryMap
+      );
 
       if (!result.success) {
         return new Response(
@@ -189,6 +278,8 @@ Deno.serve(async (req) => {
           success: true,
           trend_id: result.trend_id,
           summary: result.summary,
+          category: result.category,
+          category_id: result.category_id, // Make sure to include category_id in the response
         }),
         {
           headers: {
