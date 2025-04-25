@@ -23,7 +23,7 @@ DECLARE
   pending_count INTEGER;
   supabase_url TEXT;
   api_key TEXT;
-  queue_threshold INTEGER := 5; -- Minimum number of pending items to trigger processing
+  queue_threshold INTEGER := 3; -- Minimum number of pending items to trigger processing
   response_id TEXT;
 BEGIN
   -- Get the Supabase URL and API key from vault
