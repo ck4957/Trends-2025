@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react"; // Add useRef
 import Layout from "../components/Layout";
 import Loading from "../components/layout/Loading";
 import ErrorComponent from "../components/layout/Error";
@@ -15,6 +15,11 @@ import NewsletterSignup from "../components/newsletter/NewsletterSignup";
 import { Calendar } from "lucide-react";
 
 export default function Home() {
+  // Add these refs to track initial loads
+  const initialCategoriesLoaded = useRef(false);
+  const initialDatesLoaded = useRef(false);
+  const pendingRequests = useRef(new Map());
+
   // State management
   const [trends, setTrends] = useState<Trend[]>([]);
   const [filteredTrends, setFilteredTrends] = useState<Trend[]>([]);
@@ -40,9 +45,11 @@ export default function Home() {
     }
   }, []);
 
-  // Fetch available dates when component mounts
+  // Fix the dates fetching effect
   useEffect(() => {
     async function fetchAvailableDates() {
+      if (initialDatesLoaded.current) return;
+
       try {
         const response = await fetch("/api/available-dates");
         if (!response.ok) {
@@ -52,7 +59,6 @@ export default function Home() {
         const data = await response.json();
 
         if (data.dates && data.dates.length > 0) {
-          // Convert raw dates to DateOption objects with formatted display date
           const dateOptions: DateOption[] = data.dates.map((date: string) => ({
             date,
             displayDate: formatDateForDisplay(date),
@@ -60,9 +66,8 @@ export default function Home() {
           }));
 
           setAvailableDates(dateOptions);
-
-          // Set the most recent date as current
           setCurrentDate(data.dates[0]);
+          initialDatesLoaded.current = true;
         } else {
           setError("No trend data available.");
         }
@@ -75,9 +80,21 @@ export default function Home() {
     fetchAvailableDates();
   }, []);
 
-  // Fetch categories for a specific date
+  // Improved fetchCategories with request deduplication
   async function fetchCategories(date: string | null = null) {
     try {
+      // Create a request key
+      const requestKey = `categories-${date || "all"}`;
+
+      // Skip if this exact request is already in flight
+      if (pendingRequests.current.has(requestKey)) {
+        console.log(`Skipping duplicate request: ${requestKey}`);
+        return;
+      }
+
+      // Mark this request as pending
+      pendingRequests.current.set(requestKey, true);
+
       // Include date in the query if it's available
       const endpoint = date
         ? `/api/categories?date=${date}`
@@ -85,6 +102,10 @@ export default function Home() {
 
       console.log("Fetching categories from:", endpoint);
       const response = await fetch(endpoint);
+
+      // Remove from pending regardless of success or failure
+      pendingRequests.current.delete(requestKey);
+
       if (!response.ok) {
         throw new Error("Failed to fetch categories");
       }
@@ -108,32 +129,31 @@ export default function Home() {
     }
   }
 
-  // Fetch trends for the current date whenever it changes
-  useEffect(() => {
-    if (currentDate) {
-      // We have a date, fetch trends and categories for that specific date
-      fetchTrendsForDate(currentDate);
-      fetchCategories(currentDate);
-    } else if (categories.length === 0) {
-      // No date yet but we need categories, fetch without date filter
-      fetchCategories(null);
-    }
-  }, [currentDate, categories.length]);
-
-  // Fetch trends for a specific date
+  // Create a deduplicating fetch trends function
   const fetchTrendsForDate = async (date: string) => {
+    const requestKey = `trends-${date}`;
+
+    // Skip if this exact request is already in flight
+    if (pendingRequests.current.has(requestKey)) {
+      console.log(`Skipping duplicate request: ${requestKey}`);
+      return;
+    }
+
     setLoading(true);
     setError("");
+    pendingRequests.current.set(requestKey, true);
 
     try {
       const response = await fetch(`/api/trends-by-date?date=${date}`);
+      pendingRequests.current.delete(requestKey);
+
       if (!response.ok) {
         throw new Error("Failed to fetch trends for date");
       }
 
       const data = await response.json();
       setTrends(data.trends);
-      setFilteredTrends(data.trends); // Initialize filtered trends with all trends
+      setFilteredTrends(data.trends);
       setTimestamp(new Date().toISOString());
     } catch (err) {
       console.error(`Error fetching trends for date ${date}:`, err);
@@ -142,6 +162,19 @@ export default function Home() {
       setLoading(false);
     }
   };
+
+  // Fix the main fetching effect - REMOVE categories.length from dependencies
+  useEffect(() => {
+    if (currentDate) {
+      // We have a date, fetch trends and categories for that specific date
+      fetchTrendsForDate(currentDate);
+      fetchCategories(currentDate);
+    } else if (!initialCategoriesLoaded.current) {
+      // No date yet but we need categories, fetch without date filter
+      fetchCategories(null);
+      initialCategoriesLoaded.current = true;
+    }
+  }, [currentDate]); // Remove categories.length dependency
 
   // Add this useEffect to filter trends when activeCategory changes
   useEffect(() => {

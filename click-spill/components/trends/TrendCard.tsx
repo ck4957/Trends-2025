@@ -20,7 +20,7 @@ const TrendCard: React.FC<TrendCardProps> = ({
 
   // Comprehensive category color mapping
   const getCategoryColor = (slug: string) => {
-    const colors = {
+    const colors: { [key: string]: string } = {
       // Original categories
       technology:
         "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
