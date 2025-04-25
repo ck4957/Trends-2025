@@ -39,7 +39,7 @@ export default async function handler(
       return res.status(404).json({ error: "No data found for this date" });
     }
 
-    // 2. Get all trends for this day
+    // 2. Get all trends for this day with categories
     const { data: trends, error: trendsError } = await supabase
       .from("trends")
       .select(
@@ -53,6 +53,11 @@ export default async function handler(
         published_at,
         rank,
         category_id,
+        categories (
+          id,
+          name,
+          slug
+        ),
         news_items (
           id, 
           title, 
@@ -80,6 +85,13 @@ export default async function handler(
       publishedAt: trend.published_at,
       summary: trend.ai_summary,
       categoryId: trend.category_id,
+      category: trend.categories
+        ? {
+            id: trend.categories.id,
+            name: trend.categories.name,
+            slug: trend.categories.slug,
+          }
+        : null,
       news: trend.news_items.map((news) => ({
         id: news.id,
         title: news.title,

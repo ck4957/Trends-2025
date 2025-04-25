@@ -8,6 +8,12 @@ export interface NewsItem {
   publishedAt?: string;
 }
 
+export interface CategoryInfo {
+  id: string;
+  name: string;
+  slug: string;
+}
+
 export interface Trend {
   id: string;
   title: string;
@@ -17,6 +23,7 @@ export interface Trend {
   publishedAt: string;
   summary?: string;
   categoryId?: string;
+  category?: CategoryInfo | null;
   news: NewsItem[];
 }
 

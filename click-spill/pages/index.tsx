@@ -11,6 +11,8 @@ import {
 } from "../components/trends/trends.model";
 import { getTrendDateString } from "@/utils/dateUtils";
 import NewsletterSignup from "../components/newsletter/NewsletterSignup";
+// Add Lucide React icons import
+import { Calendar } from "lucide-react";
 
 export default function Home() {
   // State management
@@ -210,7 +212,7 @@ export default function Home() {
                   key={dateOption.date}
                   onClick={() => setCurrentDate(dateOption.date)}
                   className={`
-                    px-3 py-1 rounded-md whitespace-nowrap text-sm
+                    px-3 py-1 rounded-md whitespace-nowrap text-sm flex items-center
                     ${
                       currentDate === dateOption.date
                         ? "bg-blue-600 text-white"
@@ -219,6 +221,10 @@ export default function Home() {
                   `}
                   title={dateOption.displayDate}
                 >
+                  {/* Add Calendar icon to date buttons */}
+                  {currentDate === dateOption.date && (
+                    <Calendar className="w-3 h-3 mr-1" />
+                  )}
                   {dateOption.relativeDate || dateOption.displayDate}{" "}
                 </button>
               ))}
@@ -226,9 +232,10 @@ export default function Home() {
           )}
         </div>
 
-        {/* Current Date Display */}
+        {/* Current Date Display with Calendar icon */}
         {currentDate && (
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2 flex items-center">
+            <Calendar className="w-5 h-5 mr-2" />
             Trends for {formatDateForDisplay(currentDate)}
           </h1>
         )}
@@ -296,8 +303,12 @@ export default function Home() {
 
       {renderContent()}
 
-      {/* Newsletter Signup */}
+      {/* Newsletter Signup with Share2 icon */}
       {/* <div className="mt-10">
+        <div className="flex items-center mb-2">
+          <Share2 className="w-4 h-4 mr-2" />
+          <h3 className="text-lg font-semibold">Stay Updated</h3>
+        </div>
         <NewsletterSignup />
       </div> */}
     </Layout>
