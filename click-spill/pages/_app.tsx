@@ -22,7 +22,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="language" content="English" />
         <meta name="revisit-after" content="1 days" />
         <meta name="author" content="ClickSpill" />
-
+        // Add these to your Head component in _app.tsx
+        <meta
+          name="google-site-verification"
+          content="ww1oAvtDmJgQ76OAIWy7izbQduMtWwS4cac_BCD1Jok"
+        />
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://clickspill.com/" />
@@ -38,7 +43,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           property="og:image"
           content="https://clickspill.com/og-image.jpg"
         /> */}
-
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://clickspill.com/" />
@@ -54,27 +58,22 @@ function MyApp({ Component, pageProps }: AppProps) {
           property="twitter:image"
           content="https://clickspill.com/twitter-image.jpg"
         /> */}
-
         {/* Mobile optimization */}
         <meta name="theme-color" content="#2563eb" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="format-detection" content="telephone=no" />
-
         {/* Resource hints for faster loading */}
         <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
         <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
-
         {/* Canonical URL */}
         <link rel="canonical" href="https://clickspill.com" />
         <link rel="icon" href="/cs.ico" />
-
         {/* Font Awesome for icons */}
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         />
-
         {/* JSON-LD structured data for better SEO */}
         <script
           type="application/ld+json"
