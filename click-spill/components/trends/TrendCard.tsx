@@ -3,7 +3,7 @@ import NewsItemDetail from "./NewsItem";
 import { TrendCardProps } from "./trends.model";
 import { getRelativeTimeString } from "@/utils/dateUtils";
 import { TrendingUp, Tag } from "lucide-react"; // Import Tag icon
-
+import Image from "next/image";
 const TrendCard: React.FC<TrendCardProps> = ({
   title,
   traffic,
@@ -118,9 +118,12 @@ const TrendCard: React.FC<TrendCardProps> = ({
 
         {/* Rest of your component remains the same */}
         {picture && (
-          <img
+          <Image
             src={picture}
             alt={title}
+            width={500}
+            height={500}
+            layout="responsive"
             className={`
             rounded-lg object-cover shadow-sm border border-gray-200 dark:border-gray-700
             ${
@@ -133,6 +136,21 @@ const TrendCard: React.FC<TrendCardProps> = ({
               (e.target as HTMLImageElement).style.display = "none";
             }}
           />
+          // <img
+          //   src={picture}
+          //   alt={title}
+          //   className={`
+          //   rounded-lg object-cover shadow-sm border border-gray-200 dark:border-gray-700
+          //   ${
+          //     viewMode === "grid"
+          //       ? "w-full h-40 mb-4"
+          //       : "w-50 h-50 float-right ml-4 mb-2"
+          //   }
+          // `}
+          //   onError={(e) => {
+          //     (e.target as HTMLImageElement).style.display = "none";
+          //   }}
+          // />
         )}
 
         {/* AI Summary Section */}

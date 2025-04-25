@@ -1,7 +1,7 @@
 import React from "react";
 import TrendCard from "./TrendCard";
 import { TrendsListProps } from "./trends.model";
-
+import Script from "next/script";
 const TrendsList: React.FC<TrendsListProps> = ({ trends, viewMode }) => {
   if (trends.length === 0) {
     return (
@@ -46,6 +46,40 @@ const TrendsList: React.FC<TrendsListProps> = ({ trends, viewMode }) => {
           />
         ))}
       </div>
+
+      {/* Enhanced JSON-LD for trending topics */}
+      <Script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `
+          {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": [
+              ${trends
+                .map(
+                  (trend, index) => `{
+                "@type": "ListItem",
+                "position": ${index + 1},
+                "item": {
+                  "@type": "Article",
+                  "headline": "${trend.title}",
+                  "description": "${trend.summary || ""}",
+                  "image": "${trend.picture || ""}",
+                  "datePublished": "${trend.publishedAt}",
+                  "author": {
+                    "@type": "Organization",
+                    "name": "ClickSpill"
+                  }
+                }
+              }`
+                )
+                .join(",")}
+            ]
+          }
+          `,
+        }}
+      />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import Script from "next/script";
 import { useTheme } from "../context/ThemeContext";
-
+import Image from "next/image";
 interface LayoutProps {
   children: React.ReactNode;
   title?: string;
@@ -55,11 +55,18 @@ const Layout: React.FC<LayoutProps> = ({
             {" "}
             {/* Changed to justify-between and added items-center */}
             <a href="/" className="flex items-center">
-              <img
+              <Image
                 src="/logo.png"
                 alt="ClickSpill Logo"
                 className="h-10 w-10 rounded-md object-contain bg-black p-1 shadow-md mr-3"
+                width={40}
+                height={40}
               />
+              {/* <img
+                src="/logo.png"
+                alt="ClickSpill Logo"
+                className="h-10 w-10 rounded-md object-contain bg-black p-1 shadow-md mr-3"
+              /> */}
               <div className="flex flex-col">
                 <span
                   className="text-2xl tracking-tight text-gray-900 dark:text-white select-none"
