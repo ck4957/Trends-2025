@@ -1,3 +1,5 @@
+/* stylelint-disable at-rule-no-unknown */
+@import "tailwindcss";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,6 +10,10 @@
   --bg-header: #eaeaea;
   --bg-footer: #eaeaea;
   --text-main: #333333;
+  --background: #f3f4f6;
+  --surface: #ffffff;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
 }
 
 .dark {
@@ -15,6 +21,10 @@
   --bg-header: #111111;
   --bg-footer: #111111;
   --text-main: #e0e0e0;
+  --background: #111827;
+  --surface: #1f2937;
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
 }
 
 body {

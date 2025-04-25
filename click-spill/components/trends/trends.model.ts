@@ -8,14 +8,22 @@ export interface NewsItem {
   publishedAt?: string;
 }
 
+export interface CategoryInfo {
+  id: string;
+  name: string;
+  slug: string;
+}
+
 export interface Trend {
-  id?: string;
+  id: string;
   title: string;
   traffic: string;
-  picture: string | null;
-  source: string;
-  publishedAt?: string;
-  summary: string | null;
+  picture?: string;
+  source?: string;
+  publishedAt: string;
+  summary?: string;
+  categoryId?: string;
+  category?: CategoryInfo | null;
   news: NewsItem[];
 }
 
@@ -39,3 +47,10 @@ export interface DateOption {
 }
 
 export type ViewMode = "grid" | "list";
+
+export interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  count: number;
+}

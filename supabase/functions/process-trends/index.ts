@@ -11,13 +11,6 @@ import { createClient } from "supabase";
 import { parseStringPromise } from "xml2js";
 
 const TrendsFilesBucket = "trends-files";
-// Delay between summary generation requests (in milliseconds)
-const SUMMARY_REQUEST_DELAY_MS = 300;
-// Maximum concurrent summary requests (0 = unlimited)
-const MAX_CONCURRENT_SUMMARY_REQUESTS = 9;
-
-// Track the number of currently executing summary requests
-let activeSummaryRequests = 0;
 
 // Storage bucket event payload interface
 interface StoragePayload {
@@ -46,46 +39,26 @@ function extractDateFromFilename(filename: string): string {
   return match ? match[1] : new Date().toISOString().split("T")[0];
 }
 
-// Helper function to delay summary generation with controlled concurrency
-async function requestSummaryWithDelay(
+// Add new function to queue a trend for summary generation
+async function queueTrendForSummary(
+  supabaseAdmin: any,
   trendId: string,
   title: string
 ): Promise<void> {
-  // Wait if we've reached max concurrent requests
-  while (
-    MAX_CONCURRENT_SUMMARY_REQUESTS > 0 &&
-    activeSummaryRequests >= MAX_CONCURRENT_SUMMARY_REQUESTS
-  ) {
-    await new Promise((resolve) => setTimeout(resolve, 100)); // Check every 100ms
-  }
+  // Insert into summary queue table
+  const { error } = await supabaseAdmin.from("summary_queue").insert({
+    trend_id: trendId,
+    trend_title: title,
+    status: "pending",
+    created_at: new Date().toISOString(),
+  });
 
-  // Increment active request counter
-  activeSummaryRequests++;
-
-  try {
-    // Add delay between requests
-    await new Promise((resolve) =>
-      setTimeout(resolve, SUMMARY_REQUEST_DELAY_MS)
+  if (error) {
+    console.error(
+      `Error queuing trend "${title}" for summary: ${error.message}`
     );
-
-    // Make the request to generate summary
-    fetch(`${Deno.env.get("SUPABASE_URL")}/functions/v1/generate-summaries`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")}`,
-      },
-      body: JSON.stringify({
-        trend_id: trendId,
-      }),
-    }).catch((error) => {
-      console.error(`Error calling summary generation for "${title}":`, error);
-    });
-
-    console.log(`Requested summary generation for trend "${title}"`);
-  } finally {
-    // Decrement counter when done (regardless of success/failure)
-    activeSummaryRequests--;
+  } else {
+    console.log(`Successfully queued trend "${title}" for summary generation`);
   }
 }
 
@@ -298,12 +271,8 @@ Deno.serve(async (req) => {
       // Wait for all news items to be processed
       await Promise.all(newsPromises);
 
-      // Now that all news items are inserted, generate a summary for this trend
-
-      // Only attempt to generate a summary if there are news items
       if (newsItems.length > 0) {
-        // Call the trend summary function using our delayed request helper
-        requestSummaryWithDelay(trendId, title);
+        await queueTrendForSummary(supabaseAdmin, trendId, title);
       } else {
         console.log(
           `Skipping summary generation for trend "${title}" (no news items)`

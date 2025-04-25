@@ -39,7 +39,7 @@ export default async function handler(
       return res.status(404).json({ error: "No data found for this date" });
     }
 
-    // 2. Get all trends for this day
+    // 2. Get all trends for this day with categories
     const { data: trends, error: trendsError } = await supabase
       .from("trends")
       .select(
@@ -52,6 +52,12 @@ export default async function handler(
         source,
         published_at,
         rank,
+        category_id,
+        categories (
+          id,
+          name,
+          slug
+        ),
         news_items (
           id, 
           title, 
@@ -78,6 +84,17 @@ export default async function handler(
       source: trend.source,
       publishedAt: trend.published_at,
       summary: trend.ai_summary,
+      categoryId: trend.category_id,
+      category: trend.categories
+        ? {
+            // @ts-ignore - Supabase typing issue with nested selects
+            id: trend.categories.id,
+            // @ts-ignore - Supabase typing issue with nested selects
+            name: trend.categories.name,
+            // @ts-ignore - Supabase typing issue with nested selects
+            slug: trend.categories.slug,
+          }
+        : null,
       news: trend.news_items.map((news) => ({
         id: news.id,
         title: news.title,
