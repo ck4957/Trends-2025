@@ -42,6 +42,7 @@ const TrendsList: React.FC<TrendsListProps> = ({ trends, viewMode }) => {
             summary={trend.summary}
             news={trend.news}
             viewMode={viewMode}
+            category={trend.category} // Pass the category prop
           />
         ))}
       </div>

@@ -1,25 +1,11 @@
-import { useEffect } from "react";
 import Head from "next/head";
 import type { AppProps } from "next/app";
+import { ThemeProvider } from "../context/ThemeContext";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  // Initialize dark mode based on user preference
-  useEffect(() => {
-    // Check for saved theme preference or use system preference
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
-
   return (
-    <>
+    <ThemeProvider>
       <Head>
         <title>ClickSpill - Daily Trending Topics | Latest Trending News</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -48,10 +34,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           property="og:description"
           content="Your source for daily trending topics and viral content. Stay updated with the latest trends and breaking news."
         />
-        <meta
+        {/* <meta
           property="og:image"
           content="https://clickspill.com/og-image.jpg"
-        />
+        /> */}
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
@@ -64,10 +50,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           property="twitter:description"
           content="Your source for daily trending topics and viral content. Stay updated with the latest trends and breaking news."
         />
-        <meta
+        {/* <meta
           property="twitter:image"
           content="https://clickspill.com/twitter-image.jpg"
-        />
+        /> */}
 
         {/* Mobile optimization */}
         <meta name="theme-color" content="#2563eb" />
@@ -83,32 +69,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="canonical" href="https://clickspill.com" />
         <link rel="icon" href="/cs.ico" />
 
-        {/* Tailwind CSS via CDN */}
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-        {/* Add Font Awesome for icons */}
+        {/* Font Awesome for icons */}
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        />
-        {/* Tailwind config script for dark mode */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            tailwind.config = {
-              darkMode: 'class',
-              theme: {
-                extend: {
-                  colors: {
-                    primary: {
-                      DEFAULT: '#2563eb',
-                      600: '#2563eb'
-                    }
-                  }
-                }
-              }
-            }
-          `,
-          }}
         />
 
         {/* JSON-LD structured data for better SEO */}
@@ -126,9 +90,25 @@ function MyApp({ Component, pageProps }: AppProps) {
             `,
           }}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function() {
+              try {
+                var theme = localStorage.getItem('theme');
+                if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (e) {}
+            })();
+          `,
+          }}
+        />
       </Head>
       <Component {...pageProps} />
-    </>
+    </ThemeProvider>
   );
 }
 
