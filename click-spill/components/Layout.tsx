@@ -3,6 +3,9 @@ import Head from "next/head";
 import Script from "next/script";
 import { useTheme } from "../context/ThemeContext";
 import Image from "next/image";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 interface LayoutProps {
   children: React.ReactNode;
   title?: string;
@@ -25,18 +28,6 @@ const Layout: React.FC<LayoutProps> = ({
     <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
       <Head>
         <title>{title}</title>
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-CKLFFYDFCZ"
-        />
-        <Script
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());gtag('config', 'G-CKLFFYDFCZ');`,
-          }}
-        />
-
         <meta name="description" content={description} />
         <meta
           name="google-adsense-account"
@@ -47,6 +38,18 @@ const Layout: React.FC<LayoutProps> = ({
           rel="stylesheet"
         />
       </Head>
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-CKLFFYDFCZ"
+      />
+      <Script
+        dangerouslySetInnerHTML={{
+          __html: `window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());gtag('config', 'G-CKLFFYDFCZ');`,
+        }}
+      />
+
       {/* Google AdSense Script */}
       <Script
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3911596373332918"
@@ -152,6 +155,8 @@ const Layout: React.FC<LayoutProps> = ({
           {`(adsbygoogle = window.adsbygoogle || []).push({});`}
         </Script>
       </div>
+      <SpeedInsights />
+      <Analytics />
 
       {/* Footer remains the same */}
       <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">

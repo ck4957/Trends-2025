@@ -1,6 +1,4 @@
 import { Html, Head, Main, NextScript } from "next/document";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 export default function Document() {
   return (
     <Html lang="en">
@@ -17,8 +15,6 @@ export default function Document() {
         </noscript>
         <Main />
         <NextScript />
-        <SpeedInsights />
-        <Analytics />
       </body>
     </Html>
   );
