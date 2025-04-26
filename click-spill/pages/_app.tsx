@@ -8,17 +8,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider>
       <Head>
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-CKLFFYDFCZ"
-        />
-        <Script
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());gtag('config', 'G-CKLFFYDFCZ');`,
-          }}
-        />
         <title>ClickSpill - Daily Trending Topics | Latest Trending News</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta

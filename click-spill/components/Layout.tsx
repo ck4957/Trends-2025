@@ -25,6 +25,18 @@ const Layout: React.FC<LayoutProps> = ({
     <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
       <Head>
         <title>{title}</title>
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-CKLFFYDFCZ"
+        />
+        <Script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());gtag('config', 'G-CKLFFYDFCZ');`,
+          }}
+        />
+
         <meta name="description" content={description} />
         <meta
           name="google-adsense-account"
