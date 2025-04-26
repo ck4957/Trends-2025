@@ -28,10 +28,23 @@ DECLARE
   queue_threshold INTEGER := 3; -- Process exactly 3 at a time
   cooldown_period INTERVAL := '1 minute'; -- OpenAI rate limit period
   response_id TEXT;
-  fixed_items INTEGER;
-  reset_items INTEGER;
+  fixed_items INTEGER := 0;
+  reset_items INTEGER := 0;
+  trends_to_fix INTEGER;
 BEGIN
-  -- Step 1: Find and insert missing trends into the queue
+  -- Step 1: Count how many trends need summaries first
+  SELECT COUNT(*) INTO trends_to_fix
+  FROM 
+    trends t
+  LEFT JOIN 
+    summary_queue sq ON t.id = sq.trend_id
+  WHERE 
+    t.ai_summary IS NULL AND
+    sq.id IS NULL AND
+    -- Only consider trends that have news items
+    EXISTS (SELECT 1 FROM news_items WHERE trend_id = t.id);
+  
+  -- Now insert them and count how many were actually inserted
   WITH trends_needing_summary AS (
     SELECT 
       t.id AS trend_id,
@@ -43,7 +56,6 @@ BEGIN
     WHERE 
       t.ai_summary IS NULL AND
       sq.id IS NULL AND
-      -- Only consider trends that have news items
       EXISTS (SELECT 1 FROM news_items WHERE trend_id = t.id)
   )
   INSERT INTO summary_queue (trend_id, trend_title, status, created_at)
@@ -53,10 +65,10 @@ BEGIN
     'pending', 
     NOW()
   FROM 
-    trends_needing_summary
-  RETURNING (
-    SELECT COUNT(*) FROM trends_needing_summary
-  ) INTO fixed_items;
+    trends_needing_summary;
+  
+  -- Get the count of rows inserted
+  GET DIAGNOSTICS fixed_items = ROW_COUNT;
 
   -- Step 2: Reset completed entries that still don't have summaries
   WITH completed_but_no_summary AS (
@@ -72,15 +84,14 @@ BEGIN
   )
   UPDATE summary_queue
   SET 
-    status = 'pending',
-    updated_at = NOW(),
-    retry_count = COALESCE(retry_count, 0) + 1
+    status = 'pending'
   WHERE 
-    id IN (SELECT queue_id FROM completed_but_no_summary)
-  RETURNING (
-    SELECT COUNT(*) FROM completed_but_no_summary
-  ) INTO reset_items;
+    id IN (SELECT queue_id FROM completed_but_no_summary);
+  
+  -- Get the count of rows updated
+  GET DIAGNOSTICS reset_items = ROW_COUNT;
 
+  -- Rest of the function remains the same
   -- Get the Supabase URL and API key from vault
   supabase_url := (SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'project_url');
   api_key := (SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'anon_key');
@@ -115,8 +126,7 @@ BEGIN
       headers := jsonb_build_object(
         'Content-Type', 'application/json',
         'Authorization', 'Bearer ' || api_key
-      ),
-      body := jsonb_build_object('batch_size', LEAST(pending_count, queue_threshold))::text
+      )
     );
     
     -- Log the request with successful call
@@ -168,18 +178,4 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
-
--- Set up a safety-net scheduled job to handle any pending items
--- that might have been missed by the triggers (runs hourly)
-
-
--- Replace with a scheduled job that runs every minute
-SELECT cron.schedule(
-  'process-summary-queue-every-minute',
-  '* * * * *', -- Run every minute
-  $$
-  SELECT trigger_process_summary_queue();
-  $$
-);
--- Manually trigger the function to process the queue
--- SELECT trigger_process_summary_queue();
+--select public.trigger_process_summary_queue()
