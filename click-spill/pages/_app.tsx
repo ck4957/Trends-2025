@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
           name="description"
-          content="ClickSpill provides daily trending topics, news updates, and viral content in one place. Stay updated with the latest trends and breaking news."
+          content="ClickSpill provides daily trending topics with AI-Driven Summaries, news updates, and viral content in one place. Stay updated with the latest trends and breaking news."
         />
         <meta
           name="keywords"

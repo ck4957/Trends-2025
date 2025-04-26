@@ -11,12 +11,12 @@ interface LayoutProps {
 
 const brandFont = "monospace";
 const brandName = "Click Spill";
-const brandTagline = "AI-powered trending topics";
+const brandTagline = "AI-powered Insights on Trending Topics";
 
 const Layout: React.FC<LayoutProps> = ({
   children,
-  title = "Click Spill - Daily Trending Topics",
-  description = "AI-powered insights on daily trending topics",
+  title = "Click Spill - Daily Trending Topics summarized by AI",
+  description = "Discover Trending Topics with AI-Driven Summaries",
 }) => {
   const { theme, toggleTheme } = useTheme();
   const isDarkMode = theme === "dark";
