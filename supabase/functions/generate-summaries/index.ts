@@ -39,8 +39,25 @@ async function generateSummaryAndCategory(
     };
   }
 
-  const model = "gpt-4o-mini";
-  const maxTokens = Number(Deno.env.get("OPENAI_MAX_TOKENS")) || 200;
+  const models = [
+    "gpt-4.1",
+    "gpt-4.1-mini",
+    "gpt-4.1-nano",
+    "gpt-4o",
+    "gpt-4o-mini",
+    "gpt-3.5-turbo",
+    "o4-mini",
+    "o3-mini",
+  ];
+  // Function to get a random model from the models array
+  function getRandomModel() {
+    const randomIndex = Math.floor(Math.random() * models.length);
+    return models[randomIndex];
+  }
+
+  const model = getRandomModel();
+  logInfo(`Using model: ${model} for trend: "${trendTitle}"`);
+  const maxTokens = 150;
 
   // Format news items for the prompt
   const newsItemsText = newsItems
@@ -55,11 +72,11 @@ ${newsItemsText}
     ", "
   )}
 
-2. SUMMARY: Write a concise summary (2-3 sentences) explaining what this trend is about and why it's trending.
+2. SUMMARY: Write a concise summary (1-2 sentences) explaining what this trend is about and why it's trending.
 
 Format your response exactly like this:
 CATEGORY: [single category name]
-SUMMARY: [your 2-3 sentence summary]`;
+SUMMARY: [your 1-2 sentence summary]`;
 
   const startTime = Date.now();
   try {
@@ -114,6 +131,9 @@ SUMMARY: [your 2-3 sentence summary]`;
       summary: null,
       category: "Other",
       category_id: categoryMap ? categoryMap["Other"] : null,
+      errorFromGenerateSummary: `Failed to generate summary: ${
+        error.message || String(error)
+      }`,
     };
   }
 }
@@ -173,12 +193,13 @@ async function processTrend(
 
   // Generate the summary and category together
   logInfo(`Generating summary for trend: "${trend.title}" (${trendId})`);
-  const { summary, category, category_id } = await generateSummaryAndCategory(
-    trend.title,
-    newsItems,
-    categories,
-    categoryMap
-  );
+  const { summary, category, category_id, errorFromGenerateSummary } =
+    await generateSummaryAndCategory(
+      trend.title,
+      newsItems,
+      categories,
+      categoryMap
+    );
 
   // NEW CODE: Check if we have a valid summary before updating
   if (!summary) {
@@ -188,7 +209,7 @@ async function processTrend(
     return {
       success: false,
       trend_id: trendId,
-      error: "Failed to generate summary",
+      error: errorFromGenerateSummary || "No summary generated",
       status: "pending", // Indicate that this trend is still pending
     };
   }
