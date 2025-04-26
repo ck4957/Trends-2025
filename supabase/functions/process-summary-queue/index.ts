@@ -9,16 +9,6 @@ import { createClient } from "supabase";
 
 // Configuration
 const BATCH_SIZE = 3; // Number of trends to process in one batch
-const PROCESSING_TIMEOUT_MINUTES = 10; // Consider items hung after this time
-
-// Define types for queue items
-interface QueueItem {
-  id: string;
-  trend_id: string;
-  trend_title: string;
-  attempts: number;
-  max_attempts: number;
-}
 
 // Enhanced logging functions
 function logInfo(requestId: string, message: string, data?: any) {

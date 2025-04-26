@@ -180,7 +180,20 @@ async function processTrend(
     categoryMap
   );
 
-  // Update the trend with the summary and category
+  // NEW CODE: Check if we have a valid summary before updating
+  if (!summary) {
+    logInfo(
+      `No valid summary generated for trend: "${trend.title}" (${trendId}), skipping database update`
+    );
+    return {
+      success: false,
+      trend_id: trendId,
+      error: "Failed to generate summary",
+      status: "pending", // Indicate that this trend is still pending
+    };
+  }
+
+  // Only update the database if we have a summary
   logInfo(`Updating trend in database: "${trend.title}" (${trendId})`);
   const { error: updateError } = await supabaseAdmin
     .from("trends")
@@ -200,6 +213,7 @@ async function processTrend(
       success: false,
       trend_id: trendId,
       error: `Failed to update trend: ${updateError.message}`,
+      status: "pending", // Database update failed, still pending
     };
   }
 
