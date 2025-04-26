@@ -35,19 +35,19 @@ export default function Privacy() {
         </h2>
         <p className="text-gray-700 dark:text-gray-300 mb-4">
           All trending topics and news displayed on ClickSpill are collected
-          from public sources, primarily Google Trends. We do not generate or
-          collect any user-specific data.
+          from public sources, primarily{" "}
+          <a
+            href="https://trends.google.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline text-blue-600 dark:text-blue-400"
+          >
+            Google Trends
+          </a>
+          .
         </p>
         <h2 className="text-xl font-semibold mt-6 mb-2 text-gray-900 dark:text-white">
-          4. Cookies and Analytics
-        </h2>
-        <p className="text-gray-700 dark:text-gray-300 mb-4">
-          ClickSpill does not use cookies or analytics tools to track your
-          activity. Some third-party services (such as ad networks) may use
-          cookies, but we do not have access to or control over these cookies.
-        </p>
-        <h2 className="text-xl font-semibold mt-6 mb-2 text-gray-900 dark:text-white">
-          5. Third-Party Links
+          4. Third-Party Links
         </h2>
         <p className="text-gray-700 dark:text-gray-300 mb-4">
           Our website may contain links to third-party websites. We are not
@@ -55,7 +55,7 @@ export default function Privacy() {
           Please review their privacy policies if you visit them.
         </p>
         <h2 className="text-xl font-semibold mt-6 mb-2 text-gray-900 dark:text-white">
-          6. Changes to This Policy
+          5. Changes to This Policy
         </h2>
         <p className="text-gray-700 dark:text-gray-300 mb-4">
           We may update this privacy policy from time to time. Any changes will
