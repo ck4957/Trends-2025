@@ -2,7 +2,7 @@ import Head from "next/head";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "../context/ThemeContext";
 import "../styles/globals.css";
-import Script from "next/script";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -65,16 +65,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="format-detection" content="telephone=no" />
         {/* Resource hints for faster loading */}
-        <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
         {/* Canonical URL */}
         <link rel="canonical" href="https://clickspill.com" />
         <link rel="icon" href="/cs.ico" />
-        {/* Font Awesome for icons */}
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        />
         {/* <!-- Google Tag Manager --> */}
         <script
           dangerouslySetInnerHTML={{

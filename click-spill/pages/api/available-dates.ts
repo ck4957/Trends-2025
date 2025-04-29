@@ -25,7 +25,7 @@ export default async function handler(
       .from("trend_days")
       .select("date")
       .order("date", { ascending: false })
-      .limit(14); // Get last 14 days or adjust as needed
+      .limit(5); // Get last 5 days or adjust as needed
 
     if (error) throw error;
 

@@ -19,6 +19,8 @@
   "author": "Chirag Kular",
   "license": "MIT",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@supabase/supabase-js": "^2.49.4",
     "@tailwindcss/postcss": "^4.1.4",
     "@vercel/analytics": "^1.5.0",

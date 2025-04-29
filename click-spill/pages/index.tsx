@@ -240,24 +240,25 @@ export default function Home() {
       <div className="mb-6">
         {/* View Toggle and Date Selector */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-          {/* Toggle View Button */}
-          <button
-            onClick={toggleViewMode}
-            className="flex items-center mb-4 sm:mb-0 px-3 py-2 bg-white dark:bg-gray-800 rounded-md shadow text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
-          >
-            {viewMode === "grid" ? (
-              <>
-                <i className="fas fa-list mr-2"></i>
-                <span>Switch to List View</span>
-              </>
-            ) : (
-              <>
-                <i className="fas fa-th-large mr-2"></i>
-                <span>Switch to Grid View</span>
-              </>
-            )}
-          </button>
-
+          <div className="hidden sm:block">
+            {/* Toggle View Button */}
+            <button
+              onClick={toggleViewMode}
+              className="flex items-center mb-4 sm:mb-0 px-3 py-2 bg-white dark:bg-gray-800 rounded-md shadow text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+            >
+              {viewMode === "grid" ? (
+                <>
+                  <i className="fas fa-list mr-2"></i>
+                  <span>Switch to List View</span>
+                </>
+              ) : (
+                <>
+                  <i className="fas fa-th-large mr-2"></i>
+                  <span>Switch to Grid View</span>
+                </>
+              )}
+            </button>
+          </div>
           {/* Date Selection */}
           {availableDates.length > 0 && (
             <div className="flex space-x-1 overflow-x-auto pb-2 w-full sm:w-auto">
@@ -330,7 +331,7 @@ export default function Home() {
             id="category-select"
             value={activeCategory}
             onChange={(e) => setActiveCategory(e.target.value)}
-            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+            className="appearance-none mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
           >
             {categories.map((category) => (
               <option key={category.id} value={category.slug}>
