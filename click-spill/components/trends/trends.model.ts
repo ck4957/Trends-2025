@@ -14,6 +14,11 @@ export interface CategoryInfo {
   slug: string;
 }
 
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
 export interface Trend {
   id: string;
   title: string;
@@ -25,28 +30,23 @@ export interface Trend {
   categoryId?: string;
   category?: CategoryInfo | null;
   news: NewsItem[];
+  ai_article?: string;
+  ai_faq?: FAQItem[];
 }
 
 export interface TrendsListProps {
   trends: Trend[];
-  viewMode: "grid" | "list";
 }
 
-export interface TrendCardProps extends Trend {
-  viewMode: "grid" | "list";
-}
+export interface TrendCardProps extends Trend {}
 
-export interface NewsItemProps extends NewsItem {
-  viewMode: "grid" | "list";
-}
+export interface NewsItemProps extends NewsItem {}
 
 export interface DateOption {
   date: string; // YYYY-MM-DD format
   displayDate: string; // Formatted for display
   relativeDate: string; // Relative time string
 }
-
-export type ViewMode = "grid" | "list";
 
 export interface Category {
   id: string;

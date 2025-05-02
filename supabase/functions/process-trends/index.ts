@@ -246,15 +246,18 @@ Deno.serve(async (req) => {
         // Don't generate summary here - just insert with empty summary
         const { data: newsItemData, error: newsError } = await supabaseAdmin
           .from("news_items")
-          .insert({
-            trend_id: trendId,
-            title: newsTitle,
-            url: newsUrl,
-            source: newsSource,
-            picture_url: newsPicture,
-            ai_summary: null, // Set to null initially
-            published_at: pubDate ? new Date(pubDate).toISOString() : null,
-          })
+          .upsert(
+            {
+              trend_id: trendId,
+              title: newsTitle,
+              url: newsUrl,
+              source: newsSource,
+              picture_url: newsPicture,
+              ai_summary: null, // Set to null initially
+              published_at: pubDate ? new Date(pubDate).toISOString() : null,
+            },
+            { onConflict: ["title", "url"] }
+          )
           .select()
           .single();
 

@@ -2,7 +2,7 @@ import React from "react";
 import TrendCard from "./TrendCard";
 import { TrendsListProps } from "./trends.model";
 import Script from "next/script";
-const TrendsList: React.FC<TrendsListProps> = ({ trends, viewMode }) => {
+const TrendsList: React.FC<TrendsListProps> = ({ trends }) => {
   if (trends.length === 0) {
     return (
       <div className="text-center p-8 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
@@ -21,15 +21,7 @@ const TrendsList: React.FC<TrendsListProps> = ({ trends, viewMode }) => {
         </span>
       </h2>
 
-      <div
-        className={`
-        ${
-          viewMode === "grid"
-            ? "grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-            : "flex flex-col space-y-6"
-        }
-      `}
-      >
+      <div className="flex flex-col space-y-6">
         {trends.map((trend, index) => (
           <TrendCard
             key={trend.id || index}
@@ -40,8 +32,9 @@ const TrendsList: React.FC<TrendsListProps> = ({ trends, viewMode }) => {
             source={trend.source}
             publishedAt={trend.publishedAt}
             summary={trend.summary}
+            ai_article={trend.ai_article}
+            ai_faq={trend.ai_faq}
             news={trend.news}
-            viewMode={viewMode}
             category={trend.category} // Pass the category prop
           />
         ))}
@@ -67,7 +60,28 @@ const TrendsList: React.FC<TrendsListProps> = ({ trends, viewMode }) => {
                   "description": "${trend.summary || ""}",
                   "image": "${trend.picture || ""}",
                   "datePublished": "${trend.publishedAt}",
-                  "author": {
+                  "articleBody": ${JSON.stringify(
+                    trend.ai_article || trend.summary || ""
+                  )},
+                  ${
+                    trend.ai_faq && trend.ai_faq.length > 0
+                      ? `"mainEntity": [
+                    ${trend.ai_faq
+                      .map(
+                        (faq) => `{
+                      "@type": "Question",
+                      "name": ${JSON.stringify(faq.question)},
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": ${JSON.stringify(faq.answer)}
+                      }
+                    }`
+                      )
+                      .join(",\n")}
+                  ]`
+                      : ""
+                  }
+                  ,"author": {
                     "@type": "Organization",
                     "name": "ClickSpill"
                   }

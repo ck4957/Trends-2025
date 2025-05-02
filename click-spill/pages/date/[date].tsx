@@ -4,11 +4,7 @@ import Layout from "../../components/Layout";
 import Loading from "../../components/layout/Loading";
 import ErrorComponent from "../../components/layout/Error";
 import TrendsList from "../../components/trends/TrendsList";
-import {
-  Trend,
-  ViewMode,
-  Category,
-} from "../../components/trends/trends.model";
+import { Trend, Category } from "../../components/trends/trends.model";
 import { Calendar } from "lucide-react";
 
 export default function DatePage() {
@@ -23,7 +19,6 @@ export default function DatePage() {
   const [error, setError] = useState("");
   const [categories, setCategories] = useState<Category[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>("all");
-  const [viewMode, setViewMode] = useState<ViewMode>("grid");
 
   // Fetch trends when date is available
   useEffect(() => {
@@ -137,13 +132,6 @@ export default function DatePage() {
     });
   };
 
-  // Toggle view mode
-  const toggleViewMode = () => {
-    const newMode: ViewMode = viewMode === "grid" ? "list" : "grid";
-    setViewMode(newMode);
-    localStorage.setItem("viewMode", newMode);
-  };
-
   const renderContent = () => {
     if (loading) return <Loading />;
     if (error) return <ErrorComponent message={error} />;
@@ -165,7 +153,7 @@ export default function DatePage() {
       );
     }
 
-    return <TrendsList trends={filteredTrends} viewMode={viewMode} />;
+    return <TrendsList trends={filteredTrends} />;
   };
 
   return (
@@ -177,23 +165,6 @@ export default function DatePage() {
       <div className="mb-6">
         {/* View Toggle */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-          <button
-            onClick={toggleViewMode}
-            className="flex items-center mb-4 sm:mb-0 px-3 py-2 bg-white dark:bg-gray-800 rounded-md shadow text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
-          >
-            {viewMode === "grid" ? (
-              <>
-                <i className="fas fa-list mr-2"></i>
-                <span>Switch to List View</span>
-              </>
-            ) : (
-              <>
-                <i className="fas fa-th-large mr-2"></i>
-                <span>Switch to Grid View</span>
-              </>
-            )}
-          </button>
-
           <a
             href="/"
             className="px-3 py-1 rounded-md text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"

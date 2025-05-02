@@ -8,7 +8,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "supabase";
 
 // Configuration
-const BATCH_SIZE = 3; // Number of trends to process in one batch
+const BATCH_SIZE = 2; // Number of trends to process in one batch
 
 // Enhanced logging functions
 function logInfo(requestId: string, message: string, data?: any) {
@@ -169,10 +169,12 @@ Deno.serve(async (req) => {
         }),
       });
 
-      const apiDuration = Date.now() - apiStartTime;
+      const apiDuration = (Date.now() - apiStartTime) / 1000;
       logInfo(
         requestId,
-        `API call completed in ${apiDuration}ms with status ${response.status}`
+        `API call completed in ${apiDuration.toFixed(2)}s with status ${
+          response.status
+        }`
       );
 
       if (!response.ok) {

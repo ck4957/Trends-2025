@@ -4,11 +4,7 @@ import Layout from "../../components/Layout";
 import Loading from "../../components/layout/Loading";
 import ErrorComponent from "../../components/layout/Error";
 import TrendsList from "../../components/trends/TrendsList";
-import {
-  Trend,
-  ViewMode,
-  DateOption,
-} from "../../components/trends/trends.model";
+import { Trend, DateOption } from "../../components/trends/trends.model";
 import { Tag } from "lucide-react";
 
 export default function CategoryPage() {
@@ -23,7 +19,6 @@ export default function CategoryPage() {
   const [categoryName, setCategoryName] = useState("");
   const [availableDates, setAvailableDates] = useState<DateOption[]>([]);
   const [currentDate, setCurrentDate] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<ViewMode>("grid");
 
   // Fetch available dates
   useEffect(() => {
@@ -120,13 +115,6 @@ export default function CategoryPage() {
     }
   }
 
-  // Toggle view mode
-  const toggleViewMode = () => {
-    const newMode: ViewMode = viewMode === "grid" ? "list" : "grid";
-    setViewMode(newMode);
-    localStorage.setItem("viewMode", newMode);
-  };
-
   const renderContent = () => {
     if (loading) return <Loading />;
     if (error) return <ErrorComponent message={error} />;
@@ -147,29 +135,14 @@ export default function CategoryPage() {
       );
     }
 
-    return <TrendsList trends={filteredTrends} viewMode={viewMode} />;
+    return <TrendsList trends={filteredTrends} />;
   };
 
   return (
     <Layout title={`${categoryName || slug} Trends | ClickSpill`}>
       <div className="mb-6">
         {/* <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-          <button
-            onClick={toggleViewMode}
-            className="flex items-center mb-4 sm:mb-0 px-3 py-2 bg-white dark:bg-gray-800 rounded-md shadow text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
-          >
-            {viewMode === "grid" ? (
-              <>
-                <i className="fas fa-list mr-2"></i>
-                <span>Switch to List View</span>
-              </>
-            ) : (
-              <>
-                <i className="fas fa-th-large mr-2"></i>
-                <span>Switch to Grid View</span>
-              </>
-            )}
-          </button>
+          
 
           {availableDates.length > 0 && (
             <div className="flex space-x-1 overflow-x-auto pb-2 w-full sm:w-auto">

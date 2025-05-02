@@ -3,12 +3,7 @@ import Layout from "../components/Layout";
 import Loading from "../components/layout/Loading";
 import ErrorComponent from "../components/layout/Error";
 import TrendsList from "../components/trends/TrendsList";
-import {
-  Trend,
-  ViewMode,
-  DateOption,
-  Category,
-} from "../components/trends/trends.model";
+import { Trend, DateOption, Category } from "../components/trends/trends.model";
 import { getTrendDateString } from "@/utils/dateUtils";
 import NewsletterSignup from "../components/newsletter/NewsletterSignup";
 // Add Lucide React icons import
@@ -35,15 +30,6 @@ export default function Home() {
   // Pagination and view mode
   const [availableDates, setAvailableDates] = useState<DateOption[]>([]);
   const [currentDate, setCurrentDate] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<ViewMode>("grid");
-
-  // Load view mode from localStorage
-  useEffect(() => {
-    const savedViewMode = localStorage.getItem("viewMode") as ViewMode;
-    if (savedViewMode) {
-      setViewMode(savedViewMode);
-    }
-  }, []);
 
   // Fix the dates fetching effect
   useEffect(() => {
@@ -190,17 +176,6 @@ export default function Home() {
     }
   }, [activeCategory, trends]);
 
-  // Toggle between grid and list view
-  const toggleViewMode = () => {
-    const newMode: ViewMode = viewMode === "grid" ? "list" : "grid";
-    setViewMode(newMode);
-
-    // Save preference to localStorage
-    if (typeof window !== "undefined") {
-      localStorage.setItem("viewMode", newMode);
-    }
-  };
-
   // Format date for display (e.g., "April 23, 2025")
   const formatDateForDisplay = (dateString: string): string => {
     const date = new Date(dateString);
@@ -232,7 +207,7 @@ export default function Home() {
       );
     }
 
-    return <TrendsList trends={filteredTrends} viewMode={viewMode} />;
+    return <TrendsList trends={filteredTrends} />;
   };
 
   return (
@@ -240,25 +215,6 @@ export default function Home() {
       <div className="mb-6">
         {/* View Toggle and Date Selector */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-          <div className="hidden sm:block">
-            {/* Toggle View Button */}
-            <button
-              onClick={toggleViewMode}
-              className="flex items-center mb-4 sm:mb-0 px-3 py-2 bg-white dark:bg-gray-800 rounded-md shadow text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
-            >
-              {viewMode === "grid" ? (
-                <>
-                  <i className="fas fa-list mr-2"></i>
-                  <span>Switch to List View</span>
-                </>
-              ) : (
-                <>
-                  <i className="fas fa-th-large mr-2"></i>
-                  <span>Switch to Grid View</span>
-                </>
-              )}
-            </button>
-          </div>
           {/* Date Selection */}
           {availableDates.length > 0 && (
             <div className="flex space-x-1 overflow-x-auto pb-2 w-full sm:w-auto">

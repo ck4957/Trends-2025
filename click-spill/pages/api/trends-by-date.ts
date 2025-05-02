@@ -48,6 +48,8 @@ export default async function handler(
         title,
         approx_traffic,
         ai_summary,
+        ai_article,
+        ai_faq,
         picture_url,
         source,
         published_at,
@@ -84,6 +86,8 @@ export default async function handler(
       source: trend.source,
       publishedAt: trend.published_at,
       summary: trend.ai_summary,
+      ai_article: trend.ai_article,
+      ai_faq: trend.ai_faq,
       categoryId: trend.category_id,
       category: trend.categories
         ? {

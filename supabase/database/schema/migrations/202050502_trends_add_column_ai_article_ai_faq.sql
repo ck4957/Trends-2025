@@ -1,0 +1,3 @@
+ALTER TABLE trends
+ADD COLUMN ai_article TEXT,
+ADD COLUMN ai_faq JSONB;
