@@ -27,6 +27,7 @@ const TrendsList: React.FC<TrendsListProps> = ({ trends }) => {
             key={trend.id || index}
             id={trend.id}
             title={trend.title}
+            slug={trend.slug}
             traffic={trend.traffic}
             picture={trend.picture}
             source={trend.source}

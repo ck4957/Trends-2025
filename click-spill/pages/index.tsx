@@ -86,7 +86,6 @@ export default function Home() {
         ? `/api/categories?date=${date}`
         : "/api/categories";
 
-      console.log("Fetching categories from:", endpoint);
       const response = await fetch(endpoint);
 
       // Remove from pending regardless of success or failure

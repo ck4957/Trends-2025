@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createClient } from "@supabase/supabase-js";
+import { fetchTrends } from "./utils/fetch-trends";
 
 // Environment variables
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -26,91 +27,8 @@ export default async function handler(
       return res.status(400).json({ error: "Date parameter is required" });
     }
 
-    const supabase = getSupabaseClient();
-
-    // 1. First get the trend_day record for this date
-    const { data: dayData, error: dayError } = await supabase
-      .from("trend_days")
-      .select("id")
-      .eq("date", date)
-      .single();
-
-    if (dayError || !dayData) {
-      return res.status(404).json({ error: "No data found for this date" });
-    }
-
-    // 2. Get all trends for this day with categories
-    const { data: trends, error: trendsError } = await supabase
-      .from("trends")
-      .select(
-        `
-        id, 
-        title,
-        approx_traffic,
-        ai_summary,
-        ai_article,
-        ai_faq,
-        picture_url,
-        source,
-        published_at,
-        rank,
-        category_id,
-        categories (
-          id,
-          name,
-          slug
-        ),
-        news_items (
-          id, 
-          title, 
-          url, 
-          source,
-          picture_url,
-          ai_summary,
-          published_at
-        )
-      `
-      )
-      .eq("trend_day_id", dayData.id)
-      .order("published_at", { ascending: false })
-      .order("rank", { ascending: false });
-
-    if (trendsError) throw trendsError;
-
-    // 3. Format the data for the frontend
-    const formattedTrends = trends.map((trend) => ({
-      id: trend.id,
-      title: trend.title,
-      traffic: trend.approx_traffic,
-      picture: trend.picture_url,
-      source: trend.source,
-      publishedAt: trend.published_at,
-      summary: trend.ai_summary,
-      ai_article: trend.ai_article,
-      ai_faq: trend.ai_faq,
-      categoryId: trend.category_id,
-      category: trend.categories
-        ? {
-            // @ts-ignore - Supabase typing issue with nested selects
-            id: trend.categories.id,
-            // @ts-ignore - Supabase typing issue with nested selects
-            name: trend.categories.name,
-            // @ts-ignore - Supabase typing issue with nested selects
-            slug: trend.categories.slug,
-          }
-        : null,
-      news: trend.news_items.map((news) => ({
-        id: news.id,
-        title: news.title,
-        url: news.url,
-        source: news.source,
-        picture: news.picture_url,
-        summary: news.ai_summary,
-        publishedAt: news.published_at,
-      })),
-    }));
-
-    res.status(200).json({ trends: formattedTrends });
+    const trends = await fetchTrends({ date: date as string });
+    res.status(200).json({ trends });
   } catch (error) {
     console.error("Error fetching trends for date:", error);
     res.status(500).json({ error: "Failed to fetch trends" });

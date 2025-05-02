@@ -39,6 +39,21 @@ function extractDateFromFilename(filename: string): string {
   return match ? match[1] : new Date().toISOString().split("T")[0];
 }
 
+// Slugify utility for trend titles
+function slugify(text: string, date: string) {
+  return (
+    text
+      .toString()
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-") +
+    "-" +
+    date
+  );
+}
+
 // Add new function to queue a trend for summary generation
 async function queueTrendForSummary(
   supabaseAdmin: any,
@@ -206,6 +221,7 @@ Deno.serve(async (req) => {
           .upsert({
             trend_day_id: trendDayId,
             title: title,
+            slug: slugify(title, trendDate),
             approx_traffic: traffic, // Keep original string format for display
             picture_url: pictureUrl,
             source: pictureSource,

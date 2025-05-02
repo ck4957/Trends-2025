@@ -30,7 +30,7 @@ async function getXmlData(): Promise<string> {
       const todayStr = today.toISOString().split("T")[0];
 
       filename = todayStr + ".xml";
-      console.log("Filename:", filename, "Bucket:", SUPABASE_BUCKET);
+      //console.log("Filename:", filename, "Bucket:", SUPABASE_BUCKET);
       // Get XML file from storage
       const supabase = getSupabaseClient();
       const { data: fileData, error: fileError } = await supabase.storage

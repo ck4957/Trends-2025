@@ -36,7 +36,7 @@ export default function DatePage() {
       pendingRequests.current.set(requestKey, true);
 
       try {
-        console.log(`Fetching trends for date: ${dateStr}`);
+        //console.log(`Fetching trends for date: ${dateStr}`);
         const endpoint = `/api/trends-by-date?date=${encodeURIComponent(
           dateStr
         )}`;

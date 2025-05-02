@@ -22,6 +22,7 @@ export interface FAQItem {
 export interface Trend {
   id: string;
   title: string;
+  slug: string;
   traffic: string;
   picture?: string;
   source?: string;
