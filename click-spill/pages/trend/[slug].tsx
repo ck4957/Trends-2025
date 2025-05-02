@@ -2,11 +2,13 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import TrendCard from "@/components/trends/TrendCard";
 import Layout from "@/components/Layout";
+import Head from "next/head";
+import { Trend } from "@/components/trends/trends.model";
 
 export default function TrendDetailPage() {
   const router = useRouter();
   const { slug } = router.query;
-  const [trend, setTrend] = useState(null);
+  const [trend, setTrend] = useState<Trend | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -51,9 +53,49 @@ export default function TrendDetailPage() {
       </Layout>
     );
 
+  // SEO meta tags
+  const pageTitle = `${trend.title} | Click Spill`;
+  const pageDescription =
+    trend.summary || `Latest news and analysis for ${trend.title}.`;
+  const pageUrl = `https://clickspill.com/trend/${trend.slug}`;
+  const pageImage = trend.picture || "https://clickspill.com/logo.png";
+
+  // JSON-LD structured data
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: trend.title,
+    description: trend.summary,
+    image: pageImage,
+    datePublished: trend.publishedAt,
+    author: {
+      "@type": "Organization",
+      name: "Click Spill",
+    },
+    mainEntityOfPage: pageUrl,
+  };
+
   return (
     <Layout>
-      <div className="max-w-5xl py-8">
+      <Head>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={pageUrl} />
+        {/* Open Graph */}
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={pageUrl} />
+        <meta property="og:image" content={pageImage} />
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:image" content={pageImage} />
+        {/* Structured Data */}
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+      </Head>
+      <div className="max-w-5xl mx-auto py-8 px-4">
         <button
           className="mb-4 text-blue-600 hover:underline text-sm"
           onClick={() => router.back()}
