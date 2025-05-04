@@ -21,9 +21,6 @@ const Layout: React.FC<LayoutProps> = ({
   title = "Click Spill - Daily Trending Topics summarized by AI",
   description = "Discover Trending Topics with AI-Driven Summaries",
 }) => {
-  const { theme, toggleTheme } = useTheme();
-  const isDarkMode = theme === "dark";
-
   return (
     <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
       <Head>

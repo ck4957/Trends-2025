@@ -107,8 +107,9 @@ export default function Home() {
           0
         ),
       };
-
+      //if (data.categories.length > 0) {
       setCategories([allCategoriesOption, ...data.categories]);
+      //}
     } catch (err) {
       console.error("Error fetching categories:", err);
     }

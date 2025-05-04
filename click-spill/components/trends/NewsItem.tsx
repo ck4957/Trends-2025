@@ -6,8 +6,6 @@ const NewsItemDetail: React.FC<NewsItemProps> = ({
   title,
   url,
   source,
-  picture,
-  summary,
   publishedAt,
 }) => {
   // Format published date if available
