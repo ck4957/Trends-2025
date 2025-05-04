@@ -11,7 +11,7 @@ interface ShareButtonsProps {
 const ShareButtons: React.FC<ShareButtonsProps> = ({
   title,
   url,
-  hashtags = ["clickspill", title],
+  hashtags = ["clickspill", title.replace(/\s+/g, "")],
   showLabel = false,
 }) => {
   const encodedUrl = encodeURIComponent(url);
