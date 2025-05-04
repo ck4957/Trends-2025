@@ -7,6 +7,7 @@ import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import { getCategoryColor } from "./trend-util";
+import ShareButtons from "../shared/ShareButtons";
 
 const TrendCard: React.FC<TrendCardProps & { singleColumn?: boolean }> = ({
   title,
@@ -32,14 +33,25 @@ const TrendCard: React.FC<TrendCardProps & { singleColumn?: boolean }> = ({
   if (singleColumn) {
     return (
       <div className="trend-card bg-gray-50 dark:bg-gray-800 overflow-hidden shadow rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
-          <Link
-            href={`/trend/${slug}`}
-            className="hover:underline focus:underline"
-          >
-            {title}
-          </Link>
-        </h3>
+        <div className="flex justify-between items-start mb-2">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+            <Link
+              href={`/trend/${slug}`}
+              className="hover:underline focus:underline"
+            >
+              {title}
+            </Link>
+          </h3>
+          <ShareButtons
+            title={title}
+            url={
+              typeof window !== "undefined"
+                ? `${window.location.origin}/trend/${slug}`
+                : `https://clickspill.com/trend/${slug}`
+            }
+            showLabel={false}
+          />
+        </div>
         <div className="flex flex-wrap gap-x-2 items-center text-sm mb-4">
           {traffic && (
             <span className="px-2.5 py-1 bg-indigo-100 text-xs text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200 flex items-center font-medium rounded-full">
@@ -145,14 +157,25 @@ const TrendCard: React.FC<TrendCardProps & { singleColumn?: boolean }> = ({
   if (noAIContent) {
     return (
       <div className="trend-card bg-gray-50 dark:bg-gray-800 overflow-hidden shadow rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
-          <Link
-            href={`/trend/${slug}`}
-            className="hover:underline focus:underline"
-          >
-            {title}
-          </Link>
-        </h3>
+        <div className="flex justify-between items-start mb-2">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+            <Link
+              href={`/trend/${slug}`}
+              className="hover:underline focus:underline"
+            >
+              {title}
+            </Link>
+          </h3>
+          <ShareButtons
+            title={title}
+            url={
+              typeof window !== "undefined"
+                ? `${window.location.origin}/trend/${slug}`
+                : `https://clickspill.com/trend/${slug}`
+            }
+            showLabel={false}
+          />
+        </div>
         <div className="flex flex-wrap gap-x-2 items-center text-sm mb-4">
           {traffic && (
             <span className="px-2.5 py-1 bg-indigo-100 text-xs text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200 flex items-center font-medium rounded-full">
@@ -222,14 +245,25 @@ const TrendCard: React.FC<TrendCardProps & { singleColumn?: boolean }> = ({
   // AI content present: use previous layout (not image fixed on left)
   return (
     <div className="trend-card bg-gray-50 dark:bg-gray-800 overflow-hidden shadow rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-      <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
-        <Link
-          href={`/trend/${slug}`}
-          className="hover:underline focus:underline"
-        >
-          {title}
-        </Link>
-      </h3>
+      <div className="flex justify-between items-start mb-2">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+          <Link
+            href={`/trend/${slug}`}
+            className="hover:underline focus:underline"
+          >
+            {title}
+          </Link>
+        </h3>
+        <ShareButtons
+          title={title}
+          url={
+            typeof window !== "undefined"
+              ? `${window.location.origin}/trend/${slug}`
+              : `https://clickspill.com/trend/${slug}`
+          }
+          showLabel={false}
+        />
+      </div>
       <div className="flex flex-wrap gap-x-2 items-center text-sm mb-4">
         {traffic && (
           <span className="px-2.5 py-1 bg-indigo-100 text-xs text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200 flex items-center font-medium rounded-full">

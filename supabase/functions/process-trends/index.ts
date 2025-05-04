@@ -146,16 +146,15 @@ Deno.serve(async (req) => {
     const trendDate = extractDateFromFilename(filename);
 
     // 1. First create a record in trend_days table
+    // Always insert a new row for each run (no onConflict)
     const { data: trendDay, error: trendDayError } = await supabaseAdmin
       .from("trend_days")
-      .upsert(
-        {
-          date: trendDate,
-          source_filename: filename,
-          processed_at: new Date().toISOString(),
-        },
-        { onConflict: "date" }
-      )
+      .insert({
+        date: trendDate,
+        run_time: new Date().toISOString(),
+        source_filename: filename,
+        processed_at: new Date().toISOString(),
+      })
       .select()
       .single();
 
@@ -272,7 +271,7 @@ Deno.serve(async (req) => {
               ai_summary: null, // Set to null initially
               published_at: pubDate ? new Date(pubDate).toISOString() : null,
             },
-            { onConflict: ["title", "url"] }
+            { onConflict: ["trend_id", "title", "url"] }
           )
           .select()
           .single();

@@ -40,36 +40,6 @@ Deno.serve(async (req) => {
       }
     );
 
-    // First log overall queue status
-    const { data: queueStats, error: statsError } = await supabaseAdmin
-      .from("summary_queue")
-      .select("status")
-      .then((res) => {
-        if (res.error) return { data: null, error: res.error };
-
-        // Count items by status
-        const stats = {
-          total: 0,
-          pending: 0,
-          processing: 0,
-          completed: 0,
-          failed: 0,
-        };
-        if (res.data) {
-          stats.total = res.data.length;
-          res.data.forEach((item) => {
-            stats[item.status] = (stats[item.status] || 0) + 1;
-          });
-        }
-        return { data: stats, error: null };
-      });
-
-    if (queueStats) {
-      logInfo(requestId, "Curr Q stats:", queueStats);
-    } else if (statsError) {
-      logError(requestId, "Error fetching queue statistics", statsError);
-    }
-
     // Get pending items from the queue
     logInfo(requestId, `Fetching up to ${BATCH_SIZE} pending items from queue`);
     const { data: pendingItems, error: fetchError } = await supabaseAdmin

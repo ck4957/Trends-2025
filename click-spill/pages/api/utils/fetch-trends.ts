@@ -21,11 +21,13 @@ export async function fetchTrends({
 }) {
   const supabase = getSupabaseClient();
 
-  // 1. Get the trend_day record for this date
+  // 1. Get the latest trend_day record for this date
   const { data: dayData, error: dayError } = await supabase
     .from("trend_days")
     .select("id")
     .eq("date", date)
+    .order("run_time", { ascending: false }) // Get the most recent run for this date
+    .limit(1)
     .single();
 
   if (dayError || !dayData) {

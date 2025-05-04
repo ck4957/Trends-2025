@@ -43,7 +43,7 @@ async function generateSummaryAndCategory(
     "gpt-4.1",
     //"gpt-4.1-mini",
     "gpt-4.1-nano",
-    "gpt-4o",
+    //"gpt-4o",
     "gpt-4o-mini",
     "gpt-3.5-turbo",
     //"o4-mini",

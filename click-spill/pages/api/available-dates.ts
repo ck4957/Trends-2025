@@ -20,17 +20,15 @@ export default async function handler(
   try {
     const supabase = getSupabaseClient();
 
-    // Get all unique dates from trend_days table
-    const { data, error } = await supabase
-      .from("trend_days")
-      .select("date")
-      .order("date", { ascending: false })
-      .limit(5); // Get last 5 days or adjust as needed
+    // Use DISTINCT ON to get unique dates, properly ordered
+    const { data, error } = await supabase.rpc("get_distinct_dates", {
+      limit_count: 5,
+    });
 
     if (error) throw error;
 
-    // Extract just the date values
-    const dates = data ? data.map((item) => item.date) : [];
+    // Extract the dates from the result
+    const dates = data ? data.map((item: { date: string }) => item.date) : [];
 
     res.status(200).json({ dates });
   } catch (error) {
