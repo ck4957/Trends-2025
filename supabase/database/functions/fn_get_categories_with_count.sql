@@ -18,16 +18,8 @@ BEGIN
     categories c
   LEFT JOIN 
     trends t ON c.id = t.category_id
-  LEFT JOIN (
-    -- Get only the most recent run for each date
-    SELECT td1.*
-    FROM trend_days td1
-    JOIN (
-      SELECT date, MAX(run_time) as latest_run_time
-      FROM trend_days
-      GROUP BY date
-    ) td2 ON td1.date = td2.date AND td1.run_time = td2.latest_run_time
-  ) td ON t.trend_day_id = td.id
+  LEFT JOIN 
+    trend_days td ON t.trend_day_id = td.id
   WHERE
     (date_param IS NULL OR td.date = date_param::DATE) -- Cast text to DATE
   GROUP BY 

@@ -18,16 +18,23 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const { slug, date } = req.query;
+    const { slug } = req.query;
 
-    if (!slug || !date) {
-      return res
-        .status(400)
-        .json({ error: "slug and date parameters are required" });
+    if (!slug) {
+      return res.status(400).json({ error: "slug parameter is required" });
+    }
+    // Extract date from slug (format: some-trend-title-YYYY-MM-DD)
+    const dateMatch = String(slug).match(/(\d{4}-\d{2}-\d{2})$/);
+
+    if (!dateMatch) {
+      return res.status(400).json({
+        error: "Invalid slug format. Expected format: title-YYYY-MM-DD",
+      });
     }
 
+    const date = dateMatch[1];
     const trends = await fetchTrends({
-      date: date as string,
+      date: date,
       slug: slug as string,
       limit: 1,
     });
@@ -36,7 +43,6 @@ export default async function handler(
     }
     res.status(200).json({ trend: trends[0] });
   } catch (error) {
-    console.error("Error fetching trend by slug:", error);
     res.status(500).json({ error: "Failed to fetch trend" });
   }
 }

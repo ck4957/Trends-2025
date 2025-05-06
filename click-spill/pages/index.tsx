@@ -221,7 +221,11 @@ export default function Home() {
               {availableDates.map((dateOption) => (
                 <button
                   key={dateOption.date}
-                  onClick={() => setCurrentDate(dateOption.date)}
+                  onClick={() => {
+                    setCurrentDate(dateOption.date);
+                    // Also directly save to localStorage when date button is clicked
+                    localStorage.setItem("selectedDate", dateOption.date);
+                  }}
                   className={`
                     px-3 py-1 rounded-md whitespace-nowrap text-sm flex items-center
                     ${

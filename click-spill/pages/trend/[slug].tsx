@@ -14,9 +14,8 @@ export default function TrendDetailPage() {
 
   useEffect(() => {
     if (!slug) return;
-    const today = new Date().toISOString().slice(0, 10);
     setLoading(true);
-    fetch(`/api/trend-by-slug?slug=${slug}&date=${today}`)
+    fetch(`/api/trend-by-slug?slug=${slug}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.trend) {
