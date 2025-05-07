@@ -61,8 +61,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         /> */}
         {/* Mobile optimization */}
         <meta name="theme-color" content="#2563eb" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-status-bar-style" content="default" />
         <meta name="format-detection" content="telephone=no" />
         {/* Resource hints for faster loading */}
         {/* Canonical URL */}

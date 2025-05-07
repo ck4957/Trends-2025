@@ -44,6 +44,7 @@ const TrendCard: React.FC<TrendCardProps & { singleColumn?: boolean }> = ({
           </h3>
           <ShareButtons
             title={title}
+            summary={summary}
             url={
               typeof window !== "undefined"
                 ? `${window.location.origin}/trend/${slug}`
@@ -256,6 +257,7 @@ const TrendCard: React.FC<TrendCardProps & { singleColumn?: boolean }> = ({
         </h3>
         <ShareButtons
           title={title}
+          summary={summary}
           url={
             typeof window !== "undefined"
               ? `${window.location.origin}/trend/${slug}`

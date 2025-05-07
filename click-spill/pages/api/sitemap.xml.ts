@@ -19,7 +19,12 @@ export default async function handler(
       .from("trend_days")
       .select("date")
       .order("date", { ascending: false })
-      .limit(30);
+      .limit(20)
+      .then(({ data }) => ({
+        data: data?.filter(
+          (v, i, a) => a.findIndex((t) => t.date === v.date) === i
+        ),
+      }));
 
     // Get all categories
     const { data: categories } = await supabase
@@ -61,8 +66,8 @@ export default async function handler(
           <url>
             <loc>${SITE_URL}/category/${slug}</loc>
             <lastmod>${new Date().toISOString()}</lastmod>
-            <changefreq>monthly</changefreq>
-            <priority>0.8</priority>
+            <changefreq>yearly</changefreq>
+            <priority>0.5</priority>
           </url>
         `;
       });
@@ -70,27 +75,27 @@ export default async function handler(
 
     // Add individual trend pages
     // Only get the last 500 trends to keep sitemap size reasonable
-    /*
+
     const { data: trends } = await supabase
       .from("trends")
-      .select("id, title, published_at")
+      .select("id, title, slug, published_at")
       .order("published_at", { ascending: false })
-      .limit(500);
+      .limit(100);
 
     if (trends) {
-      trends.forEach(({ id, published_at }) => {
+      trends.forEach(({ id, slug, published_at }) => {
         // Create URL-friendly slug from title
-        const slug = encodeURIComponent(id);
+        //const slug = encodeURIComponent(id);
         xml += `
           <url>
             <loc>${SITE_URL}/trend/${slug}</loc>
             <lastmod>${published_at || new Date().toISOString()}</lastmod>
-            <changefreq>monthly</changefreq>
-            <priority>0.7</priority>
+            <changefreq>daily</changefreq>
+            <priority>0.8</priority>
           </url>
         `;
       });
-    } */
+    }
 
     // Close sitemap
     xml += "</urlset>";
