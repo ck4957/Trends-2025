@@ -40,7 +40,10 @@ export function getRelativeTimeString(date: Date | string | number): string {
  * Returns a friendly string for trend dates like "today", "yesterday", "2 days ago"
  */
 export function getTrendDateString(dateStr: string): string {
-  const date = new Date(dateStr);
+  const [year, month, day] = dateStr.split("-").map((num) => parseInt(num, 10));
+
+  // Create date with specific year, month (0-based), and day
+  const date = new Date(year, month - 1, day);
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 

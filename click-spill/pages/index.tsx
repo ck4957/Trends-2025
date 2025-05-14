@@ -178,7 +178,12 @@ export default function Home() {
 
   // Format date for display (e.g., "April 23, 2025")
   const formatDateForDisplay = (dateString: string): string => {
-    const date = new Date(dateString);
+    const [year, month, day] = dateString
+      .split("-")
+      .map((num) => parseInt(num, 10));
+
+    // Create date with specific year, month (0-based), and day
+    const date = new Date(year, month - 1, day);
     return date.toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
