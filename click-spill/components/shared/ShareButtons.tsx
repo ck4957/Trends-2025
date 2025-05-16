@@ -3,6 +3,7 @@ import { Share2 } from "lucide-react";
 
 interface ShareButtonsProps {
   title: string;
+  category?: string;
   summary?: string;
   url: string;
   hashtags?: string[];
@@ -11,9 +12,10 @@ interface ShareButtonsProps {
 
 const ShareButtons: React.FC<ShareButtonsProps> = ({
   title,
+  category,
   summary,
   url,
-  hashtags = [title.replace(/\s+/g, ""), "ClickSpill"],
+  hashtags = [title.replace(/\s+/g, ""), category || ""],
   showLabel = false,
 }) => {
   const encodedUrl = encodeURIComponent(url);
