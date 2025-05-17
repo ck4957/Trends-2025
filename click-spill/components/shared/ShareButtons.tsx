@@ -1,6 +1,14 @@
 import React from "react";
 import { Share2 } from "lucide-react";
 
+// Declare FB global for TypeScript
+declare global {
+  interface Window {
+    FB: any;
+    fbAsyncInit: any;
+  }
+}
+
 interface ShareButtonsProps {
   title: string;
   category?: string;
@@ -25,7 +33,6 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({
 
   const shareLinks = {
     x: `https://x.com/intent/tweet?text=${encodedSummary}&url=${encodedUrl}&hashtags=${encodedHashtags}`,
-    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
     linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
     whatsapp: `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`,
   };
@@ -34,6 +41,33 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({
     window.open(url, "_blank", "width=600,height=400");
   };
 
+  // Facebook share dialog using FB SDK
+  const shareFacebook = () => {
+    if (typeof window !== "undefined" && window.FB) {
+      window.FB.ui(
+        {
+          method: "share",
+          display: "popup",
+          href: url,
+          hashtag: hashtags[0]
+            ? `#${hashtags[0].replace(/\s+/g, "")}`
+            : undefined,
+        },
+        (response: any) => {
+          if (response && !response.error_message) {
+            console.log("Shared successfully");
+          } else {
+            console.log("Share was not successful");
+          }
+        }
+      );
+    } else {
+      // Fallback to URL-based sharing if FB SDK is not loaded
+      openShareWindow(
+        `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`
+      );
+    }
+  };
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(url);
@@ -60,7 +94,7 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({
         <i className="fa-brands fa-x-twitter"></i>{" "}
       </button>
       <button
-        onClick={() => openShareWindow(shareLinks.facebook)}
+        onClick={shareFacebook}
         className="p-2 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-full transition-colors"
         aria-label="Share on Facebook"
         title="Share on Facebook"

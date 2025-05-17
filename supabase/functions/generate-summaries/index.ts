@@ -3,8 +3,8 @@ import { OpenAI } from "https://esm.sh/openai@4";
 // Create a singleton OpenAI client to reuse across requests
 const openAIClient = new OpenAI({
   apiKey: Deno.env.get("OPENAI_API_KEY") || "",
-  timeout: 3000,
-  maxRetries: 1,
+  //timeout: 3000,
+  maxRetries: 3,
 });
 // Enhanced logging helper
 function logInfo(message, data?) {
