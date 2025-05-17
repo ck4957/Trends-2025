@@ -22,7 +22,7 @@ export default function Document() {
                   FB.init({
                     appId: '${process.env.NEXT_PUBLIC_FACEBOOK_APP_ID}',
                     xfbml: true,
-                    version: 'v17.0'
+                    version: 'v22.0'
                   });
                 };
               `,

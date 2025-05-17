@@ -10,6 +10,7 @@ interface LayoutProps {
   children: React.ReactNode;
   title?: string;
   description?: string;
+  hasCustomMeta?: boolean; // Add this prop to indicate custom meta tags are provided
 }
 
 const brandFont = "monospace";
@@ -20,16 +21,20 @@ const Layout: React.FC<LayoutProps> = ({
   children,
   title = "Click Spill - Daily Trending Topics summarized by AI",
   description = "Discover Trending Topics with AI-Driven Summaries",
+  hasCustomMeta = false, // Default to false
 }) => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+      {/* Only render these meta tags if no custom meta is provided */}
+      {!hasCustomMeta && (
+        <Head>
+          <title>{title}</title>
+          <meta name="description" content={description} />
+        </Head>
+      )}
+
       <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta
-          name="google-adsense-account"
-          content="ca-pub-3911596373332918"
-        ></meta>
+        <meta name="google-adsense-account" content="ca-pub-3911596373332918" />
         <link
           href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
           rel="stylesheet"
