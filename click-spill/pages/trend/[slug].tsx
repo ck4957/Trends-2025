@@ -53,11 +53,11 @@ export default function TrendDetailPage() {
     );
 
   // SEO meta tags
-  const pageTitle = `${trend.title} | Click Spill`;
+  const pageTitle = `${trend.title}`;
   const pageDescription =
     trend.summary || `Latest news and analysis for ${trend.title}.`;
   const pageUrl = `https://clickspill.com/trend/${trend.slug}`;
-  const pageImage = trend.picture || "https://clickspill.com/logo.png";
+  const pageImage = trend.picture;
 
   // JSON-LD structured data
   const jsonLd = {
@@ -81,16 +81,11 @@ export default function TrendDetailPage() {
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href={pageUrl} />
         {/* Open Graph */}
+        <meta property="og:url" content={pageUrl} />
+        <meta property="og:type" content="article" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={pageUrl} />
         <meta property="og:image" content={pageImage} />
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={pageDescription} />
-        <meta name="twitter:image" content={pageImage} />
         {/* Structured Data */}
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Head>

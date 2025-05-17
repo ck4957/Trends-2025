@@ -23,42 +23,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="language" content="English" />
         <meta name="revisit-after" content="1 days" />
         <meta name="author" content="ClickSpill" />
-        // Add these to your Head component in _app.tsx
         <meta
           name="google-site-verification"
           content="ww1oAvtDmJgQ76OAIWy7izbQduMtWwS4cac_BCD1Jok"
         />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://clickspill.com/" />
-        <meta
-          property="og:title"
-          content="ClickSpill - Daily Trending Topics"
-        />
-        <meta
-          property="og:description"
-          content="Your source for daily trending topics and viral content. Stay updated with the latest trends and breaking news."
-        />
-        {/* <meta
-          property="og:image"
-          content="https://clickspill.com/og-image.jpg"
-        /> */}
-        {/* Twitter */}
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://clickspill.com/" />
-        <meta
-          property="twitter:title"
-          content="ClickSpill - Daily Trending Topics"
-        />
-        <meta
-          property="twitter:description"
-          content="Your source for daily trending topics and viral content. Stay updated with the latest trends and breaking news."
-        />
-        {/* <meta
-          property="twitter:image"
-          content="https://clickspill.com/twitter-image.jpg"
-        /> */}
         {/* Mobile optimization */}
         <meta name="theme-color" content="#2563eb" />
         <meta name="mobile-web-app-capable" content="yes" />
