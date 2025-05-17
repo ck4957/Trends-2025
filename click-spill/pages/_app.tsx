@@ -8,77 +8,68 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider>
       <Head>
-        <title>ClickSpill - Daily Trending Topics | Latest Trending News</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {/* Add key attributes to all meta tags */}
+        <title key="title">
+          ClickSpill - Daily Trending Topics | Latest Trending News
+        </title>
         <meta
+          key="viewport"
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+        />
+        <meta
+          key="description"
           name="description"
           content="ClickSpill provides daily trending topics with AI-Driven Summaries, news updates, and viral content in one place. Stay updated with the latest trends and breaking news."
         />
         <meta
+          key="keywords"
           name="keywords"
           content="trending topics, viral news, daily trends, breaking news, popular content, current events"
         />
-        <meta name="robots" content="index, follow" />
-        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="language" content="English" />
-        <meta name="revisit-after" content="1 days" />
-        <meta name="author" content="ClickSpill" />
+        <meta key="robots" name="robots" content="index, follow" />
         <meta
+          key="content-type"
+          httpEquiv="Content-Type"
+          content="text/html; charset=utf-8"
+        />
+        <meta key="language" name="language" content="English" />
+        <meta key="revisit-after" name="revisit-after" content="1 days" />
+        <meta key="author" name="author" content="ClickSpill" />
+        <meta
+          key="google-site-verification"
           name="google-site-verification"
           content="ww1oAvtDmJgQ76OAIWy7izbQduMtWwS4cac_BCD1Jok"
         />
-        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
-        {/* Mobile optimization */}
-        <meta name="theme-color" content="#2563eb" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="mobile-web-app-status-bar-style" content="default" />
-        <meta name="format-detection" content="telephone=no" />
-        {/* Resource hints for faster loading */}
-        {/* Canonical URL */}
-        <link rel="canonical" href="https://clickspill.com" />
-        <link rel="icon" href="/cs.ico" />
-        {/* <!-- Google Tag Manager --> */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-MVCCTJJ4');`,
-          }}
+        <link
+          key="sitemap"
+          rel="sitemap"
+          type="application/xml"
+          href="/sitemap.xml"
         />
-        {/* <!-- End Google Tag Manager --> */}
-        {/* JSON-LD structured data for better SEO */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: `
-            {
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              "name": "ClickSpill",
-              "url": "https://clickspill.com",
-              "description": "Daily trending topics and AI insights content"
-            }
-            `,
-          }}
+        <meta key="theme-color" name="theme-color" content="#2563eb" />
+        <meta
+          key="mobile-web-app-capable"
+          name="mobile-web-app-capable"
+          content="yes"
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            (function() {
-              try {
-                var theme = localStorage.getItem('theme');
-                if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                  document.documentElement.classList.add('dark');
-                } else {
-                  document.documentElement.classList.remove('dark');
-                }
-              } catch (e) {}
-            })();
-          `,
-          }}
+        <meta
+          key="mobile-web-app-status-bar-style"
+          name="mobile-web-app-status-bar-style"
+          content="default"
         />
+        <meta
+          key="format-detection"
+          name="format-detection"
+          content="telephone=no"
+        />
+
+        {/* IMPORTANT: Move these social/OG tags to page-specific components */}
+        {/* Only include canonical for the homepage here */}
+        <link key="canonical" rel="canonical" href="https://clickspill.com" />
+        <link key="favicon" rel="icon" href="/cs.ico" />
+
+        {/* The rest of your head content */}
       </Head>
       <Component {...pageProps} />
     </ThemeProvider>

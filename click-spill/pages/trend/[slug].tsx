@@ -77,17 +77,37 @@ export default function TrendDetailPage() {
   return (
     <Layout>
       <Head>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        <link rel="canonical" href={pageUrl} />
-        {/* Open Graph */}
-        <meta property="og:url" content={pageUrl} />
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content={pageImage} />
+        {/* Add matching key attributes to override _app.tsx tags */}
+        <title key="title">{pageTitle}</title>
+        <meta key="description" name="description" content={pageDescription} />
+        <link key="canonical" rel="canonical" href={pageUrl} />
+
+        {/* Open Graph tags with unique keys */}
+        <meta key="og:url" property="og:url" content={pageUrl} />
+        <meta key="og:type" property="og:type" content="article" />
+        <meta key="og:title" property="og:title" content={pageTitle} />
+        <meta
+          key="og:description"
+          property="og:description"
+          content={pageDescription}
+        />
+        {pageImage && (
+          <meta key="og:image" property="og:image" content={pageImage} />
+        )}
+
+        {/* Keywords specific to this trend */}
+        <meta
+          key="keywords"
+          name="keywords"
+          content={`${trend.title}, ${
+            trend.category?.name || ""
+          }, trending news, clickspill`}
+        />
+
         {/* Structured Data */}
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+        <script key="json-ld" type="application/ld+json">
+          {JSON.stringify(jsonLd)}
+        </script>
       </Head>
       <div className="max-w-5xl mx-auto py-8 px-4">
         <button
