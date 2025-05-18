@@ -265,38 +265,6 @@ Deno.serve(async (req) => {
         logError(requestId, "API response missing results array", result);
       }
 
-      // Log queue stats after processing
-      const { data: finalQueueStats } = await supabaseAdmin
-        .from("summary_queue")
-        .select("status")
-        .then((res) => {
-          if (res.error) return { data: null };
-
-          // Count items by status
-          const stats = {
-            total: 0,
-            pending: 0,
-            processing: 0,
-            completed: 0,
-            failed: 0,
-          };
-          if (res.data) {
-            stats.total = res.data.length;
-            res.data.forEach((item) => {
-              stats[item.status] = (stats[item.status] || 0) + 1;
-            });
-          }
-          return { data: stats };
-        });
-
-      if (finalQueueStats) {
-        logInfo(
-          requestId,
-          "Final queue statistics after processing:",
-          finalQueueStats
-        );
-      }
-
       const totalDuration = Date.now() - startTime;
       logInfo(
         requestId,

@@ -1,0 +1,3 @@
+ALTER TABLE trends
+ADD COLUMN IF NOT EXISTS posted_to_facebook TIMESTAMP,
+ADD COLUMN IF NOT EXISTS facebook_post_id TEXT

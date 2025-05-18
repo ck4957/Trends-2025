@@ -20,7 +20,24 @@ Deno.serve(async (_req) => {
   const rssResponse = await fetch(rssUrl);
   const xml = await rssResponse.text();
 
-  const filename = `${new Date().toISOString()}.xml`;
+  // Modified filename code with Eastern Time
+  const date = new Date();
+  const easternDate = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(date);
+  // Format: YYYY-MM-DD_HH-MM_ET.xml
+  const formattedDate = easternDate.replace(
+    /(\d+)\/(\d+)\/(\d+), (\d+):(\d+)/,
+    "$3-$1-$2_$4-$5_ET"
+  );
+  // Example: 2023-10-01_14-30_ET.xml
+  const filename = `${formattedDate}.xml`;
 
   const { error } = await supabase.storage.from(bucket).upload(filename, xml, {
     contentType: "application/xml",

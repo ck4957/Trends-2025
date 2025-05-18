@@ -1,7 +1,6 @@
 import React from "react";
 import Head from "next/head";
 import Script from "next/script";
-import { useTheme } from "../context/ThemeContext";
 import Image from "next/image";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";

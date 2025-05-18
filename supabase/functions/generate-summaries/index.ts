@@ -41,9 +41,10 @@ async function generateSummaryAndCategory(
   }
   const models = [
     "gpt-4.1",
-    //"gpt-4.1-mini",
+    "gpt-4.1-mini",
     "gpt-4.1-nano",
-    //"gpt-4o",
+    "gpt-4o",
+    "gpt-4o-mini-search-preview",
     "gpt-4o-mini",
     "gpt-3.5-turbo",
     //"o4-mini",
@@ -60,19 +61,7 @@ async function generateSummaryAndCategory(
   const newsItemsText = newsItems
     .map((item) => `- "${item.title}" from ${item.source}`)
     .join("\n");
-  // Combined prompt requesting both summary and category
-  const promptV1 = `Analyze the trending topic "${trendTitle}" based on these news headlines:
-${newsItemsText}
 
-1. CATEGORY: Classify this trend into exactly ONE of the following categories: ${categories.join(
-    ", "
-  )}
-
-2. SUMMARY: Write a concise summary (1-2 sentences) explaining what this trend is about and why it's trending.
-
-Format your response exactly like this:
-CATEGORY: [single category name]
-SUMMARY: [your 1-2 sentence summary]`;
   const prompt = `Write an in-depth, SEO-optimized article (100-300 words) about the trending topic "${trendTitle}" based on these news headlines:
 ${newsItemsText}
 
@@ -80,14 +69,13 @@ Include:
 1. CATEGORY: Classify this trend into exactly ONE of the following categories: ${categories.join(
     ", "
   )}
-2. A compelling introduction (1-2 sentences).
+2. A compelling introduction.
 3. A bulleted list of 4-7 key developments, facts, or implications about this trend. Each bullet should be concise and informative.
 4. A "People Also Ask" FAQ section with 2-3 relevant questions and concise answers.
-5. Write a concise summary (1-2 sentences) explaining what this trend is about and why it's trending.
 
 Format:
 CATEGORY: [single category name]
-SUMMARY: [your 1-2 sentence summary]
+SUMMARY: [upto 300 characters summary]
 ARTICLE:
 [Introduction]
 
@@ -101,6 +89,8 @@ Q1: [Question 1]
 A1: [Answer 1]
 Q2: [Question 2]
 A2: [Answer 2]
+Q3: [Question 3]
+A3: [Answer 3]
 `;
   const startTime = Date.now();
   try {
