@@ -59,39 +59,55 @@ async function generateSummaryAndCategory(
   const maxTokens = 900;
   // Format news items for the prompt
   const newsItemsText = newsItems
-    .map((item) => `- "${item.title}" from ${item.source}`)
+    .map(
+      (item: { title: any; source: any }) =>
+        `- "${item.title}" from ${item.source}`
+    )
     .join("\n");
 
-  const prompt = `Write an in-depth, SEO-optimized article (100-300 words) about the trending topic "${trendTitle}" based on these news headlines:
-${newsItemsText}
+  const prompt = `You are a professional news analyst and SEO content writer tasked with creating structured content about trending topics.
 
-Include:
-1. CATEGORY: Classify this trend into exactly ONE of the following categories: ${categories.join(
-    ", "
-  )}
-2. A compelling introduction.
-3. A bulleted list of 4-7 key developments, facts, or implications about this trend. Each bullet should be concise and informative.
-4. A "People Also Ask" FAQ section with 2-3 relevant questions and concise answers.
-
-Format:
-CATEGORY: [single category name]
-SUMMARY: [upto 300 characters summary]
-ARTICLE:
-[Introduction]
-
-- [Bullet point 1]
-- [Bullet point 2]
-- [Bullet point 3]
-...
-
-FAQ:
-Q1: [Question 1]
-A1: [Answer 1]
-Q2: [Question 2]
-A2: [Answer 2]
-Q3: [Question 3]
-A3: [Answer 3]
-`;
+    TOPIC: "${trendTitle}"
+    
+    CONTEXT: The following are news headlines related to this trend:
+    ${newsItemsText}
+    
+    INSTRUCTIONS:
+    1. First, classify this trend into EXACTLY ONE of these categories: ${categories.join(
+      ", "
+    )}
+    2. Write a concise summary (MAXIMUM 250 characters, no exceptions)
+    3. Create a short article with:
+       - A compelling 2-3 sentence introduction
+       - Exactly 4-5 bullet points with key facts or developments
+    4. Generate 2-3 "People Also Ask" Q&A pairs related to this trend
+    
+    OUTPUT FORMAT (follow this EXACTLY):
+    ---CATEGORY---
+    [Single category name]
+    
+    ---SUMMARY---
+    [Concise summary - STRICT MAXIMUM 250 characters]
+    
+    ---ARTICLE---
+    [2-3 sentence introduction]
+    
+    • [Key point 1]
+    • [Key point 2]
+    • [Key point 3]
+    • [Key point 4]
+    • [Optional key point 5]
+    
+    ---FAQ---
+    Q1: [Clear, specific question]
+    A1: [Concise answer - 1-2 sentences]
+    
+    Q2: [Clear, specific question]
+    A2: [Concise answer - 1-2 sentences]
+    
+    Q3: [Optional additional question]
+    A3: [Optional answer]
+    `;
   const startTime = Date.now();
   try {
     const response = await openAIClient.chat.completions.create({
@@ -116,27 +132,51 @@ A3: [Answer 3]
       }`
     );
     // Parse the response to extract category, summary, article, and FAQ
-    const categoryMatch = content.match(/CATEGORY:\s*([^\n]+)/i);
+    // More robust regex patterns with explicit section markers
+    const categoryMatch = content.match(/---CATEGORY---\s*\n(.*?)(?:\n|$)/s);
     const summaryMatch = content.match(
-      /SUMMARY:\s*(.+?)(?:\nARTICLE:|\nFAQ:|$)/is
+      /---SUMMARY---\s*\n(.*?)(?:\n---ARTICLE---|$)/s
     );
-    const articleMatch = content.match(/ARTICLE:\s*([\s\S]*?)(?:\nFAQ:|$)/i);
-    const faqMatch = content.match(/FAQ:\s*([\s\S]*)$/i);
+    const articleMatch = content.match(
+      /---ARTICLE---\s*\n([\s\S]*?)(?:\n---FAQ---|$)/s
+    );
+    const faqMatch = content.match(/---FAQ---\s*\n([\s\S]*?)(?:$)/s);
+
+    // Add proper validation and cleanup
     const categoryName = categoryMatch ? categoryMatch[1].trim() : "Other";
     const summary = summaryMatch ? summaryMatch[1].trim() : "";
     const article = articleMatch ? articleMatch[1].trim() : "";
+
+    // Improved FAQ parsing with explicit question numbering
     let faq: { question: string; answer: string }[] = [];
     if (faqMatch && faqMatch[1]) {
-      // Parse Q/A pairs
+      // Use more specific regex to handle potential formatting issues
       const faqText = faqMatch[1];
-      const qaRegex = /Q\d+:\s*(.+?)\nA\d+:\s*(.+?)(?=\nQ\d+:|\n*$)/gs;
+      const qaRegex = /Q(\d+):\s*(.+?)\s*\nA\1:\s*(.+?)(?=\s*\nQ\d+:|$)/gs;
       let match;
+
       while ((match = qaRegex.exec(faqText)) !== null) {
         faq.push({
-          question: match[1].trim(),
-          answer: match[2].trim(),
+          question: match[2].trim(),
+          answer: match[3].trim(),
         });
       }
+    }
+
+    const validation = validateContent(summary, article, categoryName);
+
+    if (validation.isValid) {
+      return {
+        summary,
+        article,
+        faq,
+        category: categoryName,
+        category_id: categoryMap[categoryName] || categoryMap["Other"],
+      };
+    } else {
+      logInfo(
+        `Content validation failed on attempt ${validation.issues.join(", ")}`
+      );
     }
     // Get the category ID from our map
     const category_id = categoryMap[categoryName] || categoryMap["Other"];
@@ -472,3 +512,44 @@ Deno.serve(async (req) => {
     );
   }
 });
+// NEW CODE: Validation function for summary, article, and category
+function validateContent(
+  summary: string,
+  article: string,
+  category: string
+): {
+  isValid: boolean;
+  issues: string[];
+} {
+  const issues: string[] = [];
+
+  // Check summary length
+  if (!summary) {
+    issues.push("Missing summary");
+  } else if (summary.length > 300) {
+    issues.push(`Summary too long (${summary.length} chars, max 300)`);
+  }
+
+  // Check article
+  if (!article) {
+    issues.push("Missing article content");
+  } else if (article.length < 100) {
+    issues.push("Article content too short");
+  }
+
+  // Check category validity
+  if (!category || category === "Other") {
+    issues.push("Category not properly classified");
+  }
+
+  // Check for bullet points in article
+  const bulletPointCount = (article.match(/•|\-|\*/g) || []).length;
+  if (bulletPointCount < 3) {
+    issues.push("Insufficient bullet points in article");
+  }
+
+  return {
+    isValid: issues.length === 0,
+    issues,
+  };
+}
