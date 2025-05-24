@@ -132,7 +132,7 @@ const TrendCard: React.FC<TrendCardProps & { singleColumn?: boolean }> = ({
               </ul>
             </div>
           )}
-          {news && news.length > 0 && (
+          {/* {news && news.length > 0 && (
             <ul className="space-y-4">
               {news.map((newsItem, idx) => (
                 <NewsItemDetail
@@ -146,7 +146,7 @@ const TrendCard: React.FC<TrendCardProps & { singleColumn?: boolean }> = ({
                 />
               ))}
             </ul>
-          )}
+          )} */}
         </div>
       </div>
     );

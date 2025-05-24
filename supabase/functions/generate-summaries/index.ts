@@ -72,31 +72,63 @@ async function generateSummaryAndCategory(
     CONTEXT: The following are news headlines related to this trend:
     ${newsItemsText}
     
+    RESEARCH REQUIREMENTS:
+    1/ You should analyze all available information about this topic thoroughly
+    2/ If there are relevant URLs and sources mentioned, consider their credibility and content
+    3/ Think critically about what additional context would improve understanding of this trend
+    4/ You should only write facts and data that can be verified from the provided sources
+    5/ Include specific details, statistics, and quotes when available from the sources
+    6/ Always provide context about why this trend matters and its broader implications
+    7/ Write comprehensive content that is at least 400-500 words
+    8/ Be specific in your analysis - don't just reference sources, extract and explain the key information
+
     INSTRUCTIONS:
     1. First, classify this trend into EXACTLY ONE of these categories: ${categories.join(
       ", "
     )}
-    2. Write a concise summary (MAXIMUM 250 characters, no exceptions)
-    3. Create a short article with:
-       - A compelling 2-3 sentence introduction
-       - Exactly 4-5 bullet points with key facts or developments
-    4. Generate 2-3 "People Also Ask" Q&A pairs related to this trend
-    
+    2. Write a concise summary (MAXIMUM 250 characters for social media)
+    3. Create a comprehensive article (400-500 words) with:
+      - A compelling 2-3 sentence introduction explaining the trend's significance
+      - Detailed analysis with at least 6-8 bullet points covering:
+        * Key facts and developments
+        * Background context and timeline
+        * Impact and implications
+        * Expert opinions or quotes (if available from sources)
+        * Statistical data (if available)
+        * Future outlook or predictions
+      - A concluding paragraph summarizing the trend's importance
+    4. Generate 3-4 "People Also Ask" Q&A pairs with detailed answers
+        
     OUTPUT FORMAT (follow this EXACTLY):
     ---CATEGORY---
     [Single category name]
     
     ---SUMMARY---
     [Concise summary - STRICT MAXIMUM 250 characters]
+    #[RelevantHashtag]
     
     ---ARTICLE---
-    [2-3 sentence introduction]
+    [2-3 sentence introduction explaining why this trend matters]
     
-    • [Key point 1]
-    • [Key point 2]
-    • [Key point 3]
-    • [Key point 4]
-    • [Optional key point 5]
+    **Background & Context:**
+    • [Detailed background point with specific information]
+    • [Timeline or historical context if relevant]
+
+    **Key Developments:**
+    • [Specific fact or development with details]
+    • [Another key development with context]
+    • [Impact or consequence with explanation]
+
+    **Analysis & Implications:**
+    • [Expert opinion or analysis if available from sources]
+    • [Statistical data or metrics if mentioned in sources]
+    • [Broader implications for industry/society]
+
+    **Future Outlook:**
+    • [Predictions or future implications based on current data]
+    • [Potential next steps or developments to watch]
+
+    [2-3 sentence conclusion summarizing the trend's significance and why people should care]    
     
     ---FAQ---
     Q1: [Clear, specific question]
