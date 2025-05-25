@@ -14,10 +14,12 @@ export async function fetchTrends({
   date,
   slug,
   limit,
+  requireAiSummary = true,
 }: {
   date: string;
   slug?: string;
   limit?: number;
+  requireAiSummary?: boolean;
 }) {
   const supabase = getSupabaseClient();
 
@@ -69,6 +71,10 @@ export async function fetchTrends({
     )
     .in("trend_day_id", trendDayIds);
 
+  // Only fetch trends with AI summaries if required
+  if (requireAiSummary) {
+    query = query.not("ai_summary", "is", null);
+  }
   if (slug) query = query.eq("slug", slug);
   if (limit) query = query.limit(limit);
   if (!slug) {
