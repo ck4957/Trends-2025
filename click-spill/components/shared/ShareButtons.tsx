@@ -51,7 +51,7 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({
         .filter((part) => part.trim().length > 0) // Remove empty parts
         .map((part) => formatAsHashtag(part));
 
-      tags.push(...categoryTags);
+      // tags.push(...categoryTags);
     }
 
     // Add a hashtag from the title (limit to first few words)
@@ -76,11 +76,11 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({
     return Array.from(new Set(tags)).filter(Boolean);
   };
 
-  const hashtags = customHashtags || generateHashtags();
+  const hashtags = generateHashtags();
 
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
-  const encodedSummary = encodeURIComponent(summary || title);
+  const encodedSummary = encodeURIComponent(summary || "");
   const encodedHashtags = hashtags.join(",");
 
   const shareLinks = {
