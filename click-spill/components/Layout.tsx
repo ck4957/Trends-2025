@@ -121,6 +121,8 @@ const Layout: React.FC<LayoutProps> = ({
           </div>
         </div>
       </header>
+
+      {/* AdSterra: Banner 160x300 99700a6546585755883e57e7a0e34d5d */}
       <Script
         id="hpf-ad-config"
         strategy="afterInteractive"
@@ -171,7 +173,16 @@ const Layout: React.FC<LayoutProps> = ({
     `,
         }}
       />
+      {/* AdSterra: Banner 160x300 Src: 99700a6546585755883e57e7a0e34d5d */}
+      <Script
+        id="hpf-ad-invoke"
+        src="//www.highperformanceformat.com/99700a6546585755883e57e7a0e34d5d/invoke.js"
+        strategy="afterInteractive"
+      />
+
       {/* Add this script after your existing HPF ad config */}
+      {/* AdSterra: Banner 728*90 8e7f6d7e537e6b214665d01c83d9d0d3 */}
+      {/* id: top-banner-ad */}
       <Script
         id="hpf-banner-ad-config"
         strategy="afterInteractive"
@@ -227,16 +238,91 @@ const Layout: React.FC<LayoutProps> = ({
     `,
         }}
       />
+      {/* AdSterra: Banner 728*90 Src: 8e7f6d7e537e6b214665d01c83d9d0d3 */}
       <Script
-        id="hpf-ad-invoke"
-        src="//www.highperformanceformat.com/99700a6546585755883e57e7a0e34d5d/invoke.js"
+        id="hpf-banner-ad-invoke"
+        src="//www.highperformanceformat.com/8e7f6d7e537e6b214665d01c83d9d0d3/invoke.js"
         strategy="afterInteractive"
       />
+
+      {/* AdSterra: Banner 160x600 f48a5e0f10c5d62d5d92352185210be6 */}
+      {/* id: left-sidebar-ad-1 h:600px */}
+      <Script
+        id="hpf-skyscraper-ad-config"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+      // Skyscraper ad configuration
+      const skyscraperAtOptions = {
+        'key': 'f48a5e0f10c5d62d5d92352185210be6',
+        'format': 'iframe',
+        'height': 600,
+        'width': 160,
+        'params': {}
+      };
+      
+      // Function to inject skyscraper ad into specific container
+      function injectHPFSkyscraperAd() {
+        // Try to place in left sidebar first, then right sidebar as fallback
+        const leftContainer = document.getElementById('left-sidebar-ad-1');
+        const rightContainer = document.getElementById('hpf-skyscraper-container');
+        
+        const targetContainer = leftContainer || rightContainer;
+        
+        if (targetContainer && skyscraperAtOptions) {
+          // Set the skyscraper options globally for this ad
+          window.atOptions = skyscraperAtOptions;
+          
+          // Clear any existing content
+          targetContainer.innerHTML = '';
+          
+          // Create the ad script element
+          const adScript = document.createElement('script');
+          adScript.type = 'text/javascript';
+          adScript.src = '//www.highperformanceformat.com/f48a5e0f10c5d62d5d92352185210be6/invoke.js';
+          
+          // Append to target container
+          targetContainer.appendChild(adScript);
+          
+          console.log('HPF skyscraper ad injected into:', targetContainer.id);
+        } else {
+          console.log('HPF skyscraper ad container not found, retrying...');
+          // Retry after 1 second if containers not ready
+          setTimeout(injectHPFSkyscraperAd, 1000);
+        }
+      }
+      
+      // Wait for DOM to be ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', injectHPFSkyscraperAd);
+      } else {
+        // Delay to ensure other ads are loaded first
+        setTimeout(injectHPFSkyscraperAd, 3000);
+      }
+    `,
+        }}
+      />
+      {/* AdSterra: Banner 160x600 Src: f48a5e0f10c5d62d5d92352185210be6 */}
+      <Script
+        id="hpf-skyscraper-ad-invoke"
+        src="//www.highperformanceformat.com/f48a5e0f10c5d62d5d92352185210be6/invoke.js"
+        strategy="afterInteractive"
+      />
+
+      {/* AdSterra: Popunder */}
       <Script
         id="profitable-rate-cpm"
         src="//pl26847292.profitableratecpm.com/ba/c7/38/bac7387c219665b557ef784aba7be7ce.js"
         strategy="afterInteractive"
       />
+
+      {/* AdSterra: Social */}
+      <Script
+        id="profitable-rate-cpm-6a"
+        src="//pl26848452.profitableratecpm.com/6a/ad/c0/6aadc0bc628575f4c95bad5a6ff11486.js"
+      />
+
+      {/* AdSterra: Direct Link */}
       <Script
         id="profitable-rate-direct"
         src="https://www.profitableratecpm.com/vx70g97er8?key=86f4eb02d1930da0e9d927837f4e84b7"
@@ -262,20 +348,9 @@ const Layout: React.FC<LayoutProps> = ({
               <div className="">
                 <div
                   id="left-sidebar-ad-1"
-                  className="text-center min-h-[250px] flex items-center justify-center"
+                  className="text-center min-h-[600px] flex items-center justify-center"
                 >
                   {/* Left sidebar ad will appear here */}
-                  <ins
-                    className="adsbygoogle"
-                    style={{
-                      display: "block",
-                      width: "160px",
-                      height: "600px",
-                    }}
-                    data-ad-client="ca-pub-3911596373332918"
-                    data-ad-slot="1656982977"
-                    data-ad-format="auto"
-                  ></ins>
                 </div>
               </div>
 
@@ -335,20 +410,7 @@ const Layout: React.FC<LayoutProps> = ({
           </aside>
         </div>
       </main>
-      {/* Ad insertion - wrapped in div with margin */}
-      {/* <div className="w-full">
-        <ins
-          className="adsbygoogle"
-          style={{ display: "block", minHeight: "90px", width: "100%" }}
-          data-ad-client="ca-pub-3911596373332918"
-          data-ad-slot="1656982977"
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        ></ins>
-        <Script id="adsense-display">
-          {`(adsbygoogle = window.adsbygoogle || []).push({});`}
-        </Script>
-      </div> */}
+
       <SpeedInsights />
       <Analytics />
       {/* Footer remains the same */}
