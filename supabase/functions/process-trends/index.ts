@@ -165,7 +165,7 @@ Deno.serve(async (req) => {
       // Parse the numeric part for ranking (remove "+" and convert to integer)
       const numericTraffic =
         traffic !== "N/A" ? parseInt(traffic.replace(/\+/g, "")) : 0;
-      if (numericTraffic < 1000) return null;
+      if (numericTraffic < 500) return null;
       const pubDate = item.pubDate ? item.pubDate[0] : null;
       const pictureUrl = item["ht:picture"][0];
       const pictureSource = item["ht:picture_source"][0];
