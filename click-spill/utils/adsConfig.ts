@@ -50,6 +50,16 @@ export const AD_CONFIGS: AdConfig[] = [
     delay: 800,
     type: "hpf",
   },
+  // {
+  //   id: "banner-300-250",
+  //   key: "e77c7f602f11df5b3e2936343c2da8b1",
+  //   format: "iframe",
+  //   height: 250,
+  //   width: 300,
+  //   targetContainers: ["left-sidebar-ad-2"],
+  //   delay: 700,
+  //   type: "hpf",
+  // },
 ];
 
 export const PROFITABLE_RATE_ADS = [

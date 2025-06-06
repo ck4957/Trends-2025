@@ -21,7 +21,7 @@ const TrendsList: React.FC<TrendsListProps> = ({ trends }) => {
         </span>
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-6">
         {trends.map((trend, index) => (
           <TrendCard
             key={trend.id || index}

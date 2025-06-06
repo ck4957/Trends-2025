@@ -87,7 +87,7 @@ const Layout: React.FC<LayoutProps> = ({
           {/* Left Sidebar */}
           <aside className="hidden xl:block xl:w-1/5">
             <div className="sticky top-20 space-y-6">
-              <AdContainer id="left-sidebar-ad-1" minHeight="600px" />
+              <AdContainer id="left-sidebar-ad-2" minHeight="250px" />
             </div>
           </aside>
 
